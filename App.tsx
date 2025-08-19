@@ -1,6 +1,5 @@
 import {
   StatusBar,
-  StyleSheet,
   useColorScheme,
   View,
 } from 'react-native';
@@ -9,6 +8,7 @@ import {
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import Splash from './src/screens/Splash';
+import { getThemedStyles } from './styles';
 
 function App() {
   return (
@@ -26,8 +26,7 @@ function AppContent() {
   return (
     <View
       style={[
-        styles.container,
-        isDarkMode ? styles.dark : styles.light,
+        getThemedStyles(isDarkMode).container,
         {
           paddingTop: safeAreaInsets.top,
           paddingBottom: safeAreaInsets.bottom,
@@ -40,17 +39,5 @@ function AppContent() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  light:{
-    backgroundColor: '#e2e2e2',
-  },
-  dark: {
-    backgroundColor: '#151515',
-  },
-});
 
 export default App;
