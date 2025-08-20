@@ -1,20 +1,23 @@
-import {
-  StatusBar,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { StatusBar, useColorScheme, View } from 'react-native';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import Splash from './src/screens/Splash';
 import { getThemedStyles } from './styles';
+import { useContext, useEffect } from 'react';
+import { AppContext } from './src/contexts/AppContext';
+import ContextsProvider from './src/contexts/ContextProvider';
+import Routes from './src/navigation/Routes';
+import { NavigationContainer } from '@react-navigation/native';
 
-function App() {
+export default function App() {
   return (
     <SafeAreaProvider>
-      <StatusBar/>
-      <AppContent />
+      <StatusBar />
+      <ContextsProvider>
+        <AppContent />
+      </ContextsProvider>
     </SafeAreaProvider>
   );
 }
@@ -23,21 +26,32 @@ function AppContent() {
   const isDarkMode = useColorScheme() === 'dark';
   const safeAreaInsets = useSafeAreaInsets();
 
+  const { setLoaded, Loaded } = useContext(AppContext);
+
+  useEffect(() => {
+    const randomDelay = Math.floor(Math.random() * (8000 - 2000 + 1)) + 2000;
+    const timer = setTimeout(() => {
+      setLoaded(true);
+    }, randomDelay);
+    return () => clearTimeout(timer);
+  }, [setLoaded]);
+
   return (
     <View
       style={[
         getThemedStyles(isDarkMode).container,
         {
           paddingTop: safeAreaInsets.top,
-          paddingBottom: safeAreaInsets.bottom,
-          paddingLeft: safeAreaInsets.left,
-          paddingRight: safeAreaInsets.right,
         },
       ]}
     >
-      <Splash />
+      {Loaded ? (
+        <NavigationContainer>
+          <Routes />
+        </NavigationContainer>
+      ) : (
+        <Splash />
+      )}
     </View>
   );
 }
-
-export default App;
