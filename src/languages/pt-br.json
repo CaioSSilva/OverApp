@@ -1,0 +1,46 @@
+{
+  "characters": "Personagens",
+  "stats": "Estatísticas",
+  "matches": "Partidas",
+  "tank": "Tanque",
+  "damage": "Dano",
+  "support": "Suporte",
+  "update": "Atualizar",
+  "player": "Jogador",
+  "updatedAt": "Atualizado em",
+  "messages": {
+    "splash": {
+      "widowmakerAim": "Ajustando a mira da Widowmaker...",
+      "reinhardtShield": "Carregando o escudo do Reinhardt...",
+      "orisaEnergy": "Recuperando a energia da Orisa...",
+      "echoDrones": "Reiniciando os drones da Echo...",
+      "ultimates": "Sincronizando os ultimates...",
+      "soldierAmmo": "Recarregando a munição do Soldier 76...",
+      "mapPositioning": "Verificando o posicionamento do mapa...",
+      "bastionSentry": "Configurando o modo sentinela do Bastion...",
+      "symmetraTeleports": "Ajustando os teleportes da Symmetra...",
+      "sigmaShields": "Recalibrando os escudos do Sigma...",
+      "torbjornDefense": "Ativando o modo de defesa do Torbjörn...",
+      "sombraNetwork": "Conectando-se à rede da Sombra...",
+      "matchTimer": "Sincronizando o cronômetro da partida...",
+      "alliesHealth": "Restaurando a saúde dos aliados...",
+      "zaryaBarrier": "Preparando a barreira da Zarya...",
+      "attackStrategies": "Analisando estratégias de ataque...",
+      "matchStatistics": "Recompilando as estatísticas da partida...",
+      "junkratGrenades": "Carregando as granadas do Junkrat...",
+      "frontline": "Monitorando a linha de frente...",
+      "supportProtocols": "Finalizando os protocolos de suporte...",
+      "tracerAbilities": "Reativando as habilidades da Tracer...",
+      "flankingRoutes": "Otimizando as rotas de flanco...",
+      "baptisteDrone": "Reiniciando o drone do Baptiste...",
+      "hanzoAim": "Ajustando a mira do Hanzo...",
+      "genjiDeflection": "Ativando a deflexão do Genji...",
+      "combatPerimeter": "Reforçando o perímetro de combate...",
+      "moiraBeams": "Carregando os feixes bióticos da Moira...",
+      "comboUltimatePlan": "Executando o plano de ultimates combinados...",
+      "skinsEffects": "Carregando skins e efeitos especiais...",
+      "nextRound": "Preparando para o próximo round..."
+    }
+  }
+
+}

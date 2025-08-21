@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { PulseIndicator } from 'react-native-indicators';
@@ -8,16 +7,23 @@ import {
   Animated,
   StyleSheet,
   Text,
+  ViewStyle,
 } from 'react-native';
 
 import { getTheme, getThemedStyles } from '../../styles';
 import { messages } from '../../messages';
+import { useTranslation } from 'react-i18next';
 
 export default function Splash() {
   const isDarkMode = useColorScheme() === 'dark';
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const [messageIndex, setMessageIndex] = useState(0);
   const styles = getThemedStyles(isDarkMode);
+  const { t } = useTranslation();
+  const splashStyle: ViewStyle = {
+    justifyContent: 'center',
+    alignItems: 'center',
+  };
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -33,12 +39,12 @@ export default function Splash() {
     return () => clearInterval(messageInterval);
   }, [fadeAnim]);
 
+
+  const currentKey = messages.splash[messageIndex];
+
   return (
     <Animated.View
-      style={[
-        styles.container,
-        { opacity: fadeAnim, justifyContent: 'center', alignItems: 'center' },
-      ]}
+      style={[styles.container, { opacity: fadeAnim }, splashStyle]}
     >
       <ImageBackground
         style={splashStyles(isDarkMode).imageBackground}
@@ -54,7 +60,7 @@ export default function Splash() {
           getThemedStyles(isDarkMode).boldText,
         ]}
       >
-        {messages.splash[messageIndex]}
+      {t(`messages.splash.${currentKey}`)}
       </Text>
     </Animated.View>
   );

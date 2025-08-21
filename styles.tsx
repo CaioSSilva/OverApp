@@ -32,6 +32,23 @@ export const getThemedStyles = (isDarkMode: boolean) => {
     boldText: {
       fontWeight: 'bold',
     },
+
+    button: {
+      backgroundColor: '#FA9C1E',
+      padding: 10,
+      borderRadius: 5,
+      alignItems: 'center',
+    },
+
+    disabledButton: {
+      backgroundColor: '#ccc',
+    },
+
+    buttonText: {
+      color: '#fff',
+      fontSize: 12,
+      fontWeight: 'bold',
+    },
   });
 };
 

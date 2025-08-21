@@ -3,11 +3,13 @@ import Home from '../screens/Home';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Stats from '../screens/Stats';
 import Matchs from '../screens/Matchs';
+import { useTranslation } from 'react-i18next';
 
 const TabNavigator = createBottomTabNavigator();
 
 export default function Routes() {
   const isDarkMode = useColorScheme() === 'dark';
+    const { t } = useTranslation();
 
   return (
     <TabNavigator.Navigator
@@ -23,7 +25,7 @@ export default function Routes() {
       }}
     >
       <TabNavigator.Screen
-        name="Heróis"
+        name={t('characters')}
         component={Home}
         options={{
           tabBarIcon: ({ size, color }) =>
@@ -34,7 +36,7 @@ export default function Routes() {
         }}
       />
       <TabNavigator.Screen
-        name="Estatísticas"
+        name={t('stats')}
         component={Stats}
         options={{
           tabBarIcon: ({ color, size }) =>
@@ -42,7 +44,7 @@ export default function Routes() {
         }}
       />
       <TabNavigator.Screen
-        name="Partidas"
+        name={t('matches')}
         component={Matchs}
         options={{
           tabBarIcon: ({ color, size }) => createImageIcon(require('../assets/rank_badge.png'), size, color),
