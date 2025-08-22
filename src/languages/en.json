@@ -8,6 +8,11 @@
   "update": "Update",
   "player": "Player",
   "updatedAt": "Updated at",
+  "selectCharacter": "Select a character",
+  "selectGamemode": "Select a gamemode",
+  "selectPlatform": "Select a platform",
+  "quickplay": "Quick Play",
+  "competitive": "Competitive",
   "messages": {
     "splash": {
       "widowmakerAim": "Adjusting Widowmaker's aim...",

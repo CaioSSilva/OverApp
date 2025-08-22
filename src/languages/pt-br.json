@@ -8,6 +8,11 @@
   "update": "Atualizar",
   "player": "Jogador",
   "updatedAt": "Atualizado em",
+  "selectCharacter": "Selecione um personagem",
+  "selectGamemode": "Selecione um modo de jogo",
+  "selectPlatform": "Selecione uma plataforma",
+  "quickplay": "Jogo Rápido",
+  "competitive": "Competitivo",
   "messages": {
     "splash": {
       "widowmakerAim": "Ajustando a mira da Widowmaker...",

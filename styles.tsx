@@ -35,7 +35,7 @@ export const getThemedStyles = (isDarkMode: boolean) => {
 
     button: {
       backgroundColor: '#FA9C1E',
-      padding: 10,
+      padding: 8,
       borderRadius: 5,
       alignItems: 'center',
     },
@@ -49,6 +49,14 @@ export const getThemedStyles = (isDarkMode: boolean) => {
       fontSize: 12,
       fontWeight: 'bold',
     },
+
+    title:{
+
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginVertical: 16,
+    marginHorizontal: 'auto'
+    }
   });
 };
 

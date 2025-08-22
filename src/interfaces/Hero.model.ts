@@ -1,4 +1,5 @@
 export interface Hero {
+  [x: string]: any;
   key: string;
   name: string;
   portrait: string;

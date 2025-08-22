@@ -1,16 +1,18 @@
-import { useColorScheme } from "react-native";
-import SkeletonPlaceholder from "react-native-skeleton-placeholder";
-import {Dimensions} from 'react-native';
-
+import { useColorScheme } from 'react-native';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import { Dimensions } from 'react-native';
 
 export default function HeroCardPlaceholder() {
   const isDarkMode = useColorScheme() === 'dark';
   const skeletonCards = Array.from({ length: 10 });
-  const opacity ={opacity: isDarkMode ? 0.8 : 0.6 }
-const windowWidth = Dimensions.get('window').width;
+  const opacity = { opacity: isDarkMode ? 0.8 : 0.6 };
+  const windowWidth = Dimensions.get('window').width;
 
   return (
-    <SkeletonPlaceholder backgroundColor={isDarkMode ? "#222222ff" : "#9f9e9cff"}>
+    <SkeletonPlaceholder
+      backgroundColor={isDarkMode ? '#222222ff' : '#9f9e9cff'}
+      highlightColor="#777"
+    >
       {skeletonCards.map((_, idx) => (
         <SkeletonPlaceholder.Item
           key={idx}

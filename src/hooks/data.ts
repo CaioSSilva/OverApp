@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Hero } from '../interfaces/Hero.model';
 import { OverwatchProfile } from '../interfaces/Summary.model';
+import { HeroStatsResponse } from '../interfaces/Status.model';
 
 const baseUrl = 'https://overfast-api.tekrop.fr';
 
@@ -18,11 +19,12 @@ const getStatusByHero = async (
   id: string,
   gamemode: string,
   heroId: string,
-): Promise<any> => {
+): Promise<HeroStatsResponse> => {
   const response = await axios.get(
-    `${baseUrl}/players/${id}/stats?gamemode=${gamemode}&hero=${heroId}`,
+    heroId
+      ? `${baseUrl}/players/${id}/stats?gamemode=${gamemode}&hero=${heroId}`
+      : `${baseUrl}/players/${id}/stats?gamemode=${gamemode}`,
   );
-  console.log( `${baseUrl}/players/${id}/stats?gamemode=${gamemode}&hero=${heroId}`);
   return response.data;
 };
 
