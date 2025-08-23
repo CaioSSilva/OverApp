@@ -43,14 +43,12 @@ export default function Characters() {
     const platforms = ['pc', 'console'] as const;
     const modes = ['quickplay', 'competitive'] as const;
     
-    // Collect all time played values from all platforms/modes
     const allTimeValues = platforms.flatMap(platform =>
       modes.flatMap(mode =>
         stats[platform]?.[mode]?.heroes_comparisons?.time_played?.values || []
       )
     );
 
-    // Group by hero and sum times
     const heroTimeMap = new Map<string, {
       totalTime: number;
       pcTime: number;
@@ -117,9 +115,14 @@ export default function Characters() {
   return (
     <View style={getThemedStyles(isDarkMode).container}>
       <View style={homeStyles.heroTitleContainer}>
-        <Text style={[getThemedStyles(isDarkMode).text, homeStyles.heroTitle]}>
-          {t('characters')}
-        </Text>
+        <View>
+          <Text style={[getThemedStyles(isDarkMode).text, homeStyles.heroTitle]}>
+            {t('characters')}
+          </Text>
+          <Text style={[getThemedStyles(isDarkMode).text, homeStyles.heroSubtitle]}>
+            {t('gameTimeAll')}
+          </Text>
+        </View>
 
         <Button onPress={() => updateHeroes()} title={t('update')} />
       </View>
@@ -156,7 +159,14 @@ const homeStyles = StyleSheet.create({
 
   heroTitle: {
     fontSize: 24,
+    textAlign: 'left',
     fontWeight: 'bold',
-    marginVertical: 16,
+    marginTop: 16,
+  },
+
+  heroSubtitle: {
+    fontSize: 14,
+    textAlign: 'left',
+    marginBottom: 16
   },
 });

@@ -53,8 +53,9 @@ export default function HeroCard({
 
   const showTimePlayed = () => {
     if (!time) return undefined;
-    const hours = Math.floor(time.totalTime / 60);
-    const minutes = time.totalTime % 60;
+    const hours = Math.floor(time.totalTime / 3600);
+    const minutes = Math.floor((time.totalTime % 3600) / 60);
+    if (hours === 0 && minutes === 0) return undefined;
     return `${hours}h ${minutes}m`;
   };
 
@@ -80,7 +81,7 @@ export default function HeroCard({
               top: 0,
               left: 0,
               width: calcFillWidth(),
-              height: 84.7,
+              height: '170%',
               borderRadius: 12,
             } as ViewStyle
           }
@@ -171,6 +172,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 12,
+    overflow: 'hidden',
     borderLeftWidth: 6,
     elevation: 2,
     shadowColor: '#000',
