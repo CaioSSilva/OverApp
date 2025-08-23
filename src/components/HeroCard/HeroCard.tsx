@@ -8,18 +8,57 @@ import Button from '../Button/Button';
 import { RefObject, useRef } from 'react';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
 import ActionSheetHeroStats from '../ActionSheetHeroStats';
+import LinearGradient from 'react-native-linear-gradient';
+import { ViewStyle } from 'react-native';
 
 const getCardBg = (isDarkMode: boolean) =>
   isDarkMode ? styles.cardDark : styles.cardLight;
 const getTextColor = (isDarkMode: boolean) =>
   isDarkMode ? styles.textDark : styles.textLight;
 
-const getSheetStyles = (isDarkMode : boolean) => isDarkMode ? styles.actionSheetContainerBlack : styles.actionSheetContainerwhite
+const getSheetStyles = (isDarkMode: boolean) =>
+  isDarkMode
+    ? styles.actionSheetContainerBlack
+    : styles.actionSheetContainerwhite;
 
-export default function HeroCard({ hero, status }: HeroCardProps) {
+export default function HeroCard({
+  hero,
+  status,
+  time,
+  maxSize,
+}: HeroCardProps) {
   const isDarkMode = useColorScheme() === 'dark';
   const { t } = useTranslation();
   const detailSheet = useRef<ActionSheetRef>(null);
+
+  const calcFillWidth = () => {
+    if (!time || !maxSize) return '0%';
+    const width = (time.totalTime / maxSize) * 100;
+    return `${width}%`;
+  };
+
+  const calcFillOpacity = () => {
+    if (!time || !maxSize) return 0;
+    const opacity = (time.totalTime / maxSize) * 100;
+    return opacity < 5 ? 0 : 1;
+  };
+
+  const calcFilterColors = () => {
+    if (!time || !maxSize) return ['#353535', '#353535'];
+    const opacity = (time.totalTime / maxSize) * 100;
+    return opacity < 1
+      ? ['#353535', '#353535']
+      : [roleColors[hero.role], isDarkMode ? '#353535' : '#F7FAFC'];
+  };
+
+  const showTimePlayed = () => {
+    if (!time) return undefined;
+    const hours = Math.floor(time.totalTime / 60);
+    const minutes = time.totalTime % 60;
+    return `${hours}h ${minutes}m`;
+  };
+
+  console.log('maxSize', calcFillWidth());
 
   return (
     <>
@@ -30,6 +69,22 @@ export default function HeroCard({ hero, status }: HeroCardProps) {
           { borderLeftColor: roleColors[hero.role] },
         ]}
       >
+        <LinearGradient
+          colors={calcFilterColors()}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={
+            {
+              opacity: calcFillOpacity(),
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: calcFillWidth(),
+              height: 84.7,
+              borderRadius: 12,
+            } as ViewStyle
+          }
+        />
         <Image
           source={{ uri: hero.portrait }}
           style={styles.image}
@@ -69,13 +124,30 @@ export default function HeroCard({ hero, status }: HeroCardProps) {
                   </View>
                 </>
               ))}
+            {showTimePlayed() && (
+              <View style={styles.timeContainer}>
+                <Text
+                  style={[
+                    getThemedStyles(isDarkMode).text,
+                    getThemedStyles(isDarkMode).title,
+                    styles.timeText,
+                  ]}
+                >
+                  {showTimePlayed()}
+                </Text>
+              </View>
+            )}
           </View>
         </View>
       </View>
-      <ActionSheet containerStyle={
-          getSheetStyles(isDarkMode)} ref={detailSheet} gestureEnabled={false} headerAlwaysVisible>
-        <ActionSheetHeroStats 
-          statsData={findCardStatus(status!, hero.key)!} 
+      <ActionSheet
+        containerStyle={getSheetStyles(isDarkMode)}
+        ref={detailSheet}
+        gestureEnabled={false}
+        headerAlwaysVisible
+      >
+        <ActionSheetHeroStats
+          statsData={findCardStatus(status!, hero.key)!}
           heroName={hero.name}
           isDarkMode={isDarkMode}
         />
@@ -84,7 +156,7 @@ export default function HeroCard({ hero, status }: HeroCardProps) {
   );
 }
 const findCardStatus = (status: HeroStatsResponse, heroName: string) => {
-  return status ?  status[heroName] || undefined : undefined;
+  return status ? status[heroName] || undefined : undefined;
 };
 
 const openHeroStatus = (ref: RefObject<ActionSheetRef | null>) => {
@@ -169,13 +241,19 @@ const styles = StyleSheet.create({
   },
   actionSheetContainerBlack: {
     height: 400,
-    display:'flex',
+    display: 'flex',
     backgroundColor: '#2d2d2d',
   },
 
-  actionSheetContainerwhite:{
+  actionSheetContainerwhite: {
     height: 400,
     display: 'flex',
-    backgroundColor: '#e2e2e2'
-  }
+    backgroundColor: '#e2e2e2',
+  },
+  timeText: {
+    fontSize: 20,
+  },
+  timeContainer: {
+    alignItems: 'flex-end',
+  },
 });

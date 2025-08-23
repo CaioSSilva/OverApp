@@ -1,9 +1,11 @@
 import { Image, useColorScheme } from 'react-native';
-import Home from '../screens/Home';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Stats from '../screens/Stats';
 import Matchs from '../screens/Matchs';
 import { useTranslation } from 'react-i18next';
+import Maps from '../screens/Maps';
+import { MapPin } from 'lucide-react-native';
+import Characters from '../screens/Characters';
 
 const TabNavigator = createBottomTabNavigator();
 
@@ -25,8 +27,16 @@ export default function Routes() {
       }}
     >
       <TabNavigator.Screen
+        name={t('stats')}
+        component={Stats}
+        options={{
+          tabBarIcon: ({ color, size }) =>
+            createImageIcon(require('../assets/comp_points.png'), size, color),
+        }}
+      />
+      <TabNavigator.Screen
         name={t('characters')}
-        component={Home}
+        component={Characters}
         options={{
           tabBarIcon: ({ size, color }) =>
             createImageIcon( require('../assets/logo.png'),
@@ -36,11 +46,11 @@ export default function Routes() {
         }}
       />
       <TabNavigator.Screen
-        name={t('stats')}
-        component={Stats}
+        name={t('maps')}
+        component={Maps}
         options={{
-          tabBarIcon: ({ color, size }) =>
-            createImageIcon(require('../assets/comp_points.png'), size, color),
+          tabBarIcon: ({ size, color }) =>
+            createMapsIcon(size, color),
         }}
       />
       <TabNavigator.Screen
@@ -52,6 +62,10 @@ export default function Routes() {
       />
     </TabNavigator.Navigator>
   );
+}
+
+const createMapsIcon = (size: number, color: string) => {
+  return <MapPin strokeWidth={2.5} size={size} color={color} />;
 }
 
 const createImageIcon = (source: any, size: number, color: string) => {

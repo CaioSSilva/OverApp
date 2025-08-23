@@ -64,7 +64,6 @@ export default function HeroStatsSection({
   const getStatus = useCallback(
     () =>
       dataService().getStatusByHero(
-        'Kento-12528',
         valuePlatDrop,
         valueCharDrop!,
       ),
@@ -91,6 +90,7 @@ export default function HeroStatsSection({
           items={itemsCharDrop}
           setOpen={() => {
             setOpenCharDrop(true);
+            setOpenPlatDrop(false);
             setScroll(false);
           }}
            onClose={() => {
@@ -115,6 +115,7 @@ export default function HeroStatsSection({
           items={itemsPlatDrop}
           setOpen={() => {
             setOpenPlatDrop(true);
+            setOpenCharDrop(false);
             setScroll(false);
           }}
           onClose={() => {

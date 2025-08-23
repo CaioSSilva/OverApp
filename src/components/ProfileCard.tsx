@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Image,
   Text,
@@ -11,6 +11,15 @@ import { OverwatchProfile } from '../interfaces/Summary.model';
 import { SvgUri } from 'react-native-svg';
 import { useTranslation } from 'react-i18next';
 import { locale } from '../../i18n';
+import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
+import { getThemedStyles } from '../../styles';
+import Button from './Button/Button';
+import { dataService } from '../hooks/data';
+
+const getSheetStyles = (isDarkMode: boolean) =>
+  isDarkMode
+    ? styles.actionSheetContainerBlack
+    : styles.actionSheetContainerwhite;
 
 const endorsementColors = [
   '#A0A0A0',
@@ -31,10 +40,12 @@ export default function ProfileCard({
   profile: OverwatchProfile;
 }) {
   const isDarkMode = useColorScheme() === 'dark';
+  const { logOut } = dataService();
   const { t } = useTranslation();
   const endorsementColor =
     endorsementColors[profile.endorsement.level] || endorsementColors[0];
   const [currentDateTime, setCurrentDateTime] = useState<string>('');
+  const detailSheet = useRef<ActionSheetRef>(null);
 
   useEffect(() => {
     const now = new Date();
@@ -49,43 +60,69 @@ export default function ProfileCard({
   }, []);
 
   return (
-    <View style={[styles.card, getCardBg(isDarkMode)]}>
-      <ImageBackground
-        source={{ uri: profile.namecard }}
-        style={styles.bgImage}
-        imageStyle={styles.bgImageStyle}
-        resizeMode="cover"
+    <>
+      <View
+        style={[styles.card, getCardBg(isDarkMode)]}
+        onTouchStart={() => detailSheet.current?.show()}
       >
-        <View style={styles.rowContent}>
-          <View style={styles.avatarBox}>
-            <Image source={{ uri: profile.avatar }} style={styles.avatar} />
-          </View>
-          <View style={styles.infoBox}>
-            <Text style={[styles.username]}>{profile.username}</Text>
-            {profile.title && (
-              <Text style={[styles.title, getTextColor(isDarkMode)]}>
-                {profile.title}
-              </Text>
-            )}
-            <View
-              style={[
-                styles.endorsementBox,
-                { backgroundColor: endorsementColor },
-              ]}
-            >
-              <SvgUri width={24} height={24} uri={profile.endorsement.frame} />
-
-              <Text style={styles.endorsementText}>
-                Nível {profile.endorsement.level}
+        <ImageBackground
+          source={{ uri: profile.namecard }}
+          style={styles.bgImage}
+          imageStyle={styles.bgImageStyle}
+          resizeMode="cover"
+        >
+          <View style={styles.rowContent}>
+            <View style={styles.avatarBox}>
+              <Image source={{ uri: profile.avatar }} style={styles.avatar} />
+            </View>
+            <View style={styles.infoBox}>
+              <Text style={[styles.username]}>{profile.username}</Text>
+              {profile.title && (
+                <Text style={[styles.title, getTextColor(isDarkMode)]}>
+                  {profile.title}
+                </Text>
+              )}
+              <View
+                style={[
+                  styles.endorsementBox,
+                  { backgroundColor: endorsementColor },
+                ]}
+              >
+                <SvgUri
+                  width={24}
+                  height={24}
+                  uri={profile.endorsement.frame}
+                />
+                <Text style={styles.endorsementText}>
+                 {t('level')} {profile.endorsement.level}
+                </Text>
+              </View>
+              <Text style={[styles.updated, getTextColor(isDarkMode)]}>
+                {t('updatedAt')}: {currentDateTime}
               </Text>
             </View>
-            <Text style={[styles.updated, getTextColor(isDarkMode)]}>
-              {t('updatedAt')}: {currentDateTime}
-            </Text>
           </View>
-        </View>
-      </ImageBackground>
-    </View>
+        </ImageBackground>
+      </View>
+      <ActionSheet
+        containerStyle={getSheetStyles(isDarkMode)}
+        ref={detailSheet}
+        gestureEnabled={false}
+        headerAlwaysVisible
+      ><View style={styles.exitContainer}>
+        
+          <Text
+            style={[
+              getThemedStyles(isDarkMode).text,
+              getThemedStyles(isDarkMode).title,
+            ]}
+          >
+            {t('perfil')}
+          </Text>
+          <Button title={t('exit')} onPress={() => logOut()} />
+      </View>
+      </ActionSheet>
+    </>
   );
 }
 
@@ -178,4 +215,17 @@ const styles = StyleSheet.create({
   textDark: {
     color: '#fff',
   },
+
+  actionSheetContainerBlack: {
+    height: 160,
+    display: 'flex',
+    backgroundColor: '#2d2d2d',
+  },
+
+  actionSheetContainerwhite: {
+    height: 160,
+    display: 'flex',
+    backgroundColor: '#e2e2e2',
+  },
+  exitContainer: { width:'25%', margin : 'auto'}
 });

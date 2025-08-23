@@ -22,7 +22,7 @@ export default function Stats() {
   const { t } = useTranslation();
 
   const fetchProfile = useCallback(
-    () => getProfileById('Kento-12528'),
+    () => getProfileById(),
     [getProfileById],
   );
 
