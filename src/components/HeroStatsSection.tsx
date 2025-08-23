@@ -6,6 +6,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { Hero } from '../interfaces/Hero.model';
 import { dataService } from '../hooks/data';
 import { HeroStatsResponse } from '../interfaces/Status.model';
+import HeroCard from './HeroCard/HeroCard';
+import HeroCardPlaceholder from './HeroCard/PlaceHolder';
 
 export default function HeroStatsSection() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -21,19 +23,23 @@ export default function HeroStatsSection() {
   }, [getHeroList]);
 
   useEffect(() => {
-    setItemsCharDrop(
-      heroes.map(hero => ({
+    setItemsCharDrop([
+      {
+        label: t('allCharacters'),
+        value: '',
+      },
+      ...heroes.map(hero => ({
         label: hero.name,
         value: hero.key,
       })),
-    );
-  }, [heroes]);
+    ]);
+  }, [heroes, t]);
 
   const [openCharDrop, setOpenCharDrop] = useState(false);
-  const [valueCharDrop, setValueCharDrop] = useState<string | null>(null);
   const [itemsCharDrop, setItemsCharDrop] = useState<
     { label: string; value: string }[]
   >([]);
+  const [valueCharDrop, setValueCharDrop] = useState<string | null>('');
 
   const platformItems = [
     { label: t('quickplay'), value: 'quickplay' },
@@ -81,6 +87,7 @@ export default function HeroStatsSection() {
             getStatus().then(setStatus);
           }}
           placeholder={t('selectCharacter')}
+          disabled={valueCharDrop === null}
           style={sectionStyles.charactersDropDownSel}
           dropDownContainerStyle={sectionStyles.charactersDropDown}
         />
@@ -102,7 +109,17 @@ export default function HeroStatsSection() {
           ]}
         />
       </View>
-      {status && <Text>slksl</Text>}
+      {status ? (
+        valueCharDrop ? (
+          <HeroCard hero={heroes.find(c => c.key === valueCharDrop)!} status={status} />
+        ) : (
+          heroes.map((hero, i) => (
+            <HeroCard key={i} hero={hero} status={status} />
+          ))
+        )
+      ) : (
+        <HeroCardPlaceholder numberOfCards={valueCharDrop ? 1 : 10} />
+      )}
     </>
   );
 }

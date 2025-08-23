@@ -21,7 +21,7 @@ const getStatusByHero = async (
   heroId: string,
 ): Promise<HeroStatsResponse> => {
   const response = await axios.get(
-    heroId
+    heroId !== ''
       ? `${baseUrl}/players/${id}/stats?gamemode=${gamemode}&hero=${heroId}`
       : `${baseUrl}/players/${id}/stats?gamemode=${gamemode}`,
   );

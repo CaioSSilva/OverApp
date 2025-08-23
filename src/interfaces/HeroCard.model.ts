@@ -1,7 +1,9 @@
 import { Hero, Role } from "./Hero.model";
+import { HeroStatsResponse } from "./Status.model";
 
 export type HeroCardProps = {
   hero: Hero;
+  status?: HeroStatsResponse;
 };
 
 export const roleColors: Record<Role, string> = {

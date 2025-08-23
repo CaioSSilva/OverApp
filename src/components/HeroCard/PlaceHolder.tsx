@@ -2,9 +2,13 @@ import { useColorScheme } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import { Dimensions } from 'react-native';
 
-export default function HeroCardPlaceholder() {
+type HeroCardPlaceholderProps = {
+  numberOfCards: number;
+};
+
+export default function HeroCardPlaceholder({ numberOfCards }: HeroCardPlaceholderProps) {
   const isDarkMode = useColorScheme() === 'dark';
-  const skeletonCards = Array.from({ length: 10 });
+  const skeletonCards = Array.from({ length: numberOfCards });
   const opacity = { opacity: isDarkMode ? 0.8 : 0.6 };
   const windowWidth = Dimensions.get('window').width;
 

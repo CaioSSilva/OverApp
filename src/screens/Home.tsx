@@ -44,7 +44,7 @@ export default function Home() {
           windowSize={5}
         />
       ) : (
-        <HeroCardPlaceholder />
+        <HeroCardPlaceholder numberOfCards={10} />
       )}
     </View>
   );
