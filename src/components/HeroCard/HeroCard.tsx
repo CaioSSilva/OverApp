@@ -73,7 +73,7 @@ export default function HeroCard({ hero, status }: HeroCardProps) {
         </View>
       </View>
       <ActionSheet containerStyle={
-          getSheetStyles(isDarkMode)} ref={detailSheet} gestureEnabled enableGesturesInScrollView>
+          getSheetStyles(isDarkMode)} ref={detailSheet} gestureEnabled={false} headerAlwaysVisible>
         <ActionSheetHeroStats 
           statsData={findCardStatus(status!, hero.key)!} 
           heroName={hero.name}

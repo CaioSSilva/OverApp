@@ -17,6 +17,7 @@ export default function Stats() {
   const isDarkMode = useColorScheme() === 'dark';
   const { width: windowWidth } = useWindowDimensions();
   const [profile, setProfile] = useState<OverwatchProfile | null>(null);
+  const [scroll, setScroll] = useState<boolean>(true);
   const { getProfileById } = dataService();
   const { t } = useTranslation();
 
@@ -30,7 +31,7 @@ export default function Stats() {
   }, [fetchProfile]);
 
   return (
-    <ScrollView style={getThemedStyles(isDarkMode).container}>
+    <ScrollView scrollEnabled={scroll} style={getThemedStyles(isDarkMode).container}>
       <Text style={[getThemedStyles(isDarkMode).text, getThemedStyles(isDarkMode).title]}>
         {t('player')}
       </Text>
@@ -56,7 +57,7 @@ export default function Stats() {
           </SkeletonPlaceholder.Item>
         </SkeletonPlaceholder>
       )}
-      <HeroStatsSection />
+      <HeroStatsSection setScrollEnabled={setScroll} />
     </ScrollView>
   );
 }

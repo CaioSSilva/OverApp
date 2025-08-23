@@ -9,7 +9,13 @@ import { HeroStatsResponse } from '../interfaces/Status.model';
 import HeroCard from './HeroCard/HeroCard';
 import HeroCardPlaceholder from './HeroCard/PlaceHolder';
 
-export default function HeroStatsSection() {
+interface StatsSectionProps {
+  setScrollEnabled: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function HeroStatsSection({
+  setScrollEnabled,
+}: StatsSectionProps) {
   const isDarkMode = useColorScheme() === 'dark';
   const styles = getThemedStyles(isDarkMode);
   const { t } = useTranslation();
@@ -17,6 +23,10 @@ export default function HeroStatsSection() {
   const [status, setStatus] = useState<HeroStatsResponse | null>(null);
 
   const getHeroList = useCallback(() => dataService().getHeroes(), []);
+
+  const setScroll = (value: boolean) => {
+    setScrollEnabled(value);
+  };
 
   useEffect(() => {
     getHeroList().then(setHeroes);
@@ -79,7 +89,14 @@ export default function HeroStatsSection() {
           open={openCharDrop}
           value={valueCharDrop}
           items={itemsCharDrop}
-          setOpen={setOpenCharDrop}
+          setOpen={() => {
+            setOpenCharDrop(true);
+            setScroll(false);
+          }}
+           onClose={() => {
+            setOpenCharDrop(false);
+            setScroll(true);
+          }}
           setValue={setValueCharDrop}
           setItems={setItemsCharDrop}
           loading={heroes.length === 0}
@@ -90,12 +107,20 @@ export default function HeroStatsSection() {
           disabled={valueCharDrop === null}
           style={sectionStyles.charactersDropDownSel}
           dropDownContainerStyle={sectionStyles.charactersDropDown}
+          scrollViewProps={{ nestedScrollEnabled: true }}
         />
         <DropDownPicker
           open={openPlatDrop}
           value={valuePlatDrop}
           items={itemsPlatDrop}
-          setOpen={setOpenPlatDrop}
+          setOpen={() => {
+            setOpenPlatDrop(true);
+            setScroll(false);
+          }}
+          onClose={() => {
+            setOpenPlatDrop(false);
+            setScroll(true);
+          }}
           setValue={setValuePlatDrop}
           setItems={setItemsPlatDrop}
           onChangeValue={() => {
@@ -111,7 +136,10 @@ export default function HeroStatsSection() {
       </View>
       {status ? (
         valueCharDrop ? (
-          <HeroCard hero={heroes.find(c => c.key === valueCharDrop)!} status={status} />
+          <HeroCard
+            hero={heroes.find(c => c.key === valueCharDrop)!}
+            status={status}
+          />
         ) : (
           heroes.map((hero, i) => (
             <HeroCard key={i} hero={hero} status={status} />
