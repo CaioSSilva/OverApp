@@ -16,6 +16,7 @@ export const Abilities = React.memo(({ abilities, isDarkMode }: AbilitiesProps) 
   const [hiddenOverlays, setHiddenOverlays] = useState<Set<number>>(new Set());
   const [videoDurations, setVideoDurations] = useState<Map<number, number>>(new Map());
   const [overlayTimers, setOverlayTimers] = useState<Map<number, ReturnType<typeof setTimeout>>>(new Map());
+  const [overlayHeights, setOverlayHeights] = useState<Map<number, number>>(new Map());
 
   const handleCardPress = useCallback((index: number) => {
     const existingTimer = overlayTimers.get(index);
@@ -44,6 +45,29 @@ export const Abilities = React.memo(({ abilities, isDarkMode }: AbilitiesProps) 
     setVideoDurations(prev => new Map(prev).set(index, data.duration));
   }, []);
 
+  const handleOverlayLayout = useCallback((index: number, event: any) => {
+    const { height } = event.nativeEvent.layout;
+    setOverlayHeights(prev => {
+      const newMap = new Map(prev);
+      newMap.set(index, height);
+      return newMap;
+    });
+  }, []);
+
+  const calculateGradientHeight = useCallback((ability: Ability, index: number) => {
+    const measuredHeight = overlayHeights.get(index);
+    
+    if (measuredHeight) {
+      return Math.min(measuredHeight + 10, 180);
+    }
+    
+    const words = ability.description.split(' ').length;
+    const estimatedLines = Math.max(1, Math.ceil(words / 8));
+    const totalHeight = 32 + SPACING.SM + (estimatedLines * 20) + (SPACING.MD * 2);
+    
+    return Math.min(totalHeight + 10, 180);
+  }, [overlayHeights]);
+
   useEffect(() => {
     return () => overlayTimers.forEach(clearTimeout);
   }, [overlayTimers]);
@@ -55,6 +79,7 @@ export const Abilities = React.memo(({ abilities, isDarkMode }: AbilitiesProps) 
       </Text>
       {abilities.map((ability, index) => {
         const isOverlayVisible = !hiddenOverlays.has(index);
+        const gradientHeight = calculateGradientHeight(ability, index);
         
         return (
           <TouchableOpacity 
@@ -75,8 +100,11 @@ export const Abilities = React.memo(({ abilities, isDarkMode }: AbilitiesProps) 
             {isOverlayVisible && (
               <>
                 <View style={styles.abilityGradientTop} />
-                <View style={styles.abilityGradientBottom} />
-                <View style={styles.abilityOverlay}>
+                <View style={[styles.abilityGradientBottom, { height: gradientHeight }]} />
+                <View 
+                  style={styles.abilityOverlay}
+                  onLayout={(event) => handleOverlayLayout(index, event)}
+                >
                   <View style={styles.abilityHeader}>
                     <Image source={{ uri: ability.icon }} style={styles.abilityIconSmall} />
                     <Text style={[themedStyles.text, styles.abilityName, styles.abilityTextWhite]}>
@@ -114,17 +142,9 @@ const styles = StyleSheet.create({
     position: 'relative',
     elevation: 3,
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-  },
-  abilityThumbnail: {
-    width: '100%',
-    height: 180,
-    resizeMode: 'cover',
   },
   abilityVideo: {
     width: '100%',
@@ -132,11 +152,9 @@ const styles = StyleSheet.create({
   },
   abilityOverlay: {
     position: 'absolute',
-    top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    justifyContent: 'flex-end',
     padding: SPACING.MD,
   },
   abilityGradientTop: {
@@ -144,15 +162,14 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: '20%',
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    height: '35%',
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
   },
   abilityGradientBottom: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    height: '60%',
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
   },
   abilityIconSmall: {
@@ -164,9 +181,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: SPACING.SM,
-  },
-  abilityInfo: {
-    flex: 1,
   },
   abilityName: {
     fontSize: TYPOGRAPHY.SIZES.LG,

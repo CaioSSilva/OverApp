@@ -121,6 +121,7 @@ function Stack() {
         name="HeroDetails"
         options={{
           headerShown: false,
+          animation: 'none'
         }}
         component={HeroDetailsWrapper}
       />
