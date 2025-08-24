@@ -127,16 +127,16 @@ export default function Characters() {
           <Text
             style={[getThemedStyles(isDarkMode).text, homeStyles.heroTitle]}
           >
-            {t('characters')}
+            {t('characters.title')}
           </Text>
           <Text
             style={[getThemedStyles(isDarkMode).text, homeStyles.heroSubtitle]}
           >
-            {t('gameTimeAll')}
+            {t('stats.gameTimeAll')}
           </Text>
         </View>
 
-        <Button onPress={() => updateHeroes()} title={t('update')} />
+        <Button onPress={() => updateHeroes()} title={t('common.update')} />
       </View>
       {calcHeroTimes().sortedHeroes.length > 0 ? (
         <FlatList

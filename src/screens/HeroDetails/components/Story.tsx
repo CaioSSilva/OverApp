@@ -20,7 +20,7 @@ export function Story({ story, isDarkMode }: StoryProps) {
   return (
     <View style={[themedStyles.card, styles.section]}>
       <Text style={[themedStyles.title, themedStyles.text, styles.sectionTitle]}>
-        {t('story')}
+        {t('heroDetails.story')}
       </Text>
       
       <Text style={[themedStyles.text, styles.storySummary]}>{story.summary}</Text>
@@ -30,7 +30,7 @@ export function Story({ story, isDarkMode }: StoryProps) {
         onPress={() => handleMediaPress(story.media.link)}
       >
         <Text style={styles.mediaButtonText}>
-          {story.media.type === 'video' ? t('watchVideo') : t('readStory')}
+          {story.media.type === 'video' ? t('heroDetails.watchVideo') : t('heroDetails.readStory')}
         </Text>
       </TouchableOpacity>
 

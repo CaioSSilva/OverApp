@@ -119,18 +119,18 @@ const openHeroDetails = () => {
                 },
               ]}
             >
-              <Text style={styles.roleText}>{t(hero.role).toUpperCase()}</Text>
+              <Text style={styles.roleText}>{t(`characters.${hero.role}`).toUpperCase()}</Text>
             </View>
           </View>
           <View style={styles.statsContainer}>
             {status &&
               (findCardStatus(status, hero.key) ? (
-                <Button title={t('details')} onPress={() => openHeroStatus()} />
+                <Button title={t('common.details')} onPress={() => openHeroStatus()} />
               ) : (
                 <>
                   <View style={styles.noStatsContainer}>
                     <Text style={getThemedStyles(isDarkMode).text}>
-                      {t('noData')}
+                      {t('common.noData')}
                     </Text>
                     <Info color={'#fff'} style={styles.info} size={20} />
                   </View>

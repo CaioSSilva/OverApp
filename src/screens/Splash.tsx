@@ -59,7 +59,7 @@ export default function Splash() {
           getThemedStyles(isDarkMode).boldText,
         ]}
       >
-        {t(`messages.splash.${currentKey}`)}
+        {t(`splash.messages.${currentKey}`)}
       </Text>
     </Animated.View>
   );

@@ -16,12 +16,12 @@ export function HitPoints({ heroDetails, isDarkMode }: HitPointsProps) {
   return (
     <View style={[themedStyles.card, styles.section]}>
       <Text style={[themedStyles.title, themedStyles.text, styles.sectionTitle]}>
-        {t('hitpoints')}
+        {t('heroDetails.hitpoints')}
       </Text>
       <View style={styles.hitpointsContainer}>
         {heroDetails.hitpoints.health > 0 && (
           <View style={styles.hitpointItemEnhanced}>
-            <Text style={[themedStyles.text, styles.hitpointLabel]}>{t('health')}</Text>
+            <Text style={[themedStyles.text, styles.hitpointLabel]}>{t('heroDetails.health')}</Text>
             <View style={styles.hitpointBarContainer}>
               <View style={styles.hitpointBar}>
                 <View style={[styles.hitpointFill, styles.healthFill, { 
@@ -36,7 +36,7 @@ export function HitPoints({ heroDetails, isDarkMode }: HitPointsProps) {
         )}
         {heroDetails.hitpoints.armor > 0 && (
           <View style={styles.hitpointItemEnhanced}>
-            <Text style={[themedStyles.text, styles.hitpointLabel]}>{t('armor')}</Text>
+            <Text style={[themedStyles.text, styles.hitpointLabel]}>{t('heroDetails.armor')}</Text>
             <View style={styles.hitpointBarContainer}>
               <View style={styles.hitpointBar}>
                 <View style={[styles.hitpointFill, styles.armorFill, { 
@@ -51,7 +51,7 @@ export function HitPoints({ heroDetails, isDarkMode }: HitPointsProps) {
         )}
         {heroDetails.hitpoints.shields > 0 && (
           <View style={styles.hitpointItemEnhanced}>
-            <Text style={[themedStyles.text, styles.hitpointLabel]}>{t('shields')}</Text>
+            <Text style={[themedStyles.text, styles.hitpointLabel]}>{t('heroDetails.shields')}</Text>
             <View style={styles.hitpointBarContainer}>
               <View style={styles.hitpointBar}>
                 <View style={[styles.hitpointFill, styles.shieldsFill, { 
@@ -65,7 +65,7 @@ export function HitPoints({ heroDetails, isDarkMode }: HitPointsProps) {
           </View>
         )}
         <View style={styles.hitpointItemEnhanced}>
-          <Text style={[themedStyles.text, styles.hitpointLabel]}>{t('total')}</Text>
+          <Text style={[themedStyles.text, styles.hitpointLabel]}>{t('common.total')}</Text>
           <View style={styles.hitpointBarContainer}>
             <View style={styles.hitpointBar}>
               <View style={[styles.hitpointFill, styles.totalFill]} />

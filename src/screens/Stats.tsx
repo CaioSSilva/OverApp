@@ -38,7 +38,7 @@ export default function Stats() {
           getThemedStyles(isDarkMode).title,
         ]}
       >
-        {t('player')}
+        {t('common.player')}
       </Text>
       {profile ? (
         <ProfileCard profile={profile} />

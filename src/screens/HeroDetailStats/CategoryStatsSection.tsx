@@ -62,14 +62,14 @@ const CategoryStatsSection = React.memo<CategoryStatsSectionProps>(
           if (statsToShow.length === 0) return null;
 
           const getSectionTitle = () => {
-            if (category.label === 'Hero Specific') return t('specialSkills');
-            if (category.label === 'Best') return t('bestPerformances');
-            if (category.label === 'Average') return t('averages');
+            if (category.label === 'Hero Specific') return t('stats.specialSkills');
+            if (category.label === 'Best') return t('stats.bestPerformances');
+            if (category.label === 'Average') return t('stats.averages');
 
             const categoryKey = category.category?.toLowerCase();
-            if (categoryKey === 'game') return t('game');
-            if (categoryKey === 'combat') return t('combat');
-            if (categoryKey === 'assists') return t('assists');
+            if (categoryKey === 'game') return t('stats.game');
+            if (categoryKey === 'combat') return t('stats.combat');
+            if (categoryKey === 'assists') return t('stats.assists');
 
             return category.label || category.category;
           };

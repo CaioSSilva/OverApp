@@ -49,7 +49,7 @@ const SessionSummarySection = React.memo<SessionSummarySectionProps>(
         <Text style={titleStyle}>{sectionTitle}</Text>
         <View style={cardStyle}>
           <View style={styles.summaryItem}>
-            <Text style={labelStyle}>{t('winRate')}</Text>
+            <Text style={labelStyle}>{t('stats.winRate')}</Text>
             <Text
               style={[styles.summaryValue, { color: summaryData.winRateColor }]}
             >
@@ -57,7 +57,7 @@ const SessionSummarySection = React.memo<SessionSummarySectionProps>(
             </Text>
           </View>
           <View style={styles.summaryItem}>
-            <Text style={labelStyle}>{t('kdRatio')}</Text>
+            <Text style={labelStyle}>{t('stats.kdRatio')}</Text>
             <Text
               style={[styles.summaryValue, { color: summaryData.kdRatioColor }]}
             >
@@ -65,7 +65,7 @@ const SessionSummarySection = React.memo<SessionSummarySectionProps>(
             </Text>
           </View>
           <View style={styles.summaryItem}>
-            <Text style={labelStyle}>{t('games')}</Text>
+            <Text style={labelStyle}>{t('stats.games')}</Text>
             <Text
               style={[styles.summaryValue, { color: themeColors.sectionTitle }]}
             >

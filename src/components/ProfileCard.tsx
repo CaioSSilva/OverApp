@@ -94,11 +94,11 @@ export default function ProfileCard({
                   uri={profile.endorsement.frame}
                 />
                 <Text style={styles.endorsementText}>
-                  {t('level')} {profile.endorsement.level}
+                  {t('common.level')} {profile.endorsement.level}
                 </Text>
               </View>
               <Text style={[styles.updated, getTextColor(isDarkMode)]}>
-                {t('updatedAt')}: {currentDateTime}
+                {t('common.updatedAt')}: {currentDateTime}
               </Text>
             </View>
           </View>
@@ -117,9 +117,9 @@ export default function ProfileCard({
               getThemedStyles(isDarkMode).title,
             ]}
           >
-            {t('perfil')}
+            {t('heroDetails.perfil')}
           </Text>
-          <Button title={t('exit')} onPress={() => logOut()} />
+          <Button title={t('common.exit')} onPress={() => logOut()} />
         </View>
       </ActionSheet>
     </>

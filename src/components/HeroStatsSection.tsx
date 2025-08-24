@@ -35,7 +35,7 @@ export default function HeroStatsSection({
   useEffect(() => {
     setItemsCharDrop([
       {
-        label: t('allCharacters'),
+        label: t('characters.allCharacters'),
         value: '',
       },
       ...heroes.map(hero => ({
@@ -52,8 +52,8 @@ export default function HeroStatsSection({
   const [valueCharDrop, setValueCharDrop] = useState<string | null>('');
 
   const gamemodeItems = [
-    { label: t('quickplay'), value: 'quickplay' },
-    { label: t('competitive'), value: 'competitive' },
+    { label: t('stats.quickplay'), value: 'quickplay' },
+    { label: t('stats.competitive'), value: 'competitive' },
   ];
 
   const [openModeDrop, setOpenModeDrop] = useState(false);
@@ -86,7 +86,7 @@ export default function HeroStatsSection({
               sectionStyles.charactersText,
             ]}
           >
-            {t('characters')}
+            {t('characters.title')}
           </Text>
         </View>
         <DropDownPicker
@@ -109,7 +109,7 @@ export default function HeroStatsSection({
           onChangeValue={() => {
             getStatus().then(setStatus);
           }}
-          placeholder={t('selectCharacter')}
+          placeholder={t('characters.selectCharacter')}
           disabled={valueCharDrop === null}
           style={sectionStyles.charactersDropDownSel}
           dropDownContainerStyle={sectionStyles.charactersDropDown}
@@ -134,7 +134,7 @@ export default function HeroStatsSection({
           onChangeValue={() => {
             getStatus().then(setStatus);
           }}
-          placeholder={t('selectGamemode')}
+          placeholder={t('stats.selectPlatform')}
           style={sectionStyles.charactersDropDownSel}
           dropDownContainerStyle={[
             sectionStyles.charactersDropDown,
@@ -160,7 +160,7 @@ export default function HeroStatsSection({
           onChangeValue={() => {
             getStatus().then(setStatus);
           }}
-          placeholder={t('selectGamemode')}
+          placeholder={t('stats.selectGamemode')}
           style={sectionStyles.charactersDropDownSel}
           dropDownContainerStyle={[
             sectionStyles.charactersDropDown,

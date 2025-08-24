@@ -66,8 +66,8 @@ function Tabs() {
         tabBarLabelStyle: { fontWeight: 'bold' },
       }}
     >
-      <TabNavigator.Screen
-        name={t('stats')}
+            <TabNavigator.Screen
+        name={t('navigation.stats')}
         component={Stats}
         options={{
           tabBarIcon: ({ color, size }) =>
@@ -75,7 +75,7 @@ function Tabs() {
         }}
       />
       <TabNavigator.Screen
-        name={t('characters')}
+        name={t('navigation.characters')}
         component={Characters}
         options={{
           tabBarIcon: ({ size, color }) =>
@@ -83,14 +83,14 @@ function Tabs() {
         }}
       />
       <TabNavigator.Screen
-        name={t('maps')}
+        name={t('navigation.maps')}
         component={Maps}
         options={{
           tabBarIcon: ({ size, color }) => createMapsIcon(size, color),
         }}
       />
       <TabNavigator.Screen
-        name={t('matches')}
+        name={t('navigation.matches')}
         component={Matchs}
         options={{
           tabBarIcon: ({ color, size }) =>

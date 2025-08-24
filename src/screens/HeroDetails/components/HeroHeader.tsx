@@ -40,14 +40,14 @@ export function HeroHeader({ heroDetails, isDarkMode }: HeroHeaderProps) {
           <Text style={[themedStyles.text, styles.location]}>{heroDetails.location}</Text>
           <View style={styles.personalInfoContainer}>
             <View style={styles.infoItem}>
-              <Text style={[themedStyles.text, styles.infoLabel]}>{t('age')}</Text>
+              <Text style={[themedStyles.text, styles.infoLabel]}>{t('common.age')}</Text>
               <Text style={[themedStyles.text, styles.infoValue, { color: COLORS.PRIMARY }]}>
                 {heroDetails.age}
               </Text>
             </View>
             <View style={styles.infoDivider} />
             <View style={styles.infoItem}>
-              <Text style={[themedStyles.text, styles.infoLabel]}>{t('birthday')}</Text>
+              <Text style={[themedStyles.text, styles.infoLabel]}>{t('common.birthday')}</Text>
               <Text style={[themedStyles.text, styles.infoValue, { color: COLORS.PRIMARY }]}>
                 {heroDetails.birthday}
               </Text>

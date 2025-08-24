@@ -68,7 +68,7 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
     const eliminations = combat.find((s: Stat) => s.key === 'eliminations');
     if (eliminations) {
       metrics.push({
-        title: t('eliminations'),
+        title: t('stats.eliminations'),
         value: formatters.toNumber(eliminations.value),
         color: '#10B981',
         icon: getStatIcon('eliminations'),
@@ -83,7 +83,7 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
     );
     if (damage) {
       metrics.push({
-        title: t('damage'),
+        title: t('characters.damage'),
         value: formatters.number(damage.value),
         color: '#EF4444',
         icon: getStatIcon('damage'),
@@ -95,14 +95,14 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
 
     if (accuracy) {
       metrics.push({
-        title: t('accuracy'),
+        title: t('stats.accuracy'),
         value: formatters.percentage(accuracy.value),
         color: '#3B82F6',
         icon: getStatIcon('weapon_accuracy'),
       });
     } else if (healing) {
       metrics.push({
-        title: t('healing'),
+        title: t('stats.healing'),
         value: formatters.number(healing.value),
         color: '#10B981',
         icon: getStatIcon('healing_done'),
@@ -112,7 +112,7 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
     const timePlayed = game.find((s: Stat) => s.key === 'time_played');
     if (timePlayed) {
       metrics.push({
-        title: t('time'),
+        title: t('common.time'),
         value: formatters.time(timePlayed.value),
         color: '#8B5CF6',
         icon: getStatIcon('time_played'),
@@ -190,10 +190,10 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
 
     return {
       labels: [
-        t('eliminations_short'),
-        t('deaths'),
-        t('final_blows'),
-        t('assists'),
+        t('stats.eliminations_short'),
+        t('stats.deaths'),
+        t('stats.final_blows'),
+        t('stats.assists'),
       ],
       datasets: [
         {
@@ -226,7 +226,7 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
     const kdRatio = eliminations / deaths;
 
     return {
-      labels: [t('accuracy'), t('kd'), t('objective')],
+      labels: [t('stats.accuracy'), t('stats.kd'), t('stats.objective')],
       data: [
         Math.min(Math.max(accuracy / 100, 0.01), 1),
         Math.min(Math.max(kdRatio / 3, 0.01), 1),
@@ -244,23 +244,23 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
     >
       <HeroHeader heroName={heroName} isDarkMode={isDarkMode} />
 
-      <MainSummarySection
+            <MainSummarySection
         metrics={mainMetrics}
         isDarkMode={isDarkMode}
-        sectionTitle={t('mainSummary')}
+        sectionTitle={t('stats.mainSummary')}
       />
 
       <CombatChartSection
         chartData={combatChartData}
         chartConfig={chartConfig}
-        sectionTitle={t('combatStats')}
+        sectionTitle={t('stats.combatStats')}
         isDarkMode={isDarkMode}
       />
 
       <PerformanceChartSection
         performanceData={performanceData}
         chartConfig={chartConfig}
-        sectionTitle={t('generalPerformance')}
+        sectionTitle={t('stats.generalPerformance')}
         isDarkMode={isDarkMode}
       />
 
@@ -273,7 +273,7 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
 
       <SessionSummarySection
         summaryData={summaryData}
-        sectionTitle={t('sessionSummary')}
+        sectionTitle={t('stats.sessionSummary')}
         isDarkMode={isDarkMode}
       />
     </ScrollView>

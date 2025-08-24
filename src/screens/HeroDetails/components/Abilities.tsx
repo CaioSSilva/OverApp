@@ -20,7 +20,7 @@ export function Abilities({ abilities, isDarkMode }: AbilitiesProps) {
   return (
     <View style={[themedStyles.card, styles.section]}>
       <Text style={[themedStyles.title, themedStyles.text, styles.sectionTitle]}>
-        {t('abilities')}
+        {t('heroDetails.abilities')}
       </Text>
       {abilities.map((ability, index) => (
         <TouchableOpacity 
