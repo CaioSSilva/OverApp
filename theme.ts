@@ -3,23 +3,23 @@ import { StyleSheet } from 'react-native';
 export const COLORS = {
   PRIMARY: '#FA9C1E',
   WHITE: '#FFFFFF',
-  
+
   LIGHT: {
     BACKGROUND: '#E2E2E2',
     TEXT: '#151515',
     BORDER: '#D3D3D3',
     CARD: '#FFFFFF',
   },
-  
+
   DARK: {
     BACKGROUND: '#121212',
-    TEXT: '#E2E2E2', 
+    TEXT: '#E2E2E2',
     BORDER: '#1F1F1F',
     CARD: '#1F1F1F',
   },
-  
+
   SUCCESS: '#4CAF50',
-  WARNING: '#FF9800', 
+  WARNING: '#FF9800',
   ERROR: '#F44336',
   INFO: '#2196F3',
 } as const;
@@ -91,7 +91,7 @@ export const darkTheme: Theme = {
   card: COLORS.DARK.CARD,
 };
 
-export const getTheme = (isDarkMode: boolean): Theme => 
+export const getTheme = (isDarkMode: boolean): Theme =>
   isDarkMode ? darkTheme : lightTheme;
 
 export const getThemedStyles = (isDarkMode: boolean) => {
@@ -113,9 +113,10 @@ export const getThemedStyles = (isDarkMode: boolean) => {
       fontWeight: TYPOGRAPHY.WEIGHTS.BOLD,
     },
 
-    title:{
-fontWeight: TYPOGRAPHY.WEIGHTS.BOLD,
+    title: {
+      fontWeight: TYPOGRAPHY.WEIGHTS.BOLD,
       fontSize: TYPOGRAPHY.SIZES.XXL,
+      marginVertical: SPACING.SM,
     },
 
     button: {

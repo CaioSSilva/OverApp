@@ -1,5 +1,5 @@
 import { useColorScheme, View } from 'react-native';
-import ActionSheetHeroStats from '../components/ActionSheetHeroStats';
+import ActionSheetHeroStats from '../components/HeroDetailStats/HeroDetailStats';
 import { DetailsProps } from '../interfaces/Details.model';
 import { getThemedStyles } from '../../theme';
 

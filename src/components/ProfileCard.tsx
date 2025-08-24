@@ -114,7 +114,7 @@ export default function ProfileCard({
           <Text
             style={[
               getThemedStyles(isDarkMode).text,
-              getThemedStyles(isDarkMode).boldText,
+              getThemedStyles(isDarkMode).title,
             ]}
           >
             {t('perfil')}
@@ -217,15 +217,15 @@ const styles = StyleSheet.create({
   },
 
   actionSheetContainerBlack: {
-    height: 160,
+    height: 140,
     display: 'flex',
     backgroundColor: '#2d2d2d',
   },
 
   actionSheetContainerwhite: {
-    height: 160,
+    height: 140,
     display: 'flex',
     backgroundColor: '#e2e2e2',
   },
-  exitContainer: { width:'25%', margin : 'auto'}
+  exitContainer: { width:'25%', margin : 'auto', gap: 10, },
 });
