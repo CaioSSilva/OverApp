@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, Linking, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, Linking, StyleSheet, Dimensions } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Story as StoryInterface } from '../../../interfaces/HeroStory.model';
 import { getThemedStyles, COLORS, TYPOGRAPHY, SPACING, BORDER_RADIUS } from '../../../styles/theme';
@@ -12,6 +12,8 @@ interface StoryProps {
 export function Story({ story, isDarkMode }: StoryProps) {
   const themedStyles = getThemedStyles(isDarkMode);
   const { t } = useTranslation();
+  const screenWidth = Dimensions.get('window').width;
+  const cardWidth = screenWidth - (SPACING.MD * 4); // Padding nas laterais
 
   const handleMediaPress = async (link: string) => {
     await Linking.openURL(link);
@@ -34,25 +36,30 @@ export function Story({ story, isDarkMode }: StoryProps) {
         </Text>
       </TouchableOpacity>
 
-      <ScrollView 
-        horizontal 
-        showsHorizontalScrollIndicator={false}
-        style={styles.chaptersScrollView}
-      >
+      <View style={styles.chaptersContainer}>
         {story.chapters.map((chapter, index) => (
-          <TouchableOpacity key={index} style={styles.chapterCard}>
-            <Image source={{ uri: chapter.picture }} style={styles.chapterCardImage} />
+          <View key={index} style={[styles.chapterCard, { width: cardWidth }]}>
+            <TouchableOpacity onPress={() => handleMediaPress(chapter.picture)}>
+              <Image source={{ uri: chapter.picture }} style={styles.chapterCardImage} />
+            </TouchableOpacity>
             <View style={styles.chapterCardContent}>
               <Text style={[themedStyles.text, styles.chapterCardTitle, { color: COLORS.PRIMARY }]}>
                 {chapter.title}
               </Text>
-              <Text style={[themedStyles.text, styles.chapterCardPreview]} numberOfLines={3}>
-                {chapter.content}
-              </Text>
+              <ScrollView 
+                style={styles.textScrollView}
+                showsVerticalScrollIndicator={true}
+                nestedScrollEnabled={true}
+                bounces={true}
+              >
+                <Text style={[themedStyles.text, styles.chapterCardPreview]}>
+                  {chapter.content}
+                </Text>
+              </ScrollView>
             </View>
-          </TouchableOpacity>
+          </View>
         ))}
-      </ScrollView>
+      </View>
     </View>
   );
 }
@@ -84,15 +91,16 @@ const styles = StyleSheet.create({
     fontSize: TYPOGRAPHY.SIZES.MD,
     fontWeight: TYPOGRAPHY.WEIGHTS.BOLD,
   },
-  chaptersScrollView: {
+  chaptersContainer: {
     marginTop: SPACING.MD,
   },
   chapterCard: {
-    width: 200,
-    marginRight: SPACING.MD,
+    marginBottom: SPACING.MD,
     borderRadius: BORDER_RADIUS.MD,
     backgroundColor: 'rgba(250, 156, 30, 0.1)',
     overflow: 'hidden',
+    alignSelf: 'center',
+    height: 220,
   },
   chapterCardImage: {
     width: '100%',
@@ -101,15 +109,21 @@ const styles = StyleSheet.create({
   },
   chapterCardContent: {
     padding: SPACING.SM,
+    flex: 1,
   },
   chapterCardTitle: {
     fontSize: TYPOGRAPHY.SIZES.MD,
     fontWeight: TYPOGRAPHY.WEIGHTS.BOLD,
     marginBottom: SPACING.XS,
   },
+  textScrollView: {
+    flex: 1,
+    minHeight: 80,
+    maxHeight: 120,
+  },
   chapterCardPreview: {
     fontSize: TYPOGRAPHY.SIZES.SM,
-    lineHeight: 16,
+    lineHeight: 18,
     opacity: 0.8,
   },
 });
