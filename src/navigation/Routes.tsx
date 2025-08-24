@@ -118,12 +118,13 @@ function Stack() {
         component={DetailsWrapper}
       />
        <StackNavigator.Screen
-        name="HeroDetails"
-        options={{
-          headerShown: false,
-          animation: 'none'
-        }}
-        component={HeroDetailsWrapper}
+      name="HeroDetails"
+      options={{
+        headerShown: false,
+        animation: 'none',
+        animationTypeForReplace: 'push',
+      }}
+      component={HeroDetailsWrapper}
       />
     </StackNavigator.Navigator>
   );
