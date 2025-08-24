@@ -35,7 +35,8 @@
     "react-native-screens": "^4.14.1",
     "react-native-skeleton-placeholder": "^5.2.4",
     "react-native-svg": "^15.12.1",
-    "react-native-svg-uri": "^0.0.1"
+    "react-native-svg-uri": "^0.0.1",
+    "react-native-video": "^6.16.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
