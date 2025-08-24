@@ -12,7 +12,7 @@ const player = 'Kento-12528';
 
 //Kento-12528
 
-// Coruja-11482
+//Coruja-11482
 
 const getHeroes = async (): Promise<Hero[]> => {
   const response = await axios.get<Hero[]>(`${baseUrl}/heroes`);
@@ -31,12 +31,13 @@ const getProfileFull = async (): Promise<OverwatchProfileFull> => {
 
 const getStatusByHero = async (
   gamemode: string,
+  platform: string,
   heroId: string,
 ): Promise<HeroStatsResponse> => {
   const response = await axios.get(
     heroId !== ''
-      ? `${baseUrl}/players/${player}/stats?gamemode=${gamemode}&hero=${heroId}`
-      : `${baseUrl}/players/${player}/stats?gamemode=${gamemode}`,
+      ? `${baseUrl}/players/${player}/stats?gamemode=${gamemode}&platform=${platform}&hero=${heroId}`
+      : `${baseUrl}/players/${player}/stats?gamemode=${gamemode}&platform=${platform}`,
   );
   return response.data;
 };

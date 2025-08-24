@@ -39,9 +39,10 @@ export const useFormatters = () => {
       time: (seconds: string | number): string => {
         const numSeconds = toNumber(seconds);
         if (!numSeconds) return '0:00';
-        const mins = Math.floor(numSeconds / 60);
-        const secs = numSeconds % 60;
-        return `${mins}:${secs.toString().padStart(2, '0')}`;
+        const hours = Math.floor(numSeconds / 3600);
+        const minutes = Math.floor((numSeconds % 3600) / 60);
+        if (hours === 0 && minutes === 0) return '0:00';
+        return `${hours}h ${minutes}m`;
       },
       percentage: (value: string | number): string => {
         return typeof value === 'number' ? `${value}%` : `${value}`;

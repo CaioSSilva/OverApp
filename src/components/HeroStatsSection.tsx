@@ -51,19 +51,28 @@ export default function HeroStatsSection({
   >([]);
   const [valueCharDrop, setValueCharDrop] = useState<string | null>('');
 
-  const platformItems = [
+  const gamemodeItems = [
     { label: t('quickplay'), value: 'quickplay' },
     { label: t('competitive'), value: 'competitive' },
   ];
 
-  const [openPlatDrop, setOpenPlatDrop] = useState(false);
-  const [valuePlatDrop, setValuePlatDrop] = useState(platformItems[0].value);
-  const [itemsPlatDrop, setItemsPlatDrop] =
-    useState<{ label: string; value: string }[]>(platformItems);
+  const [openModeDrop, setOpenModeDrop] = useState(false);
+  const [valueModeDrop, setValueModeDrop] = useState(gamemodeItems[0].value);
+  const [itemsModeDrop, setItemsModeDrop] =
+    useState<{ label: string; value: string }[]>(gamemodeItems);
+
+  const platformItems = [
+    { label: 'PC', value: 'pc' },
+    { label: 'Console', value: 'console' }];
+
+    const [openPlatDrop, setOpenPlatDrop] = useState(false);
+    const [valuePlatDrop, setValuePlatDrop] = useState(platformItems[0].value);
+    const [itemsPlatDrop, setItemsPlatDrop] =
+      useState<{ label: string; value: string }[]>(platformItems);
 
   const getStatus = useCallback(
-    () => dataService().getStatusByHero(valuePlatDrop, valueCharDrop!),
-    [valueCharDrop, valuePlatDrop],
+    () => dataService().getStatusByHero(valueModeDrop, valuePlatDrop, valueCharDrop!),
+    [valueCharDrop,valuePlatDrop, valueModeDrop],
   );
 
   return (
@@ -86,6 +95,7 @@ export default function HeroStatsSection({
           items={itemsCharDrop}
           setOpen={() => {
             setOpenCharDrop(true);
+            setOpenModeDrop(false);
             setOpenPlatDrop(false);
             setScroll(false);
           }}
@@ -112,6 +122,7 @@ export default function HeroStatsSection({
           setOpen={() => {
             setOpenPlatDrop(true);
             setOpenCharDrop(false);
+            setOpenModeDrop(false);
             setScroll(false);
           }}
           onClose={() => {
@@ -120,6 +131,32 @@ export default function HeroStatsSection({
           }}
           setValue={setValuePlatDrop}
           setItems={setItemsPlatDrop}
+          onChangeValue={() => {
+            getStatus().then(setStatus);
+          }}
+          placeholder={t('selectGamemode')}
+          style={sectionStyles.charactersDropDownSel}
+          dropDownContainerStyle={[
+            sectionStyles.charactersDropDown,
+            sectionStyles.platformDropDownSel,
+          ]}
+        />
+        <DropDownPicker
+          open={openModeDrop}
+          value={valueModeDrop}
+          items={itemsModeDrop}
+          setOpen={() => {
+            setOpenModeDrop(true);
+            setOpenCharDrop(false);
+            setOpenPlatDrop(false);
+            setScroll(false);
+          }}
+          onClose={() => {
+            setOpenModeDrop(false);
+            setScroll(true);
+          }}
+          setValue={setValueModeDrop}
+          setItems={setItemsModeDrop}
           onChangeValue={() => {
             getStatus().then(setStatus);
           }}
