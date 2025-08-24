@@ -7,7 +7,7 @@ export interface Hero {
 }
 
 export enum Role {
-    TANK = 'tank',
-    DAMAGE = 'damage',
-    SUPPORT = 'support',
+  TANK = 'tank',
+  DAMAGE = 'damage',
+  SUPPORT = 'support',
 }

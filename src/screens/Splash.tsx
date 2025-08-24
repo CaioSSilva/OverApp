@@ -39,7 +39,6 @@ export default function Splash() {
     return () => clearInterval(messageInterval);
   }, [fadeAnim]);
 
-
   const currentKey = messages.splash[messageIndex];
 
   return (
@@ -60,7 +59,7 @@ export default function Splash() {
           getThemedStyles(isDarkMode).boldText,
         ]}
       >
-      {t(`messages.splash.${currentKey}`)}
+        {t(`messages.splash.${currentKey}`)}
       </Text>
     </Animated.View>
   );

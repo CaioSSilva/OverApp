@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { Hero } from '../interfaces/Hero.model';
-import { OverwatchProfile, OverwatchProfileFull } from '../interfaces/Summary.model';
+import {
+  OverwatchProfile,
+  OverwatchProfileFull,
+} from '../interfaces/Summary.model';
 import { HeroStatsResponse } from '../interfaces/Status.model';
 
 const baseUrl = 'https://overfast-api.tekrop.fr';
@@ -24,7 +27,7 @@ const getProfileById = async (): Promise<OverwatchProfile> => {
 const getProfileFull = async (): Promise<OverwatchProfileFull> => {
   const response = await axios.get(`${baseUrl}/players/${player}`);
   return response.data;
-}; 
+};
 
 const getStatusByHero = async (
   gamemode: string,
@@ -49,6 +52,6 @@ export function dataService() {
     getStatusByHero,
     getProfileById,
     getProfileFull,
-    logOut
+    logOut,
   };
 }

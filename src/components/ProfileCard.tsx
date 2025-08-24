@@ -94,7 +94,7 @@ export default function ProfileCard({
                   uri={profile.endorsement.frame}
                 />
                 <Text style={styles.endorsementText}>
-                 {t('level')} {profile.endorsement.level}
+                  {t('level')} {profile.endorsement.level}
                 </Text>
               </View>
               <Text style={[styles.updated, getTextColor(isDarkMode)]}>
@@ -109,8 +109,8 @@ export default function ProfileCard({
         ref={detailSheet}
         gestureEnabled={false}
         headerAlwaysVisible
-      ><View style={styles.exitContainer}>
-        
+      >
+        <View style={styles.exitContainer}>
           <Text
             style={[
               getThemedStyles(isDarkMode).text,
@@ -120,7 +120,7 @@ export default function ProfileCard({
             {t('perfil')}
           </Text>
           <Button title={t('exit')} onPress={() => logOut()} />
-      </View>
+        </View>
       </ActionSheet>
     </>
   );
@@ -227,5 +227,5 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: '#e2e2e2',
   },
-  exitContainer: { width:'25%', margin : 'auto', gap: 10, },
+  exitContainer: { width: '25%', margin: 'auto', gap: 10 },
 });

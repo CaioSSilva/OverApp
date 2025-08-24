@@ -9,36 +9,23 @@ interface MainSummarySectionProps {
   sectionTitle: string;
 }
 
-const MainSummarySection = React.memo<MainSummarySectionProps>(({ 
-  metrics, 
-  isDarkMode, 
-  sectionTitle 
-}) => {
-  const titleStyle = useMemo(() => ({
-    ...styles.sectionTitle,
-    color: isDarkMode ? '#ffffff' : '#1f2937'
-  }), [isDarkMode]);
+const MainSummarySection = React.memo<MainSummarySectionProps>(
+  ({ metrics, isDarkMode, sectionTitle }) => {
+    const titleStyle = useMemo(
+      () => ({
+        ...styles.sectionTitle,
+        color: isDarkMode ? '#ffffff' : '#1f2937',
+      }),
+      [isDarkMode],
+    );
 
-  return (
-    <View style={styles.section}>
-      <Text style={titleStyle}>{sectionTitle}</Text>
-      <View style={styles.cardsRow}>
-        {metrics.slice(0, 2).map((metric, index) => (
-          <StatCard
-            key={`metric-${index}`}
-            title={metric.title}
-            value={metric.value}
-            color={metric.color}
-            icon={metric.icon}
-            isDarkMode={isDarkMode}
-          />
-        ))}
-      </View>
-      {metrics.length > 2 && (
+    return (
+      <View style={styles.section}>
+        <Text style={titleStyle}>{sectionTitle}</Text>
         <View style={styles.cardsRow}>
-          {metrics.slice(2, 4).map((metric, index) => (
+          {metrics.slice(0, 2).map((metric, index) => (
             <StatCard
-              key={`metric-${index + 2}`}
+              key={`metric-${index}`}
               title={metric.title}
               value={metric.value}
               color={metric.color}
@@ -47,10 +34,24 @@ const MainSummarySection = React.memo<MainSummarySectionProps>(({
             />
           ))}
         </View>
-      )}
-    </View>
-  );
-});
+        {metrics.length > 2 && (
+          <View style={styles.cardsRow}>
+            {metrics.slice(2, 4).map((metric, index) => (
+              <StatCard
+                key={`metric-${index + 2}`}
+                title={metric.title}
+                value={metric.value}
+                color={metric.color}
+                icon={metric.icon}
+                isDarkMode={isDarkMode}
+              />
+            ))}
+          </View>
+        )}
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   section: {

@@ -6,7 +6,9 @@ type HeroCardPlaceholderProps = {
   numberOfCards: number;
 };
 
-export default function HeroCardPlaceholder({ numberOfCards }: HeroCardPlaceholderProps) {
+export default function HeroCardPlaceholder({
+  numberOfCards,
+}: HeroCardPlaceholderProps) {
   const isDarkMode = useColorScheme() === 'dark';
   const skeletonCards = Array.from({ length: numberOfCards });
   const opacity = { opacity: isDarkMode ? 0.8 : 0.6 };

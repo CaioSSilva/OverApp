@@ -4,7 +4,11 @@ import { Category } from '../../interfaces/Details.model';
 export const useStatsData = (statsData: any, heroName: string) => {
   return useMemo(() => {
     let data = statsData;
-    if (statsData && typeof statsData === 'object' && !Array.isArray(statsData)) {
+    if (
+      statsData &&
+      typeof statsData === 'object' &&
+      !Array.isArray(statsData)
+    ) {
       const heroKeys = Object.keys(statsData);
       if (heroKeys.length > 0) {
         const targetHero = heroKeys.includes(heroName.toLowerCase())
@@ -24,25 +28,28 @@ export const useFormatters = () => {
     return isNaN(parsed) ? 0 : parsed;
   }, []);
 
-  return useMemo(() => ({
-    number: (num: string | number): string => {
-      const numValue = toNumber(num);
-      if (numValue >= 1000000) return (numValue / 1000000).toFixed(1) + 'M';
-      if (numValue >= 1000) return (numValue / 1000).toFixed(1) + 'K';
-      return numValue.toString();
-    },
-    time: (seconds: string | number): string => {
-      const numSeconds = toNumber(seconds);
-      if (!numSeconds) return '0:00';
-      const mins = Math.floor(numSeconds / 60);
-      const secs = numSeconds % 60;
-      return `${mins}:${secs.toString().padStart(2, '0')}`;
-    },
-    percentage: (value: string | number): string => {
-      return typeof value === 'number' ? `${value}%` : `${value}`;
-    },
-    toNumber,
-  }), [toNumber]);
+  return useMemo(
+    () => ({
+      number: (num: string | number): string => {
+        const numValue = toNumber(num);
+        if (numValue >= 1000000) return (numValue / 1000000).toFixed(1) + 'M';
+        if (numValue >= 1000) return (numValue / 1000).toFixed(1) + 'K';
+        return numValue.toString();
+      },
+      time: (seconds: string | number): string => {
+        const numSeconds = toNumber(seconds);
+        if (!numSeconds) return '0:00';
+        const mins = Math.floor(numSeconds / 60);
+        const secs = numSeconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+      },
+      percentage: (value: string | number): string => {
+        return typeof value === 'number' ? `${value}%` : `${value}`;
+      },
+      toNumber,
+    }),
+    [toNumber],
+  );
 };
 
 export const useStatIcon = () => {

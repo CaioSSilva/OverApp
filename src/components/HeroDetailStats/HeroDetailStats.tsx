@@ -1,7 +1,12 @@
 import React, { useMemo, useCallback } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { ActionSheetHeroStatsProps, Category, Metric, Stat } from '../../interfaces/Details.model';
+import {
+  ActionSheetHeroStatsProps,
+  Category,
+  Metric,
+  Stat,
+} from '../../interfaces/Details.model';
 
 import HeroHeader from './HeroHeader';
 import MainSummarySection from './MainSummarySection';
@@ -23,8 +28,14 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
   const getStatIcon = useStatIcon();
 
   const getStatValue = useCallback(
-    (category: string, key: string, defaultValue: number | string = 0): number | string => {
-      const categoryData = processedData?.find((cat: Category) => cat.category === category);
+    (
+      category: string,
+      key: string,
+      defaultValue: number | string = 0,
+    ): number | string => {
+      const categoryData = processedData?.find(
+        (cat: Category) => cat.category === category,
+      );
       const stat = categoryData?.stats?.find((s: Stat) => s.key === key);
       return stat?.value || defaultValue;
     },
@@ -33,17 +44,22 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
 
   const getCategoryStats = useCallback(
     (category: string): Stat[] => {
-      const categoryData = processedData?.find((cat: Category) => cat.category === category);
+      const categoryData = processedData?.find(
+        (cat: Category) => cat.category === category,
+      );
       return categoryData?.stats || [];
     },
     [processedData],
   );
 
-  const categoryStats = useMemo(() => ({
-    combat: getCategoryStats('combat'),
-    game: getCategoryStats('game'),
-    assists: getCategoryStats('assists'),
-  }), [getCategoryStats]);
+  const categoryStats = useMemo(
+    () => ({
+      combat: getCategoryStats('combat'),
+      game: getCategoryStats('game'),
+      assists: getCategoryStats('assists'),
+    }),
+    [getCategoryStats],
+  );
 
   const mainMetrics = useMemo((): Metric[] => {
     const metrics: Metric[] = [];
@@ -59,8 +75,11 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
       });
     }
 
-    const damage = combat.find((s: Stat) => 
-      s.key === 'all_damage_done' || s.key === 'damage_done' || s.key === 'hero_damage_done'
+    const damage = combat.find(
+      (s: Stat) =>
+        s.key === 'all_damage_done' ||
+        s.key === 'damage_done' ||
+        s.key === 'hero_damage_done',
     );
     if (damage) {
       metrics.push({
@@ -104,13 +123,21 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
   }, [categoryStats, formatters, getStatIcon, t]);
 
   const summaryData = useMemo(() => {
-    const gamesPlayed = formatters.toNumber(getStatValue('game', 'games_played'));
-    const gamesWon = formatters.toNumber(getStatValue('game', 'games_won')) || 
-                     formatters.toNumber(getStatValue('game', 'hero_wins', 0));
+    const gamesPlayed = formatters.toNumber(
+      getStatValue('game', 'games_played'),
+    );
+    const gamesWon =
+      formatters.toNumber(getStatValue('game', 'games_won')) ||
+      formatters.toNumber(getStatValue('game', 'hero_wins', 0));
     const winRate = gamesPlayed > 0 ? (gamesWon / gamesPlayed) * 100 : 0;
 
-    const eliminations = formatters.toNumber(getStatValue('combat', 'eliminations'));
-    const deaths = Math.max(formatters.toNumber(getStatValue('combat', 'deaths')), 1);
+    const eliminations = formatters.toNumber(
+      getStatValue('combat', 'eliminations'),
+    );
+    const deaths = Math.max(
+      formatters.toNumber(getStatValue('combat', 'deaths')),
+      1,
+    );
     const kdRatio = (eliminations / deaths).toFixed(2);
 
     return {
@@ -122,54 +149,80 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
     };
   }, [getStatValue, formatters]);
 
-  const chartConfig = useMemo(() => ({
-    backgroundColor: isDarkMode ? '#2d2d2d' : '#ffffff',
-    backgroundGradientFrom: isDarkMode ? '#2d2d2d' : '#ffffff',
-    backgroundGradientTo: isDarkMode ? '#1e1e1e' : '#f8f9fa',
-    decimalPlaces: 0,
-    color: (opacity = 1) => isDarkMode 
-      ? `rgba(156, 163, 175, ${opacity})` 
-      : `rgba(59, 130, 246, ${opacity})`,
-    labelColor: (opacity = 1) => isDarkMode 
-      ? `rgba(255, 255, 255, ${opacity})` 
-      : `rgba(51, 51, 51, ${opacity})`,
-    style: { borderRadius: 16 },
-    propsForLabels: { fontSize: 10, fontWeight: '400' },
-    propsForBackgroundLines: {
-      strokeWidth: 1,
-      stroke: isDarkMode ? '#404040' : '#e5e7eb'
-    },
-    barPercentage: 0.8,
-    fillShadowGradient: isDarkMode ? '#404040' : '#f3f4f6',
-    fillShadowGradientOpacity: 0.2,
-  }), [isDarkMode]);
+  const chartConfig = useMemo(
+    () => ({
+      backgroundColor: isDarkMode ? '#2d2d2d' : '#ffffff',
+      backgroundGradientFrom: isDarkMode ? '#2d2d2d' : '#ffffff',
+      backgroundGradientTo: isDarkMode ? '#1e1e1e' : '#f8f9fa',
+      decimalPlaces: 0,
+      color: (opacity = 1) =>
+        isDarkMode
+          ? `rgba(156, 163, 175, ${opacity})`
+          : `rgba(59, 130, 246, ${opacity})`,
+      labelColor: (opacity = 1) =>
+        isDarkMode
+          ? `rgba(255, 255, 255, ${opacity})`
+          : `rgba(51, 51, 51, ${opacity})`,
+      style: { borderRadius: 16 },
+      propsForLabels: { fontSize: 10, fontWeight: '400' },
+      propsForBackgroundLines: {
+        strokeWidth: 1,
+        stroke: isDarkMode ? '#404040' : '#e5e7eb',
+      },
+      barPercentage: 0.8,
+      fillShadowGradient: isDarkMode ? '#404040' : '#f3f4f6',
+      fillShadowGradientOpacity: 0.2,
+    }),
+    [isDarkMode],
+  );
 
   const combatChartData = useMemo(() => {
-    const eliminations = formatters.toNumber(getStatValue('combat', 'eliminations'));
+    const eliminations = formatters.toNumber(
+      getStatValue('combat', 'eliminations'),
+    );
     const deaths = formatters.toNumber(getStatValue('combat', 'deaths'));
-    const finalBlows = formatters.toNumber(getStatValue('combat', 'final_blows'));
-    const assists = formatters.toNumber(getStatValue('assists', 'assists')) || 
-                   formatters.toNumber(getStatValue('combat', 'assists', 0));
+    const finalBlows = formatters.toNumber(
+      getStatValue('combat', 'final_blows'),
+    );
+    const assists =
+      formatters.toNumber(getStatValue('assists', 'assists')) ||
+      formatters.toNumber(getStatValue('combat', 'assists', 0));
 
     return {
-      labels: [t('eliminations_short'), t('deaths'), t('final_blows'), t('assists')],
-      datasets: [{
-        data: [eliminations, deaths, finalBlows, assists],
-        colors: [
-          () => '#10B981',
-          () => '#EF4444', 
-          () => '#F59E0B',
-          () => '#8B5CF6',
-        ],
-      }],
+      labels: [
+        t('eliminations_short'),
+        t('deaths'),
+        t('final_blows'),
+        t('assists'),
+      ],
+      datasets: [
+        {
+          data: [eliminations, deaths, finalBlows, assists],
+          colors: [
+            () => '#10B981',
+            () => '#EF4444',
+            () => '#F59E0B',
+            () => '#8B5CF6',
+          ],
+        },
+      ],
     };
   }, [getStatValue, formatters, t]);
 
   const performanceData = useMemo(() => {
-    const accuracy = formatters.toNumber(getStatValue('combat', 'weapon_accuracy'));
-    const eliminations = formatters.toNumber(getStatValue('combat', 'eliminations'));
-    const deaths = Math.max(formatters.toNumber(getStatValue('combat', 'deaths')), 1);
-    const objectiveTime = formatters.toNumber(getStatValue('combat', 'objective_time'));
+    const accuracy = formatters.toNumber(
+      getStatValue('combat', 'weapon_accuracy'),
+    );
+    const eliminations = formatters.toNumber(
+      getStatValue('combat', 'eliminations'),
+    );
+    const deaths = Math.max(
+      formatters.toNumber(getStatValue('combat', 'deaths')),
+      1,
+    );
+    const objectiveTime = formatters.toNumber(
+      getStatValue('combat', 'objective_time'),
+    );
     const kdRatio = eliminations / deaths;
 
     return {
@@ -190,11 +243,11 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
       contentContainerStyle={styles.scrollContent}
     >
       <HeroHeader heroName={heroName} isDarkMode={isDarkMode} />
-      
-      <MainSummarySection 
-        metrics={mainMetrics} 
-        isDarkMode={isDarkMode} 
-        sectionTitle={t('mainSummary')} 
+
+      <MainSummarySection
+        metrics={mainMetrics}
+        isDarkMode={isDarkMode}
+        sectionTitle={t('mainSummary')}
       />
 
       <CombatChartSection

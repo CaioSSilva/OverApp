@@ -8,59 +8,75 @@ interface SessionSummarySectionProps {
   isDarkMode: boolean;
 }
 
-const SessionSummarySection = React.memo<SessionSummarySectionProps>(({ 
-  summaryData, 
-  sectionTitle, 
-  isDarkMode 
-}) => {
-  const { t } = useTranslation();
-  const themeColors = useMemo(() => ({
-    sectionTitle: isDarkMode ? '#ffffff' : '#1f2937',
-    cardBg: isDarkMode ? '#1e1e1e' : '#f8f9fa',
-    subtitle: isDarkMode ? '#9ca3af' : '#6b7280',
-  }), [isDarkMode]);
+const SessionSummarySection = React.memo<SessionSummarySectionProps>(
+  ({ summaryData, sectionTitle, isDarkMode }) => {
+    const { t } = useTranslation();
+    const themeColors = useMemo(
+      () => ({
+        sectionTitle: isDarkMode ? '#ffffff' : '#1f2937',
+        cardBg: isDarkMode ? '#1e1e1e' : '#f8f9fa',
+        subtitle: isDarkMode ? '#9ca3af' : '#6b7280',
+      }),
+      [isDarkMode],
+    );
 
-  const titleStyle = useMemo(() => ({
-    ...styles.sectionTitle,
-    color: themeColors.sectionTitle
-  }), [themeColors.sectionTitle]);
+    const titleStyle = useMemo(
+      () => ({
+        ...styles.sectionTitle,
+        color: themeColors.sectionTitle,
+      }),
+      [themeColors.sectionTitle],
+    );
 
-  const cardStyle = useMemo(() => ({
-    ...styles.summaryGrid,
-    backgroundColor: themeColors.cardBg
-  }), [themeColors.cardBg]);
+    const cardStyle = useMemo(
+      () => ({
+        ...styles.summaryGrid,
+        backgroundColor: themeColors.cardBg,
+      }),
+      [themeColors.cardBg],
+    );
 
-  const labelStyle = useMemo(() => ({
-    ...styles.summaryLabel,
-    color: themeColors.subtitle
-  }), [themeColors.subtitle]);
+    const labelStyle = useMemo(
+      () => ({
+        ...styles.summaryLabel,
+        color: themeColors.subtitle,
+      }),
+      [themeColors.subtitle],
+    );
 
-  return (
-    <View style={styles.section}>
-      <Text style={titleStyle}>{sectionTitle}</Text>
-      <View style={cardStyle}>
-        <View style={styles.summaryItem}>
-          <Text style={labelStyle}>{t('winRate')}</Text>
-          <Text style={[styles.summaryValue, { color: summaryData.winRateColor }]}>
-            {summaryData.winRate.toFixed(1)}%
-          </Text>
-        </View>
-        <View style={styles.summaryItem}>
-          <Text style={labelStyle}>{t('kdRatio')}</Text>
-          <Text style={[styles.summaryValue, { color: summaryData.kdRatioColor }]}>
-            {summaryData.kdRatio}
-          </Text>
-        </View>
-        <View style={styles.summaryItem}>
-          <Text style={labelStyle}>{t('games')}</Text>
-          <Text style={[styles.summaryValue, { color: themeColors.sectionTitle }]}>
-            {summaryData.gamesPlayed}
-          </Text>
+    return (
+      <View style={styles.section}>
+        <Text style={titleStyle}>{sectionTitle}</Text>
+        <View style={cardStyle}>
+          <View style={styles.summaryItem}>
+            <Text style={labelStyle}>{t('winRate')}</Text>
+            <Text
+              style={[styles.summaryValue, { color: summaryData.winRateColor }]}
+            >
+              {summaryData.winRate.toFixed(1)}%
+            </Text>
+          </View>
+          <View style={styles.summaryItem}>
+            <Text style={labelStyle}>{t('kdRatio')}</Text>
+            <Text
+              style={[styles.summaryValue, { color: summaryData.kdRatioColor }]}
+            >
+              {summaryData.kdRatio}
+            </Text>
+          </View>
+          <View style={styles.summaryItem}>
+            <Text style={labelStyle}>{t('games')}</Text>
+            <Text
+              style={[styles.summaryValue, { color: themeColors.sectionTitle }]}
+            >
+              {summaryData.gamesPlayed}
+            </Text>
+          </View>
         </View>
       </View>
-    </View>
-  );
-});
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   section: {

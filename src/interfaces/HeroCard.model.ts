@@ -1,6 +1,6 @@
-import { Hero, Role } from "./Hero.model";
-import { HeroStatsResponse } from "./Status.model";
-import { HeroTime } from "./Summary.model";
+import { Hero, Role } from './Hero.model';
+import { HeroStatsResponse } from './Status.model';
+import { HeroTime } from './Summary.model';
 
 export type HeroCardProps = {
   hero: Hero;

@@ -3,7 +3,7 @@ import { RouteProp } from '@react-navigation/native';
 
 export type RootStackParamList = {
   Tabs: undefined;
-  Stacks: undefined
+  Stacks: undefined;
 };
 
 export type TabParamList = {

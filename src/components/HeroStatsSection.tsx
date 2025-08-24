@@ -62,11 +62,7 @@ export default function HeroStatsSection({
     useState<{ label: string; value: string }[]>(platformItems);
 
   const getStatus = useCallback(
-    () =>
-      dataService().getStatusByHero(
-        valuePlatDrop,
-        valueCharDrop!,
-      ),
+    () => dataService().getStatusByHero(valuePlatDrop, valueCharDrop!),
     [valueCharDrop, valuePlatDrop],
   );
 
@@ -93,7 +89,7 @@ export default function HeroStatsSection({
             setOpenPlatDrop(false);
             setScroll(false);
           }}
-           onClose={() => {
+          onClose={() => {
             setOpenCharDrop(false);
             setScroll(true);
           }}

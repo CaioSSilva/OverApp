@@ -1,4 +1,4 @@
-import { Hero } from "./Hero.model";
+import { Hero } from './Hero.model';
 
 export interface OverwatchProfile {
   username: string;

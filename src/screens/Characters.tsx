@@ -22,10 +22,7 @@ export default function Characters() {
   const { t } = useTranslation();
 
   const getHeroList = useCallback(() => dataService().getHeroes(), []);
-  const getTimePlayed = useCallback(
-    () => dataService().getProfileFull(),
-    [],
-  );
+  const getTimePlayed = useCallback(() => dataService().getProfileFull(), []);
 
   useEffect(() => {
     getTimePlayed().then(s => setStats(s.stats));
@@ -42,22 +39,27 @@ export default function Characters() {
 
     const platforms = ['pc', 'console'] as const;
     const modes = ['quickplay', 'competitive'] as const;
-    
+
     const allTimeValues = platforms.flatMap(platform =>
-      modes.flatMap(mode =>
-        stats[platform]?.[mode]?.heroes_comparisons?.time_played?.values || []
-      )
+      modes.flatMap(
+        mode =>
+          stats[platform]?.[mode]?.heroes_comparisons?.time_played?.values ||
+          [],
+      ),
     );
 
-    const heroTimeMap = new Map<string, {
-      totalTime: number;
-      pcTime: number;
-      consoleTime: number;
-      pcQuickplayTime: number;
-      pcCompetitiveTime: number;
-      consoleQuickplayTime: number;
-      consoleCompetitiveTime: number;
-    }>();
+    const heroTimeMap = new Map<
+      string,
+      {
+        totalTime: number;
+        pcTime: number;
+        consoleTime: number;
+        pcQuickplayTime: number;
+        pcCompetitiveTime: number;
+        consoleQuickplayTime: number;
+        consoleCompetitiveTime: number;
+      }
+    >();
 
     allTimeValues.forEach(({ hero, value }) => {
       if (!heroTimeMap.has(hero)) {
@@ -76,22 +78,28 @@ export default function Characters() {
 
     platforms.forEach(platform => {
       modes.forEach(mode => {
-        const values = stats[platform]?.[mode]?.heroes_comparisons?.time_played?.values || [];
+        const values =
+          stats[platform]?.[mode]?.heroes_comparisons?.time_played?.values ||
+          [];
         values.forEach(({ hero, value }) => {
           const heroData = heroTimeMap.get(hero)!;
-          const timeKey = `${platform}${mode === 'quickplay' ? 'Quickplay' : 'Competitive'}Time` as keyof typeof heroData;
+          const timeKey = `${platform}${
+            mode === 'quickplay' ? 'Quickplay' : 'Competitive'
+          }Time` as keyof typeof heroData;
           const platformKey = `${platform}Time` as keyof typeof heroData;
-          
+
           (heroData[timeKey] as number) += value;
           (heroData[platformKey] as number) += value;
         });
       });
     });
 
-    const combinedTimes = Array.from(heroTimeMap.entries()).map(([hero, times]) => ({
-      hero,
-      ...times,
-    }));
+    const combinedTimes = Array.from(heroTimeMap.entries()).map(
+      ([hero, times]) => ({
+        hero,
+        ...times,
+      }),
+    );
 
     combinedTimes.sort((a, b) => b.totalTime - a.totalTime);
 
@@ -116,10 +124,14 @@ export default function Characters() {
     <View style={getThemedStyles(isDarkMode).container}>
       <View style={homeStyles.heroTitleContainer}>
         <View>
-          <Text style={[getThemedStyles(isDarkMode).text, homeStyles.heroTitle]}>
+          <Text
+            style={[getThemedStyles(isDarkMode).text, homeStyles.heroTitle]}
+          >
             {t('characters')}
           </Text>
-          <Text style={[getThemedStyles(isDarkMode).text, homeStyles.heroSubtitle]}>
+          <Text
+            style={[getThemedStyles(isDarkMode).text, homeStyles.heroSubtitle]}
+          >
             {t('gameTimeAll')}
           </Text>
         </View>
@@ -167,6 +179,6 @@ const homeStyles = StyleSheet.create({
   heroSubtitle: {
     fontSize: 14,
     textAlign: 'left',
-    marginBottom: 16
+    marginBottom: 16,
   },
 });

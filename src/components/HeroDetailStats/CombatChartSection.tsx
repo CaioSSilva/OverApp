@@ -12,45 +12,45 @@ interface CombatChartSectionProps {
   isDarkMode: boolean;
 }
 
-const CombatChartSection = React.memo<CombatChartSectionProps>(({ 
-  chartData, 
-  chartConfig, 
-  sectionTitle, 
-  isDarkMode 
-}) => {
-  const hasData = chartData.datasets[0].data.some((val: number) => val > 0);
-  const titleStyle = useMemo(() => ({
-    ...styles.sectionTitle,
-    color: isDarkMode ? '#ffffff' : '#1f2937'
-  }), [isDarkMode]);
-  
-  if (!hasData) return null;
+const CombatChartSection = React.memo<CombatChartSectionProps>(
+  ({ chartData, chartConfig, sectionTitle, isDarkMode }) => {
+    const hasData = chartData.datasets[0].data.some((val: number) => val > 0);
+    const titleStyle = useMemo(
+      () => ({
+        ...styles.sectionTitle,
+        color: isDarkMode ? '#ffffff' : '#1f2937',
+      }),
+      [isDarkMode],
+    );
 
-  return (
-    <View style={styles.section}>
-      <Text style={titleStyle}>{sectionTitle}</Text>
-      <View style={styles.chartContainer}>
-        <BarChart
-          data={chartData}
-          width={chartWidth}
-          height={200}
-          chartConfig={chartConfig}
-          style={styles.chart}
-          withCustomBarColorFromData={true}
-          flatColor={true}
-          showBarTops={false}
-          yAxisLabel=""
-          yAxisSuffix=""
-          withInnerLines={false}
-          showValuesOnTopOfBars={false}
-          fromZero={true}
-          horizontalLabelRotation={0}
-          verticalLabelRotation={0}
-        />
+    if (!hasData) return null;
+
+    return (
+      <View style={styles.section}>
+        <Text style={titleStyle}>{sectionTitle}</Text>
+        <View style={styles.chartContainer}>
+          <BarChart
+            data={chartData}
+            width={chartWidth}
+            height={200}
+            chartConfig={chartConfig}
+            style={styles.chart}
+            withCustomBarColorFromData={true}
+            flatColor={true}
+            showBarTops={false}
+            yAxisLabel=""
+            yAxisSuffix=""
+            withInnerLines={false}
+            showValuesOnTopOfBars={false}
+            fromZero={true}
+            horizontalLabelRotation={0}
+            verticalLabelRotation={0}
+          />
+        </View>
       </View>
-    </View>
-  );
-});
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   section: {

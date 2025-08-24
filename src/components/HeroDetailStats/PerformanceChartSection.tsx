@@ -12,41 +12,41 @@ interface PerformanceChartSectionProps {
   isDarkMode: boolean;
 }
 
-const PerformanceChartSection = React.memo<PerformanceChartSectionProps>(({ 
-  performanceData, 
-  chartConfig, 
-  sectionTitle, 
-  isDarkMode 
-}) => {
-  const hasData = performanceData.data.some((val: number) => val > 0.01);
-  const titleStyle = useMemo(() => ({
-    ...styles.sectionTitle,
-    color: isDarkMode ? '#ffffff' : '#1f2937'
-  }), [isDarkMode]);
-  
-  if (!hasData) return null;
+const PerformanceChartSection = React.memo<PerformanceChartSectionProps>(
+  ({ performanceData, chartConfig, sectionTitle, isDarkMode }) => {
+    const hasData = performanceData.data.some((val: number) => val > 0.01);
+    const titleStyle = useMemo(
+      () => ({
+        ...styles.sectionTitle,
+        color: isDarkMode ? '#ffffff' : '#1f2937',
+      }),
+      [isDarkMode],
+    );
 
-  return (
-    <View style={styles.section}>
-      <Text style={titleStyle}>{sectionTitle}</Text>
-      <View style={styles.chartContainer}>
-        <View style={styles.progressChartWrapper}>
-          <ProgressChart
-            data={performanceData}
-            width={chartWidth}
-            height={180}
-            strokeWidth={12}
-            radius={28}
-            chartConfig={chartConfig}
-            hideLegend={false}
-            style={styles.chart}
-            withCustomBarColorFromData={false}
-          />
+    if (!hasData) return null;
+
+    return (
+      <View style={styles.section}>
+        <Text style={titleStyle}>{sectionTitle}</Text>
+        <View style={styles.chartContainer}>
+          <View style={styles.progressChartWrapper}>
+            <ProgressChart
+              data={performanceData}
+              width={chartWidth}
+              height={180}
+              strokeWidth={12}
+              radius={28}
+              chartConfig={chartConfig}
+              hideLegend={false}
+              style={styles.chart}
+              withCustomBarColorFromData={false}
+            />
+          </View>
         </View>
       </View>
-    </View>
-  );
-});
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   section: {

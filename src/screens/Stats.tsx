@@ -21,18 +21,23 @@ export default function Stats() {
   const { getProfileById } = dataService();
   const { t } = useTranslation();
 
-  const fetchProfile = useCallback(
-    () => getProfileById(),
-    [getProfileById],
-  );
+  const fetchProfile = useCallback(() => getProfileById(), [getProfileById]);
 
   useEffect(() => {
     fetchProfile().then(setProfile);
   }, [fetchProfile]);
 
   return (
-    <ScrollView scrollEnabled={scroll} style={getThemedStyles(isDarkMode).container}>
-      <Text style={[getThemedStyles(isDarkMode).text, getThemedStyles(isDarkMode).title]}>
+    <ScrollView
+      scrollEnabled={scroll}
+      style={getThemedStyles(isDarkMode).container}
+    >
+      <Text
+        style={[
+          getThemedStyles(isDarkMode).text,
+          getThemedStyles(isDarkMode).title,
+        ]}
+      >
         {t('player')}
       </Text>
       {profile ? (
@@ -40,7 +45,7 @@ export default function Stats() {
       ) : (
         <SkeletonPlaceholder
           backgroundColor={isDarkMode ? '#222222ff' : '#9f9e9cff'}
-          highlightColor='#777'
+          highlightColor="#777"
         >
           <SkeletonPlaceholder.Item
             flexDirection="row"

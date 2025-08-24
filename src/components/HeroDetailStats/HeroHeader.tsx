@@ -7,10 +7,13 @@ interface HeroHeaderProps {
 }
 
 const HeroHeader = React.memo<HeroHeaderProps>(({ heroName, isDarkMode }) => {
-  const headerStyle = useMemo(() => ({
-    ...styles.heroHeader,
-    backgroundColor: isDarkMode ? '#1e1e1e' : '#667eea'
-  }), [isDarkMode]);
+  const headerStyle = useMemo(
+    () => ({
+      ...styles.heroHeader,
+      backgroundColor: isDarkMode ? '#1e1e1e' : '#667eea',
+    }),
+    [isDarkMode],
+  );
 
   return (
     <View style={headerStyle}>

@@ -15,7 +15,7 @@ export interface HeroStats {
 }
 
 export interface OverwatchPlayerStats {
-  "all-heroes": StatCategory[];
+  'all-heroes': StatCategory[];
   ana: StatCategory[];
   cassidy: StatCategory[];
   orisa: StatCategory[];
@@ -25,17 +25,17 @@ export interface OverwatchPlayerStats {
 }
 
 export interface FlexibleOverwatchStats {
-  "all-heroes": StatCategory[];
+  'all-heroes': StatCategory[];
   [heroName: string]: StatCategory[];
 }
 
 export enum StatCategoryType {
-  BEST = "best",
-  AVERAGE = "average",
-  GAME = "game",
-  COMBAT = "combat",
-  ASSISTS = "assists",
-  HERO_SPECIFIC = "hero_specific"
+  BEST = 'best',
+  AVERAGE = 'average',
+  GAME = 'game',
+  COMBAT = 'combat',
+  ASSISTS = 'assists',
+  HERO_SPECIFIC = 'hero_specific',
 }
 
 export interface TypedStatCategory {
@@ -45,7 +45,7 @@ export interface TypedStatCategory {
 }
 
 export interface TypedOverwatchStats {
-  "all-heroes": TypedStatCategory[];
+  'all-heroes': TypedStatCategory[];
   [heroName: string]: TypedStatCategory[];
 }
 
