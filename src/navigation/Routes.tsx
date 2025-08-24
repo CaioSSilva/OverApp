@@ -6,7 +6,10 @@ import { useTranslation } from 'react-i18next';
 import Maps from '../screens/Maps';
 import { MapPin } from 'lucide-react-native';
 import Characters from '../screens/Characters';
-import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from '@react-navigation/stack';
 import Details from '../screens/Details';
 import { RouteProp } from '@react-navigation/native';
 import { DetailsProps } from '../interfaces/Details.model';
@@ -93,7 +96,13 @@ function Stack() {
         gestureDirection: 'horizontal',
       }}
     >
-      <StackNavigator.Screen name="Details" component={DetailsWrapper} />
+      <StackNavigator.Screen
+        name="Details"
+        options={{
+          headerShown: false,
+        }}
+        component={DetailsWrapper}
+      />
     </StackNavigator.Navigator>
   );
 }
