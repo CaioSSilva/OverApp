@@ -1,8 +1,10 @@
+import { Role } from "./Hero.model";
+
 export interface HeroDetails {
   name: string;
   description: string;
   portrait: string;
-  role: string;
+  role: Role;
   location: string;
   age: number;
   birthday: string;

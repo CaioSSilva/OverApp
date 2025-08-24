@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { HeroDetails } from '../../../interfaces/HeroStory.model';
 import { getThemedStyles, COLORS, TYPOGRAPHY, SPACING, BORDER_RADIUS } from '../../../styles/theme';
+import { roleColors } from '../../../interfaces/HeroCard.model';
 
 interface HeroHeaderProps {
   heroDetails: HeroDetails;
@@ -13,19 +14,6 @@ export function HeroHeader({ heroDetails, isDarkMode }: HeroHeaderProps) {
   const themedStyles = getThemedStyles(isDarkMode);
   const { t } = useTranslation();
 
-  const getRoleColor = (role: string) => {
-    switch (role.toLowerCase()) {
-      case 'tank':
-        return '#f99e1a';
-      case 'damage':
-        return '#f44336';
-      case 'support':
-        return '#13cd13';
-      default:
-        return COLORS.PRIMARY;
-    }
-  };
-
   return (
     <View style={styles.headerGradient}>
       <View style={styles.headerContainer}>
@@ -34,8 +22,8 @@ export function HeroHeader({ heroDetails, isDarkMode }: HeroHeaderProps) {
           <Text style={[themedStyles.title, themedStyles.text, styles.heroName]}>
             {heroDetails.name}
           </Text>
-          <View style={[styles.roleContainer, { backgroundColor: getRoleColor(heroDetails.role) }]}>
-            <Text style={styles.roleText}>{heroDetails.role.toUpperCase()}</Text>
+          <View style={[styles.roleContainer, { backgroundColor: roleColors[heroDetails.role] }]}>
+            <Text style={styles.roleText}>{t(`characters.${heroDetails.role}`).toUpperCase()}</Text>
           </View>
           <Text style={[themedStyles.text, styles.location]}>{heroDetails.location}</Text>
           <View style={styles.personalInfoContainer}>

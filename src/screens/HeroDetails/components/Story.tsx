@@ -1,8 +1,23 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, Linking, StyleSheet, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  Linking,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Story as StoryInterface } from '../../../interfaces/HeroStory.model';
-import { getThemedStyles, COLORS, TYPOGRAPHY, SPACING, BORDER_RADIUS } from '../../../styles/theme';
+import {
+  getThemedStyles,
+  COLORS,
+  TYPOGRAPHY,
+  SPACING,
+  BORDER_RADIUS,
+} from '../../../styles/theme';
 
 interface StoryProps {
   story: StoryInterface;
@@ -13,7 +28,7 @@ export function Story({ story, isDarkMode }: StoryProps) {
   const themedStyles = getThemedStyles(isDarkMode);
   const { t } = useTranslation();
   const screenWidth = Dimensions.get('window').width;
-  const cardWidth = screenWidth - (SPACING.MD * 4); // Padding nas laterais
+  const cardWidth = screenWidth - SPACING.MD * 4; // Padding nas laterais
 
   const handleMediaPress = async (link: string) => {
     await Linking.openURL(link);
@@ -21,32 +36,49 @@ export function Story({ story, isDarkMode }: StoryProps) {
 
   return (
     <View style={[themedStyles.card, styles.section]}>
-      <Text style={[themedStyles.title, themedStyles.text, styles.sectionTitle]}>
+      <Text
+        style={[themedStyles.title, themedStyles.text, styles.sectionTitle]}
+      >
         {t('heroDetails.story')}
       </Text>
-      
-      <Text style={[themedStyles.text, styles.storySummary]}>{story.summary}</Text>
-      
-      <TouchableOpacity 
-        style={styles.mediaButton}
-        onPress={() => handleMediaPress(story.media.link)}
-      >
-        <Text style={styles.mediaButtonText}>
-          {story.media.type === 'video' ? t('heroDetails.watchVideo') : t('heroDetails.readStory')}
-        </Text>
-      </TouchableOpacity>
+
+      <Text style={[themedStyles.text, styles.storySummary]}>
+        {story.summary}
+      </Text>
+
+      {story.media && (
+        <TouchableOpacity
+          style={styles.mediaButton}
+          onPress={() => handleMediaPress(story.media.link)}
+        >
+          <Text style={styles.mediaButtonText}>
+            {story.media.type === 'video'
+              ? t('heroDetails.watchVideo')
+              : t('heroDetails.readStory')}
+          </Text>
+        </TouchableOpacity>
+      )}
 
       <View style={styles.chaptersContainer}>
         {story.chapters.map((chapter, index) => (
           <View key={index} style={[styles.chapterCard, { width: cardWidth }]}>
             <TouchableOpacity onPress={() => handleMediaPress(chapter.picture)}>
-              <Image source={{ uri: chapter.picture }} style={styles.chapterCardImage} />
+              <Image
+                source={{ uri: chapter.picture }}
+                style={styles.chapterCardImage}
+              />
             </TouchableOpacity>
             <View style={styles.chapterCardContent}>
-              <Text style={[themedStyles.text, styles.chapterCardTitle, { color: COLORS.PRIMARY }]}>
+              <Text
+                style={[
+                  themedStyles.text,
+                  styles.chapterCardTitle,
+                  { color: COLORS.PRIMARY },
+                ]}
+              >
                 {chapter.title}
               </Text>
-              <ScrollView 
+              <ScrollView
                 style={styles.textScrollView}
                 showsVerticalScrollIndicator={true}
                 nestedScrollEnabled={true}
