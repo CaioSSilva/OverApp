@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, useColorScheme, View } from 'react-native';
-import { getThemedStyles } from '../../theme';
+import { getThemedStyles } from '../styles/theme';
 
 export default function Matchs() {
   const isDarkMode = useColorScheme() === 'dark';

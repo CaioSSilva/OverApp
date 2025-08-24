@@ -14,7 +14,7 @@ import { locale } from '../../i18n';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
 import Button from './Button/Button';
 import { dataService } from '../hooks/data';
-import { getThemedStyles } from '../../theme';
+import { getThemedStyles } from '../styles/theme';
 
 const getSheetStyles = (isDarkMode: boolean) =>
   isDarkMode

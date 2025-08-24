@@ -11,7 +11,7 @@ import { OverwatchProfile } from '../interfaces/Summary.model';
 import ProfileCard from '../components/ProfileCard';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import HeroStatsSection from '../components/HeroStatsSection';
-import { getThemedStyles } from '../../theme';
+import { getThemedStyles } from '../styles/theme';
 
 export default function Stats() {
   const isDarkMode = useColorScheme() === 'dark';

@@ -10,7 +10,7 @@ import {
   CalcHeroTimesReturn,
   OverwatchProfileFullStats,
 } from '../interfaces/Summary.model';
-import { getThemedStyles } from '../../theme';
+import { getThemedStyles } from '../styles/theme';
 
 export default function Characters() {
   const isDarkMode = useColorScheme() === 'dark';

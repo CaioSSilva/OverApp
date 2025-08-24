@@ -1,5 +1,5 @@
 import { View, Text, useColorScheme } from 'react-native';
-import { getThemedStyles } from '../../theme';
+import { getThemedStyles } from '../styles/theme';
 
 export default function Maps() {
   const isDarkMode = useColorScheme() === 'dark';

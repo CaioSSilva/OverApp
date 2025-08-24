@@ -7,7 +7,7 @@ import Button from '../Button/Button';
 import LinearGradient from 'react-native-linear-gradient';
 import { ViewStyle } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { getThemedStyles } from '../../../theme';
+import { getThemedStyles } from '../../styles/theme';
 
 const getCardBg = (isDarkMode: boolean) =>
   isDarkMode ? styles.cardDark : styles.cardLight;

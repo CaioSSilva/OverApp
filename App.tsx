@@ -9,7 +9,7 @@ import { AppContext } from './src/contexts/AppContext';
 import ContextsProvider from './src/contexts/ContextProvider';
 import Routes from './src/navigation/Routes';
 import { NavigationContainer } from '@react-navigation/native';
-import { getThemedStyles } from './theme';
+import { getThemedStyles } from './src/styles/theme';
 
 export default function App() {
   return (

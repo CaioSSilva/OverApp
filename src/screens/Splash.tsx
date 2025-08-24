@@ -12,7 +12,7 @@ import {
 
 import { messages } from '../../messages';
 import { useTranslation } from 'react-i18next';
-import { getTheme, getThemedStyles } from '../../theme';
+import { getTheme, getThemedStyles } from '../styles/theme';
 
 export default function Splash() {
   const isDarkMode = useColorScheme() === 'dark';

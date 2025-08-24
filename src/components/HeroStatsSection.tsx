@@ -1,6 +1,6 @@
 import { StyleSheet, Text, useColorScheme, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { getThemedStyles } from '../../theme';
+import { getThemedStyles } from '../styles/theme';
 import { useTranslation } from 'react-i18next';
 import { useCallback, useEffect, useState } from 'react';
 import { Hero } from '../interfaces/Hero.model';
