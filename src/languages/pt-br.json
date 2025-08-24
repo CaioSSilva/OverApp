@@ -31,6 +31,9 @@
   "specialSkills": "Habilidades Especiais",
   "bestPerformances": "Melhores Performances",
   "averages": "Médias",
+  "game": "Jogo",
+  "combat": "Combate",
+  "assists" : "Assistências",
   "sessionSummary": "Resumo da Sessão",
   "winRate": "Taxa de Vitória",
   "kdRatio": "K/D Ratio",
@@ -39,7 +42,6 @@
   "eliminations_short": "Elim.",
   "deaths": "Mortes",
   "final_blows": "Finais",
-  "assists": "Assists",
   "objective": "Obj.",
   "messages": {
     "splash": {

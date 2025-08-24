@@ -50,11 +50,20 @@ const CategoryStatsSection = React.memo<CategoryStatsSectionProps>(({
         const statsToShow = category.stats.slice(0, 6);
         if (statsToShow.length === 0) return null;
 
-        const sectionTitle = 
-          category.label === 'Hero Specific' ? t('specialSkills') :
-          category.label === 'Best' ? t('bestPerformances') :
-          category.label === 'Average' ? t('averages') :
-          category.label || category.category;
+        const getSectionTitle = () => {
+          if (category.label === 'Hero Specific') return t('specialSkills');
+          if (category.label === 'Best') return t('bestPerformances');
+          if (category.label === 'Average') return t('averages');
+          
+          const categoryKey = category.category?.toLowerCase();
+          if (categoryKey === 'game') return t('game');
+          if (categoryKey === 'combat') return t('combat');
+          if (categoryKey === 'assists') return t('assists');
+          
+          return category.label || category.category;
+        };
+
+        const sectionTitle = getSectionTitle();
 
         return (
           <View key={`category-${categoryIndex}`} style={styles.section}>

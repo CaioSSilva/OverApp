@@ -31,6 +31,9 @@
   "specialSkills": "Special Skills",
   "bestPerformances": "Best Performances",
   "averages": "Averages",
+  "game": "Game",
+  "combat": "Combat",
+  "assists" : "Assists", 
   "sessionSummary": "Session Summary",
   "winRate": "Win Rate",
   "kdRatio": "K/D Ratio",
@@ -39,7 +42,6 @@
   "eliminations_short": "Elim.",
   "deaths": "Deaths",
   "final_blows": "Finals",
-  "assists": "Assists",
   "objective": "Obj.",
   "messages": {
     "splash": {
