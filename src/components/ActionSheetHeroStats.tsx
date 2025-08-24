@@ -2,42 +2,10 @@ import React, { useMemo, useCallback } from 'react';
 import { View, Text, ScrollView, Dimensions, StyleSheet } from 'react-native';
 import { BarChart, ProgressChart } from 'react-native-chart-kit';
 import { useTranslation } from 'react-i18next';
-interface Stat {
-  key: string;
-  label: string;
-  value: number | string;
-}
-
-interface Category {
-  category: string;
-  label: string;
-  stats: Stat[];
-}
-
-interface Metric {
-  title: string;
-  value: string | number;
-  color: string;
-  icon: string;
-}
-
-interface StatCardProps {
-  title: string;
-  value: string | number;
-  subtitle?: string;
-  color?: string;
-  icon?: string;
-  isDarkMode?: boolean;
-}
-
-interface ActionSheetHeroStatsProps {
-  statsData: Category[] | Record<string, Category[]>;
-  heroName?: string;
-  isDarkMode?: boolean;
-}
+import { ActionSheetHeroStatsProps, Category, Metric, Stat, StatCardProps } from '../interfaces/Details.model';
 
 const { width: screenWidth } = Dimensions.get('window');
-const chartWidth = screenWidth - 40; // Ajustado para ficar similar aos cards de habilidades especiais
+const chartWidth = screenWidth - 40;
 
 const StatCard: React.FC<StatCardProps> = ({
   title,

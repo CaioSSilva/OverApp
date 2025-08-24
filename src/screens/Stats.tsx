@@ -5,13 +5,13 @@ import {
   useColorScheme,
   useWindowDimensions,
 } from 'react-native';
-import { getThemedStyles } from '../../styles';
 import { useTranslation } from 'react-i18next';
 import { dataService } from '../hooks/data';
 import { OverwatchProfile } from '../interfaces/Summary.model';
 import ProfileCard from '../components/ProfileCard';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import HeroStatsSection from '../components/HeroStatsSection';
+import { getThemedStyles } from '../../theme';
 
 export default function Stats() {
   const isDarkMode = useColorScheme() === 'dark';

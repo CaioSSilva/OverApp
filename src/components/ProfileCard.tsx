@@ -12,9 +12,9 @@ import { SvgUri } from 'react-native-svg';
 import { useTranslation } from 'react-i18next';
 import { locale } from '../../i18n';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
-import { getThemedStyles } from '../../styles';
 import Button from './Button/Button';
 import { dataService } from '../hooks/data';
+import { getThemedStyles } from '../../theme';
 
 const getSheetStyles = (isDarkMode: boolean) =>
   isDarkMode
@@ -114,7 +114,7 @@ export default function ProfileCard({
           <Text
             style={[
               getThemedStyles(isDarkMode).text,
-              getThemedStyles(isDarkMode).title,
+              getThemedStyles(isDarkMode).boldText,
             ]}
           >
             {t('perfil')}

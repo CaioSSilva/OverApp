@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, useColorScheme, View } from 'react-native';
-import { getThemedStyles } from '../../styles';
 import { dataService } from '../hooks/data';
 import { Hero } from '../interfaces/Hero.model';
 import HeroCardPlaceholder from '../components/HeroCard/PlaceHolder';
@@ -11,6 +10,7 @@ import {
   CalcHeroTimesReturn,
   OverwatchProfileFullStats,
 } from '../interfaces/Summary.model';
+import { getThemedStyles } from '../../theme';
 
 export default function Characters() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -158,7 +158,7 @@ const homeStyles = StyleSheet.create({
   },
 
   heroTitle: {
-    fontSize: 24,
+    fontSize: 20,
     textAlign: 'left',
     fontWeight: 'bold',
     marginTop: 16,

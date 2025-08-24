@@ -6,12 +6,35 @@ import { useTranslation } from 'react-i18next';
 import Maps from '../screens/Maps';
 import { MapPin } from 'lucide-react-native';
 import Characters from '../screens/Characters';
+import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
+import Details from '../screens/Details';
+import { RouteProp } from '@react-navigation/native';
+import { DetailsProps } from '../interfaces/Details.model';
 
 const TabNavigator = createBottomTabNavigator();
 
-export default function Routes() {
+type StackParamList = {
+  Details: {
+    status: DetailsProps['status'];
+    hero: DetailsProps['hero'];
+  };
+};
+
+const StackNavigator = createStackNavigator<StackParamList>();
+
+type DetailsScreenProps = {
+  navigation: StackNavigationProp<StackParamList, 'Details'>;
+  route: RouteProp<StackParamList, 'Details'>;
+};
+
+function DetailsWrapper({ route }: DetailsScreenProps) {
+  const { status, hero } = route.params;
+  return <Details status={status} hero={hero} />;
+}
+
+function Tabs() {
   const isDarkMode = useColorScheme() === 'dark';
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <TabNavigator.Navigator
@@ -39,34 +62,62 @@ export default function Routes() {
         component={Characters}
         options={{
           tabBarIcon: ({ size, color }) =>
-            createImageIcon( require('../assets/logo.png'),
-              size,
-              color,
-            ),
+            createImageIcon(require('../assets/logo.png'), size, color),
         }}
       />
       <TabNavigator.Screen
         name={t('maps')}
         component={Maps}
         options={{
-          tabBarIcon: ({ size, color }) =>
-            createMapsIcon(size, color),
+          tabBarIcon: ({ size, color }) => createMapsIcon(size, color),
         }}
       />
       <TabNavigator.Screen
         name={t('matches')}
         component={Matchs}
         options={{
-          tabBarIcon: ({ color, size }) => createImageIcon(require('../assets/rank_badge.png'), size, color),
+          tabBarIcon: ({ color, size }) =>
+            createImageIcon(require('../assets/rank_badge.png'), size, color),
         }}
       />
     </TabNavigator.Navigator>
   );
 }
 
+function Stack() {
+  return (
+    <StackNavigator.Navigator
+      screenOptions={{
+        headerShown: true,
+        gestureEnabled: true,
+        gestureDirection: 'horizontal',
+      }}
+    >
+      <StackNavigator.Screen name="Details" component={DetailsWrapper} />
+    </StackNavigator.Navigator>
+  );
+}
+
+const MainStackNavigator = createStackNavigator();
+
+export default function Routes() {
+  return (
+    <MainStackNavigator.Navigator
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: true,
+        gestureDirection: 'horizontal',
+      }}
+    >
+      <MainStackNavigator.Screen name="Tabs" component={Tabs} />
+      <MainStackNavigator.Screen name="Stack" component={Stack} />
+    </MainStackNavigator.Navigator>
+  );
+}
+
 const createMapsIcon = (size: number, color: string) => {
   return <MapPin strokeWidth={2.5} size={size} color={color} />;
-}
+};
 
 const createImageIcon = (source: any, size: number, color: string) => {
   return (

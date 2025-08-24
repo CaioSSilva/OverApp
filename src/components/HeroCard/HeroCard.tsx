@@ -3,23 +3,16 @@ import { HeroCardProps, roleColors } from '../../interfaces/HeroCard.model';
 import { useTranslation } from 'react-i18next';
 import { HeroStatsResponse } from '../../interfaces/Status.model';
 import { Info } from 'lucide-react-native';
-import { getThemedStyles } from '../../../styles';
 import Button from '../Button/Button';
-import { RefObject, useRef } from 'react';
-import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
-import ActionSheetHeroStats from '../ActionSheetHeroStats';
 import LinearGradient from 'react-native-linear-gradient';
 import { ViewStyle } from 'react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { getThemedStyles } from '../../../theme';
 
 const getCardBg = (isDarkMode: boolean) =>
   isDarkMode ? styles.cardDark : styles.cardLight;
 const getTextColor = (isDarkMode: boolean) =>
   isDarkMode ? styles.textDark : styles.textLight;
-
-const getSheetStyles = (isDarkMode: boolean) =>
-  isDarkMode
-    ? styles.actionSheetContainerBlack
-    : styles.actionSheetContainerwhite;
 
 export default function HeroCard({
   hero,
@@ -29,7 +22,7 @@ export default function HeroCard({
 }: HeroCardProps) {
   const isDarkMode = useColorScheme() === 'dark';
   const { t } = useTranslation();
-  const detailSheet = useRef<ActionSheetRef>(null);
+  const navigation = useNavigation<NavigationProp<any>>();
 
   const calcFillWidth = () => {
     if (!time || !maxSize) return '0%';
@@ -59,7 +52,17 @@ export default function HeroCard({
     return `${hours}h ${minutes}m`;
   };
 
-  console.log('maxSize', calcFillWidth());
+  const openHeroStatus = () => {
+    const findStatus = findCardStatus(status!, hero.key);
+    console.log('Navigating to Details with:', { findStatus, hero });
+    navigation.navigate('Stack', {
+      screen: 'Details',
+      params: {
+        status: findStatus,
+        hero: hero,
+      },
+    });
+  };
 
   return (
     <>
@@ -111,10 +114,7 @@ export default function HeroCard({
           <View style={styles.statsContainer}>
             {status &&
               (findCardStatus(status, hero.key) ? (
-                <Button
-                  title={t('details')}
-                  onPress={() => openHeroStatus(detailSheet)}
-                />
+                <Button title={t('details')} onPress={() => openHeroStatus()} />
               ) : (
                 <>
                   <View style={styles.noStatsContainer}>
@@ -130,7 +130,7 @@ export default function HeroCard({
                 <Text
                   style={[
                     getThemedStyles(isDarkMode).text,
-                    getThemedStyles(isDarkMode).title,
+                    getThemedStyles(isDarkMode).boldText,
                     styles.timeText,
                   ]}
                 >
@@ -141,27 +141,11 @@ export default function HeroCard({
           </View>
         </View>
       </View>
-      <ActionSheet
-        containerStyle={getSheetStyles(isDarkMode)}
-        ref={detailSheet}
-        gestureEnabled={false}
-        headerAlwaysVisible
-      >
-        <ActionSheetHeroStats
-          statsData={findCardStatus(status!, hero.key)!}
-          heroName={hero.name}
-          isDarkMode={isDarkMode}
-        />
-      </ActionSheet>
     </>
   );
 }
 const findCardStatus = (status: HeroStatsResponse, heroName: string) => {
   return status ? status[heroName] || undefined : undefined;
-};
-
-const openHeroStatus = (ref: RefObject<ActionSheetRef | null>) => {
-  ref.current?.show();
 };
 
 const styles = StyleSheet.create({
@@ -240,17 +224,6 @@ const styles = StyleSheet.create({
   info: {
     backgroundColor: '#df6363',
     borderRadius: '100%',
-  },
-  actionSheetContainerBlack: {
-    height: 400,
-    display: 'flex',
-    backgroundColor: '#2d2d2d',
-  },
-
-  actionSheetContainerwhite: {
-    height: 400,
-    display: 'flex',
-    backgroundColor: '#e2e2e2',
   },
   timeText: {
     fontSize: 20,

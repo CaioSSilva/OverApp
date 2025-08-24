@@ -4,12 +4,12 @@ import {
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import Splash from './src/screens/Splash';
-import { getThemedStyles } from './styles';
 import { useContext, useEffect } from 'react';
 import { AppContext } from './src/contexts/AppContext';
 import ContextsProvider from './src/contexts/ContextProvider';
 import Routes from './src/navigation/Routes';
 import { NavigationContainer } from '@react-navigation/native';
+import { getThemedStyles } from './theme';
 
 export default function App() {
   return (

@@ -10,9 +10,9 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { getTheme, getThemedStyles } from '../../styles';
 import { messages } from '../../messages';
 import { useTranslation } from 'react-i18next';
+import { getTheme, getThemedStyles } from '../../theme';
 
 export default function Splash() {
   const isDarkMode = useColorScheme() === 'dark';
