@@ -15,7 +15,7 @@ import PerformanceChartSection from './PerformanceChartSection';
 import CategoryStatsSection from './CategoryStatsSection';
 import SessionSummarySection from './SessionSummarySection';
 
-import { useStatsData, useFormatters, useStatIcon } from './hooks';
+import { useStatsData, useFormatters, useStatIcon } from '../../hooks/useHeroDetailStats';
 
 const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
   statsData,

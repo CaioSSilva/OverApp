@@ -5,10 +5,11 @@ import {
   OverwatchProfileFull,
 } from '../interfaces/Summary.model';
 import { HeroStatsResponse } from '../interfaces/Status.model';
+import { locale } from '../../i18n';
 
 const baseUrl = 'https://overfast-api.tekrop.fr';
 
-const player = 'Kento-12528';
+const player = 'Coruja-11482';
 
 //Kento-12528
 
@@ -42,8 +43,12 @@ const getStatusByHero = async (
   return response.data;
 };
 
+const getHeroDetails = async (heroId: string) => {
+  const response = await axios.get(`${baseUrl}/heroes/${heroId}?locale=${locale === 'pt' ? 'pt-br':'en-us'}`);
+  return response.data;
+};
+
 const logOut = () => {
-  // Placeholder for logout functionality
   console.log('User logged out');
 };
 
@@ -53,6 +58,7 @@ export function dataService() {
     getStatusByHero,
     getProfileById,
     getProfileFull,
+    getHeroDetails,
     logOut,
   };
 }

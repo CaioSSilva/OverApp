@@ -1,5 +1,5 @@
 import { useMemo, useCallback } from 'react';
-import { Category } from '../../interfaces/Details.model';
+import { Category } from '../interfaces/Details.model';
 
 export const useStatsData = (statsData: any, heroName: string) => {
   return useMemo(() => {

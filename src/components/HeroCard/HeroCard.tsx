@@ -1,4 +1,4 @@
-import { Image, Text, View, StyleSheet, useColorScheme } from 'react-native';
+import { Image, Text, View, StyleSheet, useColorScheme, TouchableOpacity } from 'react-native';
 import { HeroCardProps, roleColors } from '../../interfaces/HeroCard.model';
 import { useTranslation } from 'react-i18next';
 import { HeroStatsResponse } from '../../interfaces/Status.model';
@@ -54,7 +54,6 @@ export default function HeroCard({
 
   const openHeroStatus = () => {
     const findStatus = findCardStatus(status!, hero.key);
-    console.log('Navigating to Details with:', { findStatus, hero });
     navigation.navigate('Stack', {
       screen: 'Details',
       params: {
@@ -64,14 +63,26 @@ export default function HeroCard({
     });
   };
 
+
+const openHeroDetails = () => {
+  navigation.navigate('Stack', {
+    screen: 'HeroDetails',
+    params: {
+      hero: hero,
+    },
+  });
+}
+
   return (
     <>
-      <View
+      <TouchableOpacity
         style={[
           styles.card,
           getCardBg(isDarkMode),
           { borderLeftColor: roleColors[hero.role] },
         ]}
+        onPress={()=> openHeroDetails()}
+        disabled={showTimePlayed() ? false : true}
       >
         <LinearGradient
           colors={calcFilterColors()}
@@ -140,7 +151,7 @@ export default function HeroCard({
             )}
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     </>
   );
 }

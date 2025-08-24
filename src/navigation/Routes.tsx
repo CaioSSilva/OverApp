@@ -13,12 +13,16 @@ import {
 import Details from '../screens/Details';
 import { RouteProp } from '@react-navigation/native';
 import { DetailsProps } from '../interfaces/Details.model';
+import HeroDetails from '../screens/HeroDetails/HeroDetails';
 
 const TabNavigator = createBottomTabNavigator();
 
 type StackParamList = {
   Details: {
     status: DetailsProps['status'];
+    hero: DetailsProps['hero'];
+  };
+  HeroDetails: {
     hero: DetailsProps['hero'];
   };
 };
@@ -33,6 +37,16 @@ type DetailsScreenProps = {
 function DetailsWrapper({ route }: DetailsScreenProps) {
   const { status, hero } = route.params;
   return <Details status={status} hero={hero} />;
+}
+
+type HeroDetailsScreenProps = {
+  navigation: StackNavigationProp<StackParamList, 'HeroDetails'>;
+  route: RouteProp<StackParamList, 'HeroDetails'>;
+};
+
+function HeroDetailsWrapper({ route }: HeroDetailsScreenProps) {
+  const { hero } = route.params;
+  return <HeroDetails hero={hero} />;
 }
 
 function Tabs() {
@@ -102,6 +116,13 @@ function Stack() {
           headerShown: false,
         }}
         component={DetailsWrapper}
+      />
+       <StackNavigator.Screen
+        name="HeroDetails"
+        options={{
+          headerShown: false,
+        }}
+        component={HeroDetailsWrapper}
       />
     </StackNavigator.Navigator>
   );
