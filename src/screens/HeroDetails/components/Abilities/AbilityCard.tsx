@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { View, Text, Image, StyleSheet, Platform } from 'react-native';
 import { Ability } from '../../../../interfaces/HeroStory.model';
 import { getThemedStyles, COLORS, TYPOGRAPHY, SPACING, BORDER_RADIUS } from '../../../../styles/theme';
 import { OptimizedVideo } from './OptimizedVideo';
@@ -31,6 +31,9 @@ export const AbilityCard = React.memo(({
       if (isPaused) {
         setIsPaused(false);
         setIsOverlayVisible(false);
+        if (videoRef.current) {
+          videoRef.current.seek(0);
+        }
       } else {
         setIsPaused(true);
         setIsOverlayVisible(true);
@@ -59,6 +62,9 @@ export const AbilityCard = React.memo(({
     if (Platform.OS === 'android') {
       setIsPaused(true);
       setIsOverlayVisible(true);
+      if (videoRef.current) {
+        videoRef.current.seek(0);
+      }
     }
   }, []);
 
@@ -90,10 +96,9 @@ export const AbilityCard = React.memo(({
   const gradientHeight = calculateGradientHeight();
 
   return (
-    <TouchableOpacity
+    <View
       style={styles.abilityCardEnhanced}
-      onPress={handleCardPress}
-      activeOpacity={0.8}
+      onTouchEnd={handleCardPress}
     >
       <OptimizedVideo
         ref={videoRef}
@@ -131,7 +136,7 @@ export const AbilityCard = React.memo(({
           </View>
         </>
       )}
-    </TouchableOpacity>
+    </View>
   );
 });
 

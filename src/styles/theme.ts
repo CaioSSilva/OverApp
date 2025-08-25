@@ -141,14 +141,6 @@ export const getThemedStyles = (isDarkMode: boolean) => {
       borderRadius: BORDER_RADIUS.MD,
       padding: SPACING.MD,
       marginVertical: SPACING.XS,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.1,
-      shadowRadius: 3.84,
-      elevation: 5,
     },
 
     row: {

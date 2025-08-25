@@ -104,11 +104,7 @@ function Tabs() {
 function Stack() {
   return (
     <StackNavigator.Navigator
-      screenOptions={{
-        headerShown: true,
-        gestureEnabled: true,
-        gestureDirection: 'horizontal',
-      }}
+
     >
       <StackNavigator.Screen
         name="Details"
@@ -121,8 +117,6 @@ function Stack() {
       name="HeroDetails"
       options={{
         headerShown: false,
-        animation: 'none',
-        animationTypeForReplace: 'push',
       }}
       component={HeroDetailsWrapper}
       />
@@ -137,7 +131,7 @@ export default function Routes() {
     <MainStackNavigator.Navigator
       screenOptions={{
         headerShown: false,
-        gestureEnabled: true,
+        gestureEnabled: false,
         gestureDirection: 'horizontal',
       }}
     >
