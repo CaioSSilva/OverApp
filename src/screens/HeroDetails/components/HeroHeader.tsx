@@ -2,9 +2,16 @@ import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { HeroDetails } from '../../../interfaces/HeroStory.model';
-import { getThemedStyles, COLORS, TYPOGRAPHY, SPACING, BORDER_RADIUS } from '../../../styles/theme';
+import {
+  getThemedStyles,
+  COLORS,
+  TYPOGRAPHY,
+  SPACING,
+  BORDER_RADIUS,
+} from '../../../styles/theme';
 import { roleColors } from '../../../interfaces/HeroCard.model';
-
+import { ArrowLeft } from 'lucide-react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 interface HeroHeaderProps {
   heroDetails: HeroDetails;
   isDarkMode: boolean;
@@ -13,30 +20,64 @@ interface HeroHeaderProps {
 export function HeroHeader({ heroDetails, isDarkMode }: HeroHeaderProps) {
   const themedStyles = getThemedStyles(isDarkMode);
   const { t } = useTranslation();
+  const navigation = useNavigation<NavigationProp<any>>();
 
   return (
     <View style={styles.headerGradient}>
       <View style={styles.headerContainer}>
-        <Image source={{ uri: heroDetails.portrait }} style={styles.heroImage} />
+        <Image
+          source={{ uri: heroDetails.portrait }}
+          style={styles.heroImage}
+        />
         <View style={styles.heroInfo}>
-          <Text style={[themedStyles.title, themedStyles.text, styles.heroName]}>
-            {heroDetails.name}
-          </Text>
-          <View style={[styles.roleContainer, { backgroundColor: roleColors[heroDetails.role] }]}>
-            <Text style={styles.roleText}>{t(`characters.${heroDetails.role}`).toUpperCase()}</Text>
+          <View style={styles.heroNameContainer}>
+            <ArrowLeft style={styles.backIco} onPress={() => navigation.goBack()} size={23} color={COLORS.PRIMARY} />
+            <Text
+              style={[themedStyles.title, themedStyles.text, styles.heroName]}
+            >
+              {heroDetails.name}
+            </Text>
           </View>
-          <Text style={[themedStyles.text, styles.location]}>{heroDetails.location}</Text>
+          <View
+            style={[
+              styles.roleContainer,
+              { backgroundColor: roleColors[heroDetails.role] },
+            ]}
+          >
+            <Text style={styles.roleText}>
+              {t(`characters.${heroDetails.role}`).toUpperCase()}
+            </Text>
+          </View>
+          <Text style={[themedStyles.text, styles.location]}>
+            {heroDetails.location}
+          </Text>
           <View style={styles.personalInfoContainer}>
             <View style={styles.infoItem}>
-              <Text style={[themedStyles.text, styles.infoLabel]}>{t('common.age')}</Text>
-              <Text style={[themedStyles.text, styles.infoValue, { color: COLORS.PRIMARY }]}>
+              <Text style={[themedStyles.text, styles.infoLabel]}>
+                {t('common.age')}
+              </Text>
+              <Text
+                style={[
+                  themedStyles.text,
+                  styles.infoValue,
+                  { color: COLORS.PRIMARY },
+                ]}
+              >
                 {heroDetails.age}
               </Text>
             </View>
             <View style={styles.infoDivider} />
             <View style={styles.infoItem}>
-              <Text style={[themedStyles.text, styles.infoLabel]}>{t('common.birthday')}</Text>
-              <Text style={[themedStyles.text, styles.infoValue, { color: COLORS.PRIMARY }]}>
+              <Text style={[themedStyles.text, styles.infoLabel]}>
+                {t('common.birthday')}
+              </Text>
+              <Text
+                style={[
+                  themedStyles.text,
+                  styles.infoValue,
+                  { color: COLORS.PRIMARY },
+                ]}
+              >
                 {heroDetails.birthday}
               </Text>
             </View>
@@ -54,9 +95,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerGradient: {
-    backgroundColor: 'rgba(250, 156, 30, 0.1)',
     borderBottomLeftRadius: BORDER_RADIUS.LG,
     borderBottomRightRadius: BORDER_RADIUS.LG,
+  },
+  heroNameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.SM,
+  },
+  backIco:{
+    backgroundColor: 'rgba(250, 155, 30, 0.4)',
+    borderRadius: '100%',
   },
   heroImage: {
     width: 120,
