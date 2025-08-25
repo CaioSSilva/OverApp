@@ -11,14 +11,14 @@ import {
   Dimensions,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Story as StoryInterface } from '../../../../interfaces/HeroStory.model';
+import { Story as StoryInterface } from '../../../interfaces/HeroStory.model';
 import {
   getThemedStyles,
   COLORS,
   TYPOGRAPHY,
   SPACING,
   BORDER_RADIUS,
-} from '../../../../styles/theme';
+} from '../../../styles/theme';
 
 interface StoryProps {
   story: StoryInterface;

@@ -12,7 +12,7 @@ import { useHeroDetails } from "../../hooks/useHeroDetails";
 import { HeroHeader } from "./components/HeroHeader";
 import { HitPoints } from "./components/HitPoints";
 import { Abilities } from "./components/Abilities";
-import { Story } from "./components/Story/Story";
+import { Story } from "./components/Story";
 import { LoadingSkeleton } from "./components/LoadingSkeleton";
 
 export default function HeroDetails({ hero }: { hero: Hero }) {
