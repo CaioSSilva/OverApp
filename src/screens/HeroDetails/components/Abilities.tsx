@@ -77,49 +77,50 @@ export const Abilities = React.memo(({ abilities, isDarkMode }: AbilitiesProps) 
       <Text style={[themedStyles.title, themedStyles.text, styles.sectionTitle]}>
         {t('heroDetails.abilities')}
       </Text>
-      {abilities.map((ability, index) => {
-        const isOverlayVisible = !hiddenOverlays.has(index);
-        const gradientHeight = calculateGradientHeight(ability, index);
+      <View style={{ gap: SPACING.MD }}>
+        {abilities.map((ability, index) => {
+          const isOverlayVisible = !hiddenOverlays.has(index);
+          const gradientHeight = calculateGradientHeight(ability, index);
         
-        return (
-          <TouchableOpacity 
-            key={index} 
-            style={styles.abilityCardEnhanced}
-            onPress={() => handleCardPress(index)}
-          >
-            <Video
-              source={{ uri: ability.video.link.mp4 }}
-              style={styles.abilityVideo}
-              resizeMode="cover"
-              repeat={true}
-              muted={true}
-              onLoad={(data) => handleVideoLoad(index, data)}
-              poster={ability.video.thumbnail}
-            />
-            
-            {isOverlayVisible && (
-              <>
-                <View style={styles.abilityGradientTop} />
-                <View style={[styles.abilityGradientBottom, { height: gradientHeight }]} />
-                <View 
-                  style={styles.abilityOverlay}
-                  onLayout={(event) => handleOverlayLayout(index, event)}
-                >
-                  <View style={styles.abilityHeader}>
-                    <Image source={{ uri: ability.icon }} style={styles.abilityIconSmall} />
-                    <Text style={[themedStyles.text, styles.abilityName, styles.abilityTextWhite]}>
-                      {ability.name}
+          return (
+            <TouchableOpacity
+              key={index}
+              style={styles.abilityCardEnhanced}
+              onPress={() => handleCardPress(index)}
+            >
+              <Video
+                source={{ uri: ability.video.link.mp4 }}
+                style={styles.abilityVideo}
+                resizeMode="cover"
+                repeat={true}
+                muted={true}
+                onLoad={(data) => handleVideoLoad(index, data)}
+                poster={ability.video.thumbnail}
+              />
+        
+              {isOverlayVisible && (
+                <>
+                  <View style={[styles.abilityGradientBottom, { height: gradientHeight }]} />
+                  <View
+                    style={styles.abilityOverlay}
+                    onLayout={(event) => handleOverlayLayout(index, event)}
+                  >
+                    <View style={styles.abilityHeader}>
+                      <Image source={{ uri: ability.icon }} style={styles.abilityIconSmall} />
+                      <Text style={[themedStyles.text, styles.abilityName, styles.abilityTextWhite]}>
+                        {ability.name}
+                      </Text>
+                    </View>
+                    <Text style={[themedStyles.text, styles.abilityDescription, styles.abilityTextWhite]}>
+                      {ability.description}
                     </Text>
                   </View>
-                  <Text style={[themedStyles.text, styles.abilityDescription, styles.abilityTextWhite]}>
-                    {ability.description}
-                  </Text>
-                </View>
-              </>
-            )}
-          </TouchableOpacity>
-        );
-      })}
+                </>
+              )}
+            </TouchableOpacity>
+          );
+        })}
+      </View>
     </View>
   );
 });
@@ -135,16 +136,9 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.MD,
   },
   abilityCardEnhanced: {
-    marginBottom: SPACING.MD,
     borderRadius: BORDER_RADIUS.MD,
     overflow: 'hidden',
-    backgroundColor: 'rgba(250, 156, 30, 0.1)',
     position: 'relative',
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
   },
   abilityVideo: {
     width: '100%',
@@ -156,14 +150,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     padding: SPACING.MD,
-  },
-  abilityGradientTop: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: '35%',
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
   },
   abilityGradientBottom: {
     position: 'absolute',
