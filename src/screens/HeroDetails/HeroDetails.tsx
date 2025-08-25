@@ -11,7 +11,7 @@ import { SPACING, TYPOGRAPHY } from "../../styles/theme";
 import { useHeroDetails } from "../../hooks/useHeroDetails";
 import { HeroHeader } from "./components/HeroHeader";
 import { HitPoints } from "./components/HitPoints";
-import { Abilities } from "./components/Abilities";
+import { Abilities } from "./components/Abilities/Abilities";
 import { Story } from "./components/Story";
 import { LoadingSkeleton } from "./components/LoadingSkeleton";
 
