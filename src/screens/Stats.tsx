@@ -41,7 +41,7 @@ export default function Stats() {
       {profile ? (
         <ProfileCard profile={profile} />
       ) : (
-        <Skeleton height={142} />
+        <Skeleton height={136} />
       )}
       <HeroStatsSection setScrollEnabled={setScroll} />
     </ScrollView>
