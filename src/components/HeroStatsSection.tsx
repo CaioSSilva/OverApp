@@ -63,16 +63,22 @@ export default function HeroStatsSection({
 
   const platformItems = [
     { label: 'PC', value: 'pc' },
-    { label: 'Console', value: 'console' }];
+    { label: 'Console', value: 'console' },
+  ];
 
-    const [openPlatDrop, setOpenPlatDrop] = useState(false);
-    const [valuePlatDrop, setValuePlatDrop] = useState(platformItems[0].value);
-    const [itemsPlatDrop, setItemsPlatDrop] =
-      useState<{ label: string; value: string }[]>(platformItems);
+  const [openPlatDrop, setOpenPlatDrop] = useState(false);
+  const [valuePlatDrop, setValuePlatDrop] = useState(platformItems[0].value);
+  const [itemsPlatDrop, setItemsPlatDrop] =
+    useState<{ label: string; value: string }[]>(platformItems);
 
   const getStatus = useCallback(
-    () => dataService().getStatusByHero(valueModeDrop, valuePlatDrop, valueCharDrop!),
-    [valueCharDrop,valuePlatDrop, valueModeDrop],
+    () =>
+      dataService().getStatusByHero(
+        valueModeDrop,
+        valuePlatDrop,
+        valueCharDrop!,
+      ),
+    [valueCharDrop, valuePlatDrop, valueModeDrop],
   );
 
   return (
@@ -180,7 +186,7 @@ export default function HeroStatsSection({
           ))
         )
       ) : (
-        <Skeleton height={90} count={ valueCharDrop ? 1 : 10} />
+        <Skeleton height={90} count={valueCharDrop ? 1 : 10} />
       )}
     </>
   );

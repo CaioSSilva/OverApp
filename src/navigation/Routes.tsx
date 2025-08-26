@@ -66,7 +66,7 @@ function Tabs() {
         tabBarLabelStyle: { fontWeight: 'bold' },
       }}
     >
-            <TabNavigator.Screen
+      <TabNavigator.Screen
         name={t('navigation.stats')}
         component={Stats}
         options={{
@@ -103,9 +103,7 @@ function Tabs() {
 
 function Stack() {
   return (
-    <StackNavigator.Navigator
-
-    >
+    <StackNavigator.Navigator>
       <StackNavigator.Screen
         name="Details"
         options={{
@@ -113,12 +111,12 @@ function Stack() {
         }}
         component={DetailsWrapper}
       />
-       <StackNavigator.Screen
-      name="HeroDetails"
-      options={{
-        headerShown: false,
-      }}
-      component={HeroDetailsWrapper}
+      <StackNavigator.Screen
+        name="HeroDetails"
+        options={{
+          headerShown: false,
+        }}
+        component={HeroDetailsWrapper}
       />
     </StackNavigator.Navigator>
   );

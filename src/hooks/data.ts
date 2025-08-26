@@ -44,7 +44,9 @@ const getStatusByHero = async (
 };
 
 const getHeroDetails = async (heroId: string) => {
-  const response = await axios.get(`${baseUrl}/heroes/${heroId}?locale=${locale === 'pt' ? 'pt-br':'en-us'}`);
+  const response = await axios.get(
+    `${baseUrl}/heroes/${heroId}?locale=${locale === 'pt' ? 'pt-br' : 'en-us'}`,
+  );
   return response.data;
 };
 

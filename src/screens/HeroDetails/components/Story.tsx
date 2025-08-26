@@ -36,41 +36,47 @@ export const Story = React.memo(({ story, isDarkMode }: StoryProps) => {
     await Linking.openURL(link);
   }, []);
 
-  const onScroll = useCallback((event: any) => {
-    const slideSize = cardWidth + SPACING.MD;
-    const index = Math.round(event.nativeEvent.contentOffset.x / slideSize);
-    setActiveIndex(index);
-  }, [cardWidth]);
+  const onScroll = useCallback(
+    (event: any) => {
+      const slideSize = cardWidth + SPACING.MD;
+      const index = Math.round(event.nativeEvent.contentOffset.x / slideSize);
+      setActiveIndex(index);
+    },
+    [cardWidth],
+  );
 
-  const renderChapterCard = useCallback(({ item: chapter, index }: { item: any, index: number }) => (
-    <View key={index} style={[styles.chapterCard, { width: cardWidth }]}>
-      <Image
-        source={{ uri: chapter.picture }}
-        style={styles.chapterCardImage}
-      />
-      <View style={styles.chapterCardContent}>
-        <Text
-          style={[
-            themedStyles.text,
-            styles.chapterCardTitle,
-            { color: COLORS.PRIMARY },
-          ]}
-        >
-          {chapter.title}
-        </Text>
-        <ScrollView
-          style={styles.textScrollView}
-          showsVerticalScrollIndicator={false}
-          nestedScrollEnabled={true}
-          bounces={true}
-        >
-          <Text style={[themedStyles.text, styles.chapterCardPreview]}>
-            {chapter.content}
+  const renderChapterCard = useCallback(
+    ({ item: chapter, index }: { item: any; index: number }) => (
+      <View key={index} style={[styles.chapterCard, { width: cardWidth }]}>
+        <Image
+          source={{ uri: chapter.picture }}
+          style={styles.chapterCardImage}
+        />
+        <View style={styles.chapterCardContent}>
+          <Text
+            style={[
+              themedStyles.text,
+              styles.chapterCardTitle,
+              { color: COLORS.PRIMARY },
+            ]}
+          >
+            {chapter.title}
           </Text>
-        </ScrollView>
+          <ScrollView
+            style={styles.textScrollView}
+            showsVerticalScrollIndicator={false}
+            nestedScrollEnabled={true}
+            bounces={true}
+          >
+            <Text style={[themedStyles.text, styles.chapterCardPreview]}>
+              {chapter.content}
+            </Text>
+          </ScrollView>
+        </View>
       </View>
-    </View>
-  ), [cardWidth, themedStyles.text]);
+    ),
+    [cardWidth, themedStyles.text],
+  );
 
   return (
     <View style={styles.section}>
@@ -102,19 +108,21 @@ export const Story = React.memo(({ story, isDarkMode }: StoryProps) => {
           data={story.chapters}
           horizontal={story.chapters.length > 1}
           showsHorizontalScrollIndicator={false}
-          snapToInterval={story.chapters.length > 1 ? cardWidth + SPACING.MD : undefined}
-          decelerationRate={story.chapters.length > 1 ? "fast" : "normal"}
+          snapToInterval={
+            story.chapters.length > 1 ? cardWidth + SPACING.MD : undefined
+          }
+          decelerationRate={story.chapters.length > 1 ? 'fast' : 'normal'}
           onScroll={story.chapters.length > 1 ? onScroll : undefined}
           scrollEventThrottle={story.chapters.length > 1 ? 16 : undefined}
           contentContainerStyle={
-            story.chapters.length > 1 
+            story.chapters.length > 1
               ? { paddingLeft: SPACING.MD }
               : { paddingHorizontal: SPACING.MD }
           }
           renderItem={renderChapterCard}
           keyExtractor={(item, index) => index.toString()}
         />
-        
+
         {story.chapters.length > 1 && (
           <View style={styles.indicatorContainer}>
             {story.chapters.map((_, index) => (
@@ -122,15 +130,15 @@ export const Story = React.memo(({ story, isDarkMode }: StoryProps) => {
                 key={index}
                 style={[
                   styles.indicator,
-                  index === activeIndex ? styles.activeIndicator : styles.inactiveIndicator
+                  index === activeIndex
+                    ? styles.activeIndicator
+                    : styles.inactiveIndicator,
                 ]}
               />
             ))}
           </View>
         )}
       </View>
-      
-      
     </View>
   );
 });

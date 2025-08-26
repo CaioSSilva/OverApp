@@ -1,9 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  ScrollView,
-  Text,
-  useColorScheme,
-} from 'react-native';
+import { ScrollView, Text, useColorScheme } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { dataService } from '../hooks/data';
 import { OverwatchProfile } from '../interfaces/Summary.model';
@@ -38,11 +34,7 @@ export default function Stats() {
       >
         {t('common.player')}
       </Text>
-      {profile ? (
-        <ProfileCard profile={profile} />
-      ) : (
-        <Skeleton height={136} />
-      )}
+      {profile ? <ProfileCard profile={profile} /> : <Skeleton height={136} />}
       <HeroStatsSection setScrollEnabled={setScroll} />
     </ScrollView>
   );

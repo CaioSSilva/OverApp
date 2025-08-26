@@ -7,22 +7,28 @@ export const findCardStatus = (status: HeroStatsResponse, heroKey: string) => {
   return status?.[heroKey] || undefined;
 };
 
-export const calculateFillWidth = (time?: HeroTime, maxSize?: number): string => {
+export const calculateFillWidth = (
+  time?: HeroTime,
+  maxSize?: number,
+): string => {
   if (!time || !maxSize) return '0%';
   return `${(time.totalTime / maxSize) * 100}%`;
 };
 
-export const calculateFillOpacity = (time?: HeroTime, maxSize?: number): number => {
+export const calculateFillOpacity = (
+  time?: HeroTime,
+  maxSize?: number,
+): number => {
   if (!time || !maxSize) return 0;
   const opacity = (time.totalTime / maxSize) * 100;
   return opacity < 5 ? 0 : 1;
 };
 
 export const calculateGradientColors = (
-  time?: HeroTime, 
-  maxSize?: number, 
-  role?: Role, 
-  isDarkMode?: boolean
+  time?: HeroTime,
+  maxSize?: number,
+  role?: Role,
+  isDarkMode?: boolean,
 ): string[] => {
   if (!time || !maxSize || !role) return ['#353535', '#353535'];
   const opacity = (time.totalTime / maxSize) * 100;

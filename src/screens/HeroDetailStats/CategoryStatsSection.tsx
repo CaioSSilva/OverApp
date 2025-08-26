@@ -62,7 +62,8 @@ const CategoryStatsSection = React.memo<CategoryStatsSectionProps>(
           if (statsToShow.length === 0) return null;
 
           const getSectionTitle = () => {
-            if (category.label === 'Hero Specific') return t('stats.specialSkills');
+            if (category.label === 'Hero Specific')
+              return t('stats.specialSkills');
             if (category.label === 'Best') return t('stats.bestPerformances');
             if (category.label === 'Average') return t('stats.averages');
 

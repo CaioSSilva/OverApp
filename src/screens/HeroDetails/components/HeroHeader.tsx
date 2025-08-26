@@ -31,7 +31,12 @@ export function HeroHeader({ heroDetails, isDarkMode }: HeroHeaderProps) {
         />
         <View style={styles.heroInfo}>
           <View style={styles.heroNameContainer}>
-            <ArrowLeft style={styles.backIco} onPress={() => navigation.goBack()} size={23} color={COLORS.PRIMARY} />
+            <ArrowLeft
+              style={styles.backIco}
+              onPress={() => navigation.goBack()}
+              size={23}
+              color={COLORS.PRIMARY}
+            />
             <Text
               style={[themedStyles.title, themedStyles.text, styles.heroName]}
             >
@@ -103,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: SPACING.SM,
   },
-  backIco:{
+  backIco: {
     backgroundColor: 'rgba(250, 155, 30, 0.4)',
     borderRadius: '100%',
   },

@@ -4,41 +4,41 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Hero } from '../../interfaces/Hero.model';
 import { HeroStatsResponse } from '../../interfaces/Status.model';
 import { HeroTime } from '../../interfaces/Summary.model';
-import { 
-  findCardStatus, 
-  calculateFillWidth, 
-  calculateFillOpacity, 
-  calculateGradientColors, 
-  formatTimeDisplay 
+import {
+  findCardStatus,
+  calculateFillWidth,
+  calculateFillOpacity,
+  calculateGradientColors,
+  formatTimeDisplay,
 } from './utils';
 
 export const useHeroCard = (
   hero: Hero,
   status?: HeroStatsResponse,
   time?: HeroTime,
-  maxSize?: number
+  maxSize?: number,
 ) => {
   const isDarkMode = useColorScheme() === 'dark';
   const navigation = useNavigation<NavigationProp<any>>();
 
-  const fillWidth = React.useMemo(() => 
-    calculateFillWidth(time, maxSize), 
-    [time, maxSize]
+  const fillWidth = React.useMemo(
+    () => calculateFillWidth(time, maxSize),
+    [time, maxSize],
   );
 
-  const fillOpacity = React.useMemo(() => 
-    calculateFillOpacity(time, maxSize), 
-    [time, maxSize]
+  const fillOpacity = React.useMemo(
+    () => calculateFillOpacity(time, maxSize),
+    [time, maxSize],
   );
 
-  const gradientColors = React.useMemo(() => 
-    calculateGradientColors(time, maxSize, hero.role, isDarkMode), 
-    [time, maxSize, hero.role, isDarkMode]
+  const gradientColors = React.useMemo(
+    () => calculateGradientColors(time, maxSize, hero.role, isDarkMode),
+    [time, maxSize, hero.role, isDarkMode],
   );
 
-  const timePlayedDisplay = React.useMemo(() => 
-    formatTimeDisplay(time), 
-    [time]
+  const timePlayedDisplay = React.useMemo(
+    () => formatTimeDisplay(time),
+    [time],
   );
 
   const hasTimePlayed = Boolean(timePlayedDisplay);

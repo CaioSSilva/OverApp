@@ -4,11 +4,16 @@ import { Hero } from '../interfaces/Hero.model';
 import { dataService } from './data';
 
 export const useHeroDetails = (hero: Hero) => {
-  const [heroDetails, setHeroDetails] = useState<HeroDetailsInterface | null>(null);
+  const [heroDetails, setHeroDetails] = useState<HeroDetailsInterface | null>(
+    null,
+  );
   const [loading, setLoading] = useState(true);
   const { getHeroDetails } = dataService();
 
-  const fetchHeroDetails = useCallback(() => getHeroDetails(hero.key), [getHeroDetails, hero.key]);
+  const fetchHeroDetails = useCallback(
+    () => getHeroDetails(hero.key),
+    [getHeroDetails, hero.key],
+  );
 
   useEffect(() => {
     setLoading(true);
@@ -20,6 +25,6 @@ export const useHeroDetails = (hero: Hero) => {
   return {
     heroDetails,
     loading,
-    refetch: fetchHeroDetails
+    refetch: fetchHeroDetails,
   };
 };

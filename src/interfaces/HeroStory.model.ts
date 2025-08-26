@@ -1,4 +1,4 @@
-import { Role } from "./Hero.model";
+import { Role } from './Hero.model';
 
 export interface HeroDetails {
   name: string;

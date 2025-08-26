@@ -2,7 +2,13 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { HeroDetails } from '../../../interfaces/HeroStory.model';
-import { getThemedStyles, COLORS, TYPOGRAPHY, SPACING, BORDER_RADIUS } from '../../../styles/theme';
+import {
+  getThemedStyles,
+  COLORS,
+  TYPOGRAPHY,
+  SPACING,
+  BORDER_RADIUS,
+} from '../../../styles/theme';
 
 interface HitPointsProps {
   heroDetails: HeroDetails;
@@ -15,20 +21,40 @@ export function HitPoints({ heroDetails, isDarkMode }: HitPointsProps) {
 
   return (
     <View style={[themedStyles.card, styles.section]}>
-      <Text style={[themedStyles.title, themedStyles.text, styles.sectionTitle]}>
+      <Text
+        style={[themedStyles.title, themedStyles.text, styles.sectionTitle]}
+      >
         {t('heroDetails.hitpoints')}
       </Text>
       <View style={styles.hitpointsContainer}>
         {heroDetails.hitpoints.health > 0 && (
           <View style={styles.hitpointItemEnhanced}>
-            <Text style={[themedStyles.text, styles.hitpointLabel]}>{t('heroDetails.health')}</Text>
+            <Text style={[themedStyles.text, styles.hitpointLabel]}>
+              {t('heroDetails.health')}
+            </Text>
             <View style={styles.hitpointBarContainer}>
               <View style={styles.hitpointBar}>
-                <View style={[styles.hitpointFill, styles.healthFill, { 
-                  width: `${(heroDetails.hitpoints.health / heroDetails.hitpoints.total) * 100}%`
-                }]} />
+                <View
+                  style={[
+                    styles.hitpointFill,
+                    styles.healthFill,
+                    {
+                      width: `${
+                        (heroDetails.hitpoints.health /
+                          heroDetails.hitpoints.total) *
+                        100
+                      }%`,
+                    },
+                  ]}
+                />
               </View>
-              <Text style={[themedStyles.text, styles.hitpointValue, styles.healthValue]}>
+              <Text
+                style={[
+                  themedStyles.text,
+                  styles.hitpointValue,
+                  styles.healthValue,
+                ]}
+              >
                 {heroDetails.hitpoints.health}
               </Text>
             </View>
@@ -36,14 +62,32 @@ export function HitPoints({ heroDetails, isDarkMode }: HitPointsProps) {
         )}
         {heroDetails.hitpoints.armor > 0 && (
           <View style={styles.hitpointItemEnhanced}>
-            <Text style={[themedStyles.text, styles.hitpointLabel]}>{t('heroDetails.armor')}</Text>
+            <Text style={[themedStyles.text, styles.hitpointLabel]}>
+              {t('heroDetails.armor')}
+            </Text>
             <View style={styles.hitpointBarContainer}>
               <View style={styles.hitpointBar}>
-                <View style={[styles.hitpointFill, styles.armorFill, { 
-                  width: `${(heroDetails.hitpoints.armor / heroDetails.hitpoints.total) * 100}%`
-                }]} />
+                <View
+                  style={[
+                    styles.hitpointFill,
+                    styles.armorFill,
+                    {
+                      width: `${
+                        (heroDetails.hitpoints.armor /
+                          heroDetails.hitpoints.total) *
+                        100
+                      }%`,
+                    },
+                  ]}
+                />
               </View>
-              <Text style={[themedStyles.text, styles.hitpointValue, styles.armorValue]}>
+              <Text
+                style={[
+                  themedStyles.text,
+                  styles.hitpointValue,
+                  styles.armorValue,
+                ]}
+              >
                 {heroDetails.hitpoints.armor}
               </Text>
             </View>
@@ -51,26 +95,52 @@ export function HitPoints({ heroDetails, isDarkMode }: HitPointsProps) {
         )}
         {heroDetails.hitpoints.shields > 0 && (
           <View style={styles.hitpointItemEnhanced}>
-            <Text style={[themedStyles.text, styles.hitpointLabel]}>{t('heroDetails.shields')}</Text>
+            <Text style={[themedStyles.text, styles.hitpointLabel]}>
+              {t('heroDetails.shields')}
+            </Text>
             <View style={styles.hitpointBarContainer}>
               <View style={styles.hitpointBar}>
-                <View style={[styles.hitpointFill, styles.shieldsFill, { 
-                  width: `${(heroDetails.hitpoints.shields / heroDetails.hitpoints.total) * 100}%`
-                }]} />
+                <View
+                  style={[
+                    styles.hitpointFill,
+                    styles.shieldsFill,
+                    {
+                      width: `${
+                        (heroDetails.hitpoints.shields /
+                          heroDetails.hitpoints.total) *
+                        100
+                      }%`,
+                    },
+                  ]}
+                />
               </View>
-              <Text style={[themedStyles.text, styles.hitpointValue, styles.shieldsValue]}>
+              <Text
+                style={[
+                  themedStyles.text,
+                  styles.hitpointValue,
+                  styles.shieldsValue,
+                ]}
+              >
                 {heroDetails.hitpoints.shields}
               </Text>
             </View>
           </View>
         )}
         <View style={styles.hitpointItemEnhanced}>
-          <Text style={[themedStyles.text, styles.hitpointLabel]}>{t('common.total')}</Text>
+          <Text style={[themedStyles.text, styles.hitpointLabel]}>
+            {t('common.total')}
+          </Text>
           <View style={styles.hitpointBarContainer}>
             <View style={styles.hitpointBar}>
               <View style={[styles.hitpointFill, styles.totalFill]} />
             </View>
-            <Text style={[themedStyles.text, styles.hitpointValue, styles.totalValue]}>
+            <Text
+              style={[
+                themedStyles.text,
+                styles.hitpointValue,
+                styles.totalValue,
+              ]}
+            >
               {heroDetails.hitpoints.total}
             </Text>
           </View>

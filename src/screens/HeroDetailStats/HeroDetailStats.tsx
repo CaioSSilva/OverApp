@@ -15,7 +15,11 @@ import PerformanceChartSection from './PerformanceChartSection';
 import CategoryStatsSection from './CategoryStatsSection';
 import SessionSummarySection from './SessionSummarySection';
 
-import { useStatsData, useFormatters, useStatIcon } from '../../hooks/useHeroDetailStats';
+import {
+  useStatsData,
+  useFormatters,
+  useStatIcon,
+} from '../../hooks/useHeroDetailStats';
 
 const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
   statsData,
@@ -244,7 +248,7 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
     >
       <HeroHeader heroName={heroName} isDarkMode={isDarkMode} />
 
-            <MainSummarySection
+      <MainSummarySection
         metrics={mainMetrics}
         isDarkMode={isDarkMode}
         sectionTitle={t('stats.mainSummary')}

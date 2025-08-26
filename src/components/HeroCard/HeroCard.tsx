@@ -1,5 +1,12 @@
 import React from 'react';
-import { Image, Text, View, useColorScheme, TouchableOpacity, ViewStyle } from 'react-native';
+import {
+  Image,
+  Text,
+  View,
+  useColorScheme,
+  TouchableOpacity,
+  ViewStyle,
+} from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Info } from 'lucide-react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -10,10 +17,15 @@ import { getThemedStyles } from '../../styles/theme';
 import { styles, getCardBg, getTextColor } from './styles';
 import { useHeroCard } from './hooks';
 
-export default function HeroCard({ hero, status, time, maxSize }: HeroCardProps) {
+export default function HeroCard({
+  hero,
+  status,
+  time,
+  maxSize,
+}: HeroCardProps) {
   const { t } = useTranslation();
   const isDarkMode = useColorScheme() === 'dark';
-  
+
   const {
     fillWidth,
     fillOpacity,
@@ -39,23 +51,25 @@ export default function HeroCard({ hero, status, time, maxSize }: HeroCardProps)
         colors={gradientColors}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
-        style={{
-          opacity: fillOpacity,
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: fillWidth,
-          height: '170%',
-          borderRadius: 12,
-        } as ViewStyle}
+        style={
+          {
+            opacity: fillOpacity,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: fillWidth,
+            height: '170%',
+            borderRadius: 12,
+          } as ViewStyle
+        }
       />
-      
+
       <Image
         source={{ uri: hero.portrait }}
         style={styles.image}
         resizeMode="cover"
       />
-      
+
       <View style={styles.infoBox}>
         <View>
           <Text style={[styles.name, getTextColor(isDarkMode)]}>
@@ -75,14 +89,11 @@ export default function HeroCard({ hero, status, time, maxSize }: HeroCardProps)
             </Text>
           </View>
         </View>
-        
+
         <View style={styles.statsContainer}>
-          {status && (
-            heroStatusData ? (
-              <Button 
-                title={t('common.details')} 
-                onPress={handleStatusPress} 
-              />
+          {status &&
+            (heroStatusData ? (
+              <Button title={t('common.details')} onPress={handleStatusPress} />
             ) : (
               <View style={styles.noStatsContainer}>
                 <Text style={getThemedStyles(isDarkMode).text}>
@@ -90,9 +101,8 @@ export default function HeroCard({ hero, status, time, maxSize }: HeroCardProps)
                 </Text>
                 <Info color={'#fff'} style={styles.info} size={20} />
               </View>
-            )
-          )}
-          
+            ))}
+
           {timePlayedDisplay && (
             <View style={styles.timeContainer}>
               <Text

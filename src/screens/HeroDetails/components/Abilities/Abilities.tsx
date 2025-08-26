@@ -11,31 +11,35 @@ interface AbilitiesProps {
   isDarkMode: boolean;
 }
 
-export const Abilities = React.memo(({ abilities, isDarkMode }: AbilitiesProps) => {
-  const themedStyles = getThemedStyles(isDarkMode);
-  const { t } = useTranslation();
-  const { handleVideoLoad, getVideoDuration } = useVideoManager();
+export const Abilities = React.memo(
+  ({ abilities, isDarkMode }: AbilitiesProps) => {
+    const themedStyles = getThemedStyles(isDarkMode);
+    const { t } = useTranslation();
+    const { handleVideoLoad, getVideoDuration } = useVideoManager();
 
-  return (
-    <View style={[themedStyles.card, styles.section]}>
-      <Text style={[themedStyles.title, themedStyles.text, styles.sectionTitle]}>
-        {t('heroDetails.abilities')}
-      </Text>
-      <View style={styles.abilitiesContainer}>
-        {abilities.map((ability, index) => (
-          <AbilityCard
-            key={`${ability.name}-${index}`}
-            ability={ability}
-            index={index}
-            isDarkMode={isDarkMode}
-            onVideoLoad={handleVideoLoad}
-            videoDuration={getVideoDuration(index)}
-          />
-        ))}
+    return (
+      <View style={[themedStyles.card, styles.section]}>
+        <Text
+          style={[themedStyles.title, themedStyles.text, styles.sectionTitle]}
+        >
+          {t('heroDetails.abilities')}
+        </Text>
+        <View style={styles.abilitiesContainer}>
+          {abilities.map((ability, index) => (
+            <AbilityCard
+              key={`${ability.name}-${index}`}
+              ability={ability}
+              index={index}
+              isDarkMode={isDarkMode}
+              onVideoLoad={handleVideoLoad}
+              videoDuration={getVideoDuration(index)}
+            />
+          ))}
+        </View>
       </View>
-    </View>
-  );
-});
+    );
+  },
+);
 
 Abilities.displayName = 'Abilities';
 

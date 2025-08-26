@@ -18,13 +18,19 @@ export const useVideoManager = () => {
     }));
   }, []);
 
-  const getVideoDuration = useCallback((index: number): number => {
-    return videoState.durations.get(index) || 5;
-  }, [videoState.durations]);
+  const getVideoDuration = useCallback(
+    (index: number): number => {
+      return videoState.durations.get(index) || 5;
+    },
+    [videoState.durations],
+  );
 
-  const isVideoLoaded = useCallback((index: number): boolean => {
-    return videoState.loadedVideos.has(index);
-  }, [videoState.loadedVideos]);
+  const isVideoLoaded = useCallback(
+    (index: number): boolean => {
+      return videoState.loadedVideos.has(index);
+    },
+    [videoState.loadedVideos],
+  );
 
   return {
     handleVideoLoad,

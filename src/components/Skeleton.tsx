@@ -6,11 +6,7 @@ import {
   Animated,
   Easing,
 } from 'react-native';
-import {
-  COLORS,
-  SPACING,
-  BORDER_RADIUS,
-} from '../styles/theme';
+import { COLORS, SPACING, BORDER_RADIUS } from '../styles/theme';
 
 interface SkeletonProps {
   height: number;
@@ -45,7 +41,7 @@ const Skeleton: React.FC<SkeletonProps> = ({
           duration: 1500,
           easing: Easing.linear,
           useNativeDriver: true,
-        })
+        }),
       ).start();
     };
 
@@ -61,7 +57,7 @@ const Skeleton: React.FC<SkeletonProps> = ({
 
   const renderSkeletonItem = (index: number) => {
     const itemMarginTop = gap;
-    
+
     return (
       <View
         key={index}
@@ -74,7 +70,9 @@ const Skeleton: React.FC<SkeletonProps> = ({
             marginVertical: marginVertical,
             marginHorizontal,
             marginTop: itemMarginTop,
-            backgroundColor: isDarkMode ? COLORS.DARK.BORDER : COLORS.LIGHT.BORDER,
+            backgroundColor: isDarkMode
+              ? COLORS.DARK.BORDER
+              : COLORS.LIGHT.BORDER,
           },
           style,
         ]}
@@ -84,7 +82,9 @@ const Skeleton: React.FC<SkeletonProps> = ({
             styles.shimmer,
             {
               borderRadius,
-              backgroundColor: isDarkMode ? COLORS.DARK.TEXT : COLORS.LIGHT.TEXT,
+              backgroundColor: isDarkMode
+                ? COLORS.DARK.TEXT
+                : COLORS.LIGHT.TEXT,
             },
             shimmerStyle,
           ]}
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 2,
-    alignSelf:'center'
+    alignSelf: 'center',
   },
   shimmer: {
     flex: 1,

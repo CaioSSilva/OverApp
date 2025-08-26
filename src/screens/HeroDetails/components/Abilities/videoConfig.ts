@@ -31,11 +31,12 @@ export const videoConfig = {
     muted: true,
     controls: false,
     disableFocus: true,
-  }
+  },
 };
 
 export const getVideoProps = () => {
-  const platformConfig = Platform.OS === 'android' ? videoConfig.android : videoConfig.ios;
+  const platformConfig =
+    Platform.OS === 'android' ? videoConfig.android : videoConfig.ios;
   return {
     ...videoConfig.common,
     ...platformConfig,
