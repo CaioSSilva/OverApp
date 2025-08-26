@@ -18,7 +18,7 @@ export default function HeroDetails({ hero }: { hero: Hero }) {
   return (
     <View style={themedStyles.container}>
       {loading || !heroDetails ? (
-        <LoadingSkeleton isDarkMode={isDarkMode} />
+        <LoadingSkeleton/>
       ) : (
         <ScrollView showsVerticalScrollIndicator={false}>
           <HeroHeader heroDetails={heroDetails} isDarkMode={isDarkMode} />

@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, useColorScheme, View } from 'react-native';
 import { dataService } from '../hooks/data';
 import { Hero } from '../interfaces/Hero.model';
-import HeroCardPlaceholder from '../components/HeroCard/PlaceHolder';
 import HeroCard from '../components/HeroCard/HeroCard';
 import { useTranslation } from 'react-i18next';
 import Button from '../components/Button/Button';
@@ -11,6 +10,7 @@ import {
   OverwatchProfileFullStats,
 } from '../interfaces/Summary.model';
 import { getThemedStyles } from '../styles/theme';
+import Skeleton from '../components/Skeleton';
 
 export default function Characters() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -154,7 +154,7 @@ export default function Characters() {
           windowSize={5}
         />
       ) : (
-        <HeroCardPlaceholder numberOfCards={10} />
+        <Skeleton height={90} count={10} />
       )}
     </View>
   );

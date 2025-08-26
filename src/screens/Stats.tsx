@@ -3,19 +3,17 @@ import {
   ScrollView,
   Text,
   useColorScheme,
-  useWindowDimensions,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { dataService } from '../hooks/data';
 import { OverwatchProfile } from '../interfaces/Summary.model';
 import ProfileCard from '../components/ProfileCard';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import HeroStatsSection from '../components/HeroStatsSection';
 import { getThemedStyles } from '../styles/theme';
+import Skeleton from '../components/Skeleton';
 
 export default function Stats() {
   const isDarkMode = useColorScheme() === 'dark';
-  const { width: windowWidth } = useWindowDimensions();
   const [profile, setProfile] = useState<OverwatchProfile | null>(null);
   const [scroll, setScroll] = useState<boolean>(true);
   const { getProfileById } = dataService();
@@ -43,24 +41,7 @@ export default function Stats() {
       {profile ? (
         <ProfileCard profile={profile} />
       ) : (
-        <SkeletonPlaceholder
-          backgroundColor={isDarkMode ? '#222222ff' : '#9f9e9cff'}
-          highlightColor="#777"
-        >
-          <SkeletonPlaceholder.Item
-            flexDirection="row"
-            alignItems="center"
-            marginVertical={10}
-            marginHorizontal={10}
-            padding={0}
-          >
-            <SkeletonPlaceholder.Item
-              width={windowWidth - 20}
-              height={110}
-              borderRadius={18}
-            />
-          </SkeletonPlaceholder.Item>
-        </SkeletonPlaceholder>
+        <Skeleton height={142} />
       )}
       <HeroStatsSection setScrollEnabled={setScroll} />
     </ScrollView>

@@ -7,7 +7,7 @@ import { Hero } from '../interfaces/Hero.model';
 import { dataService } from '../hooks/data';
 import { HeroStatsResponse } from '../interfaces/Status.model';
 import HeroCard from './HeroCard/HeroCard';
-import HeroCardPlaceholder from './HeroCard/PlaceHolder';
+import Skeleton from './Skeleton';
 
 interface StatsSectionProps {
   setScrollEnabled: React.Dispatch<React.SetStateAction<boolean>>;
@@ -180,7 +180,7 @@ export default function HeroStatsSection({
           ))
         )
       ) : (
-        <HeroCardPlaceholder numberOfCards={valueCharDrop ? 1 : 10} />
+        <Skeleton height={90} count={ valueCharDrop ? 1 : 10} />
       )}
     </>
   );
