@@ -122,6 +122,7 @@
     "welcome": "Welcome to Athena",
     "subtitle": "Your companion for strategy and insights",
     "inputPlaceholder": "Type your message...",
+    "lastChats": "Last chats",
     "description": "Explore heroes, discover strategies, and elevate your performance."
   }
 }

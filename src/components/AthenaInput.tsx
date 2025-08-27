@@ -16,7 +16,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Send, Mic } from 'lucide-react-native';
-import { COLORS, SPACING, TYPOGRAPHY } from '../styles/theme';
+import { COLORS, GLASS_COLORS, SPACING, TYPOGRAPHY } from '../styles/theme';
 
 interface InputProps extends TextInputProps {
   placeholder?: string;
@@ -153,15 +153,6 @@ InputComponent.displayName = 'Input';
 const Input = InputComponent;
 
 export default Input;
-
-const GLASS_COLORS = {
-  PRIMARY_BACKGROUND: 'rgba(250, 156, 30, 0.15)',
-  PRIMARY_BORDER: 'rgba(250, 156, 30, 0.3)',
-  DARK_BACKGROUND: 'rgba(250, 156, 30, 0.2)',
-  DARK_BORDER: 'rgba(250, 156, 30, 0.4)',
-  WHITE_BACKGROUND: 'rgba(255, 255, 255, 0.2)',
-  WHITE_BORDER: 'rgba(255, 255, 255, 0.3)',
-}
 
 const styles = StyleSheet.create({
   container: {

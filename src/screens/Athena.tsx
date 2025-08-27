@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getThemedStyles, SPACING, TYPOGRAPHY } from '../styles/theme';
 import Input from '../components/AthenaInput';
+import AthenaMenu from '../components/AthenaMenu';
 
 export default function Athena() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -42,6 +43,7 @@ export default function Athena() {
       >
         <TouchableWithoutFeedback onPress={dismissKeyboard}>
           <View style={[themedStyles.container, styles.wrapper]}>
+          <AthenaMenu />
             <View style={styles.content}>
               <Text
                 style={[
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
   subtitle: {
     textAlign: 'center',
     fontSize: TYPOGRAPHY.SIZES.LG,
-    marginBottom: SPACING.LG,
+    marginBottom: SPACING.SM,
     opacity: 0.8,
   },
   description: {
