@@ -31,7 +31,7 @@ export default function Athena() {
       setMessage('');
     }
   };
-  const keyboardOffset = Platform.OS === 'ios' ? insets.bottom + 20 : 20;
+  const keyboardOffset = Platform.OS === 'ios' ? 40 : 40;
 
   return (
     <View style={styles.container}>
