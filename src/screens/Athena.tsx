@@ -7,9 +7,10 @@ import {
   TouchableWithoutFeedback, 
   Keyboard,
   KeyboardAvoidingView,
-  Dimensions
+  Platform
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getThemedStyles, SPACING, TYPOGRAPHY } from '../styles/theme';
 import Input from '../components/Input';
 
@@ -18,6 +19,7 @@ export default function Athena() {
   const themedStyles = getThemedStyles(isDarkMode);
   const [message, setMessage] = useState('');
   const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
@@ -31,45 +33,53 @@ export default function Athena() {
     }
   };
 
+  // Calcula o offset baseado no dispositivo e safe area
+  const keyboardOffset = Platform.OS === 'ios' ? insets.bottom + 20 : 20;
+
   return (
-    <KeyboardAvoidingView 
-      style={styles.container}
-      behavior="padding"
-      keyboardVerticalOffset={Dimensions.get('screen').height *0.04}
-    >
-      <TouchableWithoutFeedback onPress={dismissKeyboard}>
-        <View style={[themedStyles.container, styles.wrapper]}>
-          <View style={styles.content}>
-            <Text style={[themedStyles.title, themedStyles.text, styles.welcomeTitle]}>
-              {t('athena.welcome')}
-            </Text>
-            
-            <Text style={[themedStyles.text, styles.subtitle]}>
-              {t('athena.subtitle')}
-            </Text>
+    <View style={styles.container}>
+      <KeyboardAvoidingView 
+        style={styles.keyboardContainer}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={keyboardOffset}
+      >
+        <TouchableWithoutFeedback onPress={dismissKeyboard}>
+          <View style={[themedStyles.container, styles.wrapper]}>
+            <View style={styles.content}>
+              <Text style={[themedStyles.title, themedStyles.text, styles.welcomeTitle]}>
+                {t('athena.welcome')}
+              </Text>
+              
+              <Text style={[themedStyles.text, styles.subtitle]}>
+                {t('athena.subtitle')}
+              </Text>
 
-            <Text style={[themedStyles.text, styles.description]}>
-              {t('athena.description')}
-            </Text>
-          </View>
+              <Text style={[themedStyles.text, styles.description]}>
+                {t('athena.description')}
+              </Text>
+            </View>
 
-          <View style={styles.bottomContainer}>
-            <Input
-              placeholder={t('athena.inputPlaceholder')}
-              value={message}
-              onChangeText={setMessage}
-              onSend={handleSend}
-              multiline={false}
-            />
+            <View style={[styles.bottomContainer, { paddingBottom: insets.bottom }]}>
+              <Input
+                placeholder={t('athena.inputPlaceholder')}
+                value={message}
+                onChangeText={setMessage}
+                onSend={handleSend}
+                multiline={false}
+              />
+            </View>
           </View>
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  keyboardContainer: {
     flex: 1,
   },
   wrapper: {
