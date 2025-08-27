@@ -42,7 +42,8 @@ export const TYPOGRAPHY = {
 } as const;
 
 export const SPACING = {
-  XS: 4,
+  XXS: 4,
+  XS: 6,
   SM: 8,
   MD: 16,
   LG: 24,
@@ -103,6 +104,30 @@ export const getThemedStyles = (isDarkMode: boolean) => {
       backgroundColor: theme.background,
     },
 
+    header:{
+    paddingHorizontal: 16,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+
+    },
+
+    headerTitle:{
+
+    fontSize: 20,
+    textAlign: 'left',
+    fontWeight: 'bold',
+    marginTop: 16,
+    },
+
+    headerSubtitle:{
+
+    fontSize: 14,
+    textAlign: 'left',
+    marginBottom: 16,
+    },
+
     text: {
       color: theme.text,
       fontSize: TYPOGRAPHY.SIZES.MD,
@@ -121,7 +146,7 @@ export const getThemedStyles = (isDarkMode: boolean) => {
 
     button: {
       backgroundColor: COLORS.PRIMARY,
-      padding: SPACING.SM,
+      padding: SPACING.XS,
       borderRadius: BORDER_RADIUS.SM,
       alignItems: 'center',
     },

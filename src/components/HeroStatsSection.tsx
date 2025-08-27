@@ -113,6 +113,7 @@ export default function HeroStatsSection({
           setItems={setItemsCharDrop}
           loading={heroes.length === 0}
           onChangeValue={() => {
+            setStatus(null);
             getStatus().then(setStatus);
           }}
           placeholder={t('characters.selectCharacter')}
@@ -138,6 +139,7 @@ export default function HeroStatsSection({
           setValue={setValuePlatDrop}
           setItems={setItemsPlatDrop}
           onChangeValue={() => {
+            setStatus(null);
             getStatus().then(setStatus);
           }}
           placeholder={t('stats.selectPlatform')}
@@ -164,6 +166,7 @@ export default function HeroStatsSection({
           setValue={setValueModeDrop}
           setItems={setItemsModeDrop}
           onChangeValue={() => {
+            setStatus(null);
             getStatus().then(setStatus);
           }}
           placeholder={t('stats.selectGamemode')}

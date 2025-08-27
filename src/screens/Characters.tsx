@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { FlatList, Text, useColorScheme, View } from 'react-native';
 import { dataService } from '../hooks/data';
 import { Hero } from '../interfaces/Hero.model';
 import HeroCard from '../components/HeroCard/HeroCard';
@@ -9,8 +9,9 @@ import {
   CalcHeroTimesReturn,
   OverwatchProfileFullStats,
 } from '../interfaces/Summary.model';
-import { getThemedStyles } from '../styles/theme';
+import { COLORS, getThemedStyles } from '../styles/theme';
 import Skeleton from '../components/Skeleton';
+import { IterationCw } from 'lucide-react-native';
 
 export default function Characters() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -122,21 +123,21 @@ export default function Characters() {
 
   return (
     <View style={getThemedStyles(isDarkMode).container}>
-      <View style={homeStyles.heroTitleContainer}>
+      <View style={getThemedStyles(isDarkMode).header}>
         <View>
           <Text
-            style={[getThemedStyles(isDarkMode).text, homeStyles.heroTitle]}
+            style={[getThemedStyles(isDarkMode).text, getThemedStyles(isDarkMode).headerTitle]}
           >
             {t('characters.title')}
           </Text>
           <Text
-            style={[getThemedStyles(isDarkMode).text, homeStyles.heroSubtitle]}
+            style={[getThemedStyles(isDarkMode).text, getThemedStyles(isDarkMode).headerSubtitle]}
           >
             {t('stats.gameTimeAll')}
           </Text>
         </View>
 
-        <Button onPress={() => updateHeroes()} title={t('common.update')} />
+        <Button onPress={() => updateHeroes()} icon={<IterationCw size={20} color={COLORS.WHITE} />} />
       </View>
       {calcHeroTimes().sortedHeroes.length > 0 ? (
         <FlatList
@@ -159,26 +160,3 @@ export default function Characters() {
     </View>
   );
 }
-
-const homeStyles = StyleSheet.create({
-  heroTitleContainer: {
-    paddingHorizontal: 16,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-
-  heroTitle: {
-    fontSize: 20,
-    textAlign: 'left',
-    fontWeight: 'bold',
-    marginTop: 16,
-  },
-
-  heroSubtitle: {
-    fontSize: 14,
-    textAlign: 'left',
-    marginBottom: 16,
-  },
-});

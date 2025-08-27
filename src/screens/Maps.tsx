@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { FlatList, Text, useColorScheme, View } from 'react-native';
 import { dataService } from '../hooks/data';
 import { Map } from '../interfaces/Map.model';
 import MapCard from '../components/MapCard';
 import { useTranslation } from 'react-i18next';
 import Button from '../components/Button/Button';
-import { getThemedStyles } from '../styles/theme';
+import { COLORS, getThemedStyles } from '../styles/theme';
 import Skeleton from '../components/Skeleton';
+import { IterationCw } from 'lucide-react-native';
 
 export default function Maps() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -27,21 +28,21 @@ export default function Maps() {
 
   return (
     <View style={getThemedStyles(isDarkMode).container}>
-      <View style={mapsStyles.mapsTitleContainer}>
+      <View style={getThemedStyles(isDarkMode).header}>
         <View>
           <Text
-            style={[getThemedStyles(isDarkMode).text, mapsStyles.mapsTitle]}
+            style={[getThemedStyles(isDarkMode).text, getThemedStyles(isDarkMode).headerTitle]}
           >
             {t('maps.title')}
           </Text>
           <Text
-            style={[getThemedStyles(isDarkMode).text, mapsStyles.mapsSubtitle]}
+            style={[getThemedStyles(isDarkMode).text,getThemedStyles(isDarkMode).headerSubtitle]}
           >
             {t('maps.allMaps')}
           </Text>
         </View>
 
-        <Button onPress={() => updateMaps()} title={t('common.update')} />
+        <Button onPress={() => updateMaps()} icon={<IterationCw size={20} color={COLORS.WHITE} />} />
       </View>
       {maps.length > 0 ? (
         <FlatList
@@ -58,26 +59,3 @@ export default function Maps() {
     </View>
   );
 }
-
-const mapsStyles = StyleSheet.create({
-  mapsTitleContainer: {
-    paddingHorizontal: 16,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-
-  mapsTitle: {
-    fontSize: 20,
-    textAlign: 'left',
-    fontWeight: 'bold',
-    marginTop: 16,
-  },
-
-  mapsSubtitle: {
-    fontSize: 14,
-    textAlign: 'left',
-    marginBottom: 16,
-  },
-});
