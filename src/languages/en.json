@@ -104,7 +104,18 @@
     "errorOpeningLink": "Could not open link"
   },
   "maps": {
-    "title": "Maps"
+    "title": "Maps",
+    "allMaps": "All Maps",
+    "gamemodes": "Game Modes",
+    "assault": "Assault",
+    "escort": "Escort",
+    "hybrid": "Hybrid",
+    "control": "Control",
+    "push": "Push",
+    "deathmatch": "Deathmatch",
+    "elimination": "Elimination",
+    "capture_the_flag": "Capture the Flag",
+    "mystery_heroes": "Mystery Heroes"
   },
   "matches": {
     "title": "Matches"

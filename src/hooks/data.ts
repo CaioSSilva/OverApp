@@ -6,6 +6,7 @@ import {
 } from '../interfaces/Summary.model';
 import { HeroStatsResponse } from '../interfaces/Status.model';
 import { locale } from '../../i18n';
+import { Map } from '../interfaces/Map.model';
 
 const baseUrl = 'https://overfast-api.tekrop.fr';
 
@@ -50,6 +51,11 @@ const getHeroDetails = async (heroId: string) => {
   return response.data;
 };
 
+const getMaps = async (): Promise<Map[]> => {
+  const response = await axios.get(`${baseUrl}/maps`);
+  return response.data;
+};
+
 const logOut = () => {
   console.log('User logged out');
 };
@@ -61,6 +67,7 @@ export function dataService() {
     getProfileById,
     getProfileFull,
     getHeroDetails,
+    getMaps,
     logOut,
   };
 }

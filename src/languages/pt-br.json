@@ -104,7 +104,18 @@
     "errorOpeningLink": "Não foi possível abrir o link"
   },
   "maps": {
-    "title": "Mapas"
+    "title": "Mapas",
+    "allMaps": "Todos os Mapas",
+    "gamemodes": "Modos de Jogo",
+    "assault": "Assalto",
+    "escort": "Escolta",
+    "hybrid": "Híbrido",
+    "control": "Controle",
+    "push": "Empurrar",
+    "deathmatch": "Mata-mata",
+    "elimination": "Eliminação",
+    "capture_the_flag": "Capturar a Bandeira",
+    "mystery_heroes": "Heróis Misteriosos"
   },
   "matches": {
     "title": "Partidas"
