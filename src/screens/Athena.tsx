@@ -12,7 +12,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getThemedStyles, SPACING, TYPOGRAPHY } from '../styles/theme';
-import Input from '../components/Input';
+import Input from '../components/AthenaInput';
 
 export default function Athena() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -27,9 +27,8 @@ export default function Athena() {
 
   const handleSend = () => {
     if (message.trim()) {
-      // Aqui você pode implementar a lógica de envio da mensagem
       console.log('Sending message:', message);
-      setMessage(''); // Limpa o input após enviar
+      setMessage('');
     }
   };
   const keyboardOffset = Platform.OS === 'ios' ? insets.bottom + 20 : 20;
