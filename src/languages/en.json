@@ -118,6 +118,10 @@
     "mystery_heroes": "Mystery Heroes"
   },
   "athena": {
-    "title": "Athena"
+    "title": "Athena",
+    "welcome": "Welcome to Athena",
+    "subtitle": "Your gaming companion for strategy and insights",
+    "inputPlaceholder": "Type your message...",
+    "description": "Explore heroes, discover strategies, and elevate your performance."
   }
 }

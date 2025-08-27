@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Stats from '../screens/Stats';
 import { useTranslation } from 'react-i18next';
 import Maps from '../screens/Maps';
-import { MapPin } from 'lucide-react-native';
 import Characters from '../screens/Characters';
 import {
   createStackNavigator,
