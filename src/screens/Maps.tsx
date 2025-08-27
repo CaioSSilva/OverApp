@@ -31,18 +31,27 @@ export default function Maps() {
       <View style={getThemedStyles(isDarkMode).header}>
         <View>
           <Text
-            style={[getThemedStyles(isDarkMode).text, getThemedStyles(isDarkMode).headerTitle]}
+            style={[
+              getThemedStyles(isDarkMode).text,
+              getThemedStyles(isDarkMode).headerTitle,
+            ]}
           >
             {t('maps.title')}
           </Text>
           <Text
-            style={[getThemedStyles(isDarkMode).text,getThemedStyles(isDarkMode).headerSubtitle]}
+            style={[
+              getThemedStyles(isDarkMode).text,
+              getThemedStyles(isDarkMode).headerSubtitle,
+            ]}
           >
             {t('maps.allMaps')}
           </Text>
         </View>
 
-        <Button onPress={() => updateMaps()} icon={<IterationCw size={20} color={COLORS.WHITE} />} />
+        <Button
+          onPress={() => updateMaps()}
+          icon={<IterationCw size={20} color={COLORS.WHITE} />}
+        />
       </View>
       {maps.length > 0 ? (
         <FlatList

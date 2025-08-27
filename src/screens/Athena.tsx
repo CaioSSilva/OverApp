@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { 
-  Text, 
-  useColorScheme, 
-  View, 
-  StyleSheet, 
-  TouchableWithoutFeedback, 
+import {
+  Text,
+  useColorScheme,
+  View,
+  StyleSheet,
+  TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
-  Platform
+  Platform,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -32,13 +32,11 @@ export default function Athena() {
       setMessage(''); // Limpa o input após enviar
     }
   };
-
-  // Calcula o offset baseado no dispositivo e safe area
   const keyboardOffset = Platform.OS === 'ios' ? insets.bottom + 20 : 20;
 
   return (
     <View style={styles.container}>
-      <KeyboardAvoidingView 
+      <KeyboardAvoidingView
         style={styles.keyboardContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={keyboardOffset}
@@ -46,10 +44,16 @@ export default function Athena() {
         <TouchableWithoutFeedback onPress={dismissKeyboard}>
           <View style={[themedStyles.container, styles.wrapper]}>
             <View style={styles.content}>
-              <Text style={[themedStyles.title, themedStyles.text, styles.welcomeTitle]}>
+              <Text
+                style={[
+                  themedStyles.title,
+                  themedStyles.text,
+                  styles.welcomeTitle,
+                ]}
+              >
                 {t('athena.welcome')}
               </Text>
-              
+
               <Text style={[themedStyles.text, styles.subtitle]}>
                 {t('athena.subtitle')}
               </Text>
@@ -59,7 +63,9 @@ export default function Athena() {
               </Text>
             </View>
 
-            <View style={[styles.bottomContainer, { paddingBottom: insets.bottom }]}>
+            <View
+              style={[styles.bottomContainer, { paddingBottom: insets.bottom }]}
+            >
               <Input
                 placeholder={t('athena.inputPlaceholder')}
                 value={message}

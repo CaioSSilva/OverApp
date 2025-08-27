@@ -104,28 +104,25 @@ export const getThemedStyles = (isDarkMode: boolean) => {
       backgroundColor: theme.background,
     },
 
-    header:{
-    paddingHorizontal: 16,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-
+    header: {
+      paddingHorizontal: 16,
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
     },
 
-    headerTitle:{
-
-    fontSize: 20,
-    textAlign: 'left',
-    fontWeight: 'bold',
-    marginTop: 16,
+    headerTitle: {
+      fontSize: 20,
+      textAlign: 'left',
+      fontWeight: 'bold',
+      marginTop: 16,
     },
 
-    headerSubtitle:{
-
-    fontSize: 14,
-    textAlign: 'left',
-    marginBottom: 16,
+    headerSubtitle: {
+      fontSize: 14,
+      textAlign: 'left',
+      marginBottom: 16,
     },
 
     text: {

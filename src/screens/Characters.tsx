@@ -126,18 +126,27 @@ export default function Characters() {
       <View style={getThemedStyles(isDarkMode).header}>
         <View>
           <Text
-            style={[getThemedStyles(isDarkMode).text, getThemedStyles(isDarkMode).headerTitle]}
+            style={[
+              getThemedStyles(isDarkMode).text,
+              getThemedStyles(isDarkMode).headerTitle,
+            ]}
           >
             {t('characters.title')}
           </Text>
           <Text
-            style={[getThemedStyles(isDarkMode).text, getThemedStyles(isDarkMode).headerSubtitle]}
+            style={[
+              getThemedStyles(isDarkMode).text,
+              getThemedStyles(isDarkMode).headerSubtitle,
+            ]}
           >
             {t('stats.gameTimeAll')}
           </Text>
         </View>
 
-        <Button onPress={() => updateHeroes()} icon={<IterationCw size={20} color={COLORS.WHITE} />} />
+        <Button
+          onPress={() => updateHeroes()}
+          icon={<IterationCw size={20} color={COLORS.WHITE} />}
+        />
       </View>
       {calcHeroTimes().sortedHeroes.length > 0 ? (
         <FlatList

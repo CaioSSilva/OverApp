@@ -1,4 +1,9 @@
-import React, { useState, useRef, forwardRef, useImperativeHandle } from 'react';
+import React, {
+  useState,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import {
   TextInput,
   View,
@@ -22,83 +27,85 @@ export interface InputRef {
   blur: () => void;
 }
 
-const Input = forwardRef<InputRef, InputProps>(({ 
-  placeholder, 
-  value, 
-  onChangeText, 
-  style,
-  onFocus,
-  onBlur,
-  onSend,
-  ...props 
-}, ref) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  const [isFocused, setIsFocused] = useState(false);
-  const inputRef = useRef<TextInput>(null);
+const Input = forwardRef<InputRef, InputProps>(
+  (
+    {
+      placeholder,
+      value,
+      onChangeText,
+      style,
+      onFocus,
+      onBlur,
+      onSend,
+      ...props
+    },
+    ref,
+  ) => {
+    const isDarkMode = useColorScheme() === 'dark';
+    const [isFocused, setIsFocused] = useState(false);
+    const inputRef = useRef<TextInput>(null);
 
-  useImperativeHandle(ref, () => ({
-    focus: () => inputRef.current?.focus(),
-    blur: () => inputRef.current?.blur(),
-  }));
+    useImperativeHandle(ref, () => ({
+      focus: () => inputRef.current?.focus(),
+      blur: () => inputRef.current?.blur(),
+    }));
 
-  const handleFocus = (e: any) => {
-    setIsFocused(true);
-    onFocus?.(e);
-  };
+    const handleFocus = (e: any) => {
+      setIsFocused(true);
+      onFocus?.(e);
+    };
 
-  const handleBlur = (e: any) => {
-    setIsFocused(false);
-    onBlur?.(e);
-  };
+    const handleBlur = (e: any) => {
+      setIsFocused(false);
+      onBlur?.(e);
+    };
 
-  const handleSend = () => {
-    if (value?.trim() && onSend) {
-      onSend();
-    }
-  };
+    const handleSend = () => {
+      if (value?.trim() && onSend) {
+        onSend();
+      }
+    };
 
-  const containerStyles = [
-    styles.container,
-    isDarkMode && styles.containerDark,
-    isFocused && styles.containerFocused,
-    isFocused && isDarkMode && styles.containerFocusedDark,
-  ];
+    const containerStyles = [
+      styles.container,
+      isDarkMode && styles.containerDark,
+      isFocused && styles.containerFocused,
+      isFocused && isDarkMode && styles.containerFocusedDark,
+    ];
 
-  const inputStyles = [
-    styles.input,
-    isDarkMode ? styles.inputDark : styles.inputLight,
-    style,
-  ];
+    const inputStyles = [
+      styles.input,
+      isDarkMode ? styles.inputDark : styles.inputLight,
+      style,
+    ];
 
-  return (
-    <View style={containerStyles}>
-      <TextInput
-        ref={inputRef}
-        style={inputStyles}
-        placeholder={placeholder}
-        cursorColor={COLORS.WHITE}
-        placeholderTextColor={isDarkMode ? '#AAA' : '#666'}
-        value={value}
-        onChangeText={onChangeText}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        {...props}
-      />
-      {value?.trim() && (
-        <TouchableOpacity
-          style={styles.sendButton}
-          onPress={handleSend}
-          activeOpacity={0.7}
-        >
-          <Send
-            size={20}
-            color={COLORS.PRIMARY}
-          />
-        </TouchableOpacity>
-      )}
-    </View>
-  );
-});
+    return (
+      <View style={containerStyles}>
+        <TextInput
+          ref={inputRef}
+          style={inputStyles}
+          placeholder={placeholder}
+          cursorColor={COLORS.WHITE}
+          placeholderTextColor={isDarkMode ? '#AAA' : '#666'}
+          value={value}
+          onChangeText={onChangeText}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          {...props}
+        />
+        {value?.trim() && (
+          <TouchableOpacity
+            style={styles.sendButton}
+            onPress={handleSend}
+            activeOpacity={0.7}
+          >
+            <Send size={20} color={COLORS.PRIMARY} />
+          </TouchableOpacity>
+        )}
+      </View>
+    );
+  },
+);
 
 Input.displayName = 'Input';
 

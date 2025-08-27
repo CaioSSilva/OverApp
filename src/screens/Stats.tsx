@@ -40,10 +40,13 @@ export default function Stats() {
         >
           {t('common.player')}
         </Text>
-        <Button onPress={() => {
-          setProfile(null);
-          fetchProfile().then(setProfile);
-        }} icon={<IterationCw size={20} color={COLORS.WHITE} />} />
+        <Button
+          onPress={() => {
+            setProfile(null);
+            fetchProfile().then(setProfile);
+          }}
+          icon={<IterationCw size={20} color={COLORS.WHITE} />}
+        />
       </View>
       {profile ? <ProfileCard profile={profile} /> : <Skeleton height={136} />}
       <HeroStatsSection setScrollEnabled={setScroll} />

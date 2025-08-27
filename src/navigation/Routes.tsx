@@ -85,7 +85,8 @@ function Tabs() {
         name={t('navigation.maps')}
         component={Maps}
         options={{
-          tabBarIcon: ({ size, color }) => createImageIcon(require('../assets/map.png'),size, color),
+          tabBarIcon: ({ size, color }) =>
+            createImageIcon(require('../assets/map.png'), size, color),
         }}
       />
       <TabNavigator.Screen
