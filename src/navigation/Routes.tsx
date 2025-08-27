@@ -1,7 +1,6 @@
 import { Image, useColorScheme } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Stats from '../screens/Stats';
-import Matchs from '../screens/Matchs';
 import { useTranslation } from 'react-i18next';
 import Maps from '../screens/Maps';
 import { MapPin } from 'lucide-react-native';
@@ -14,6 +13,7 @@ import Details from '../screens/Details';
 import { RouteProp } from '@react-navigation/native';
 import { DetailsProps } from '../interfaces/Details.model';
 import HeroDetails from '../screens/HeroDetails/HeroDetails';
+import Athena from '../screens/Athena';
 
 const TabNavigator = createBottomTabNavigator();
 
@@ -90,11 +90,11 @@ function Tabs() {
         }}
       />
       <TabNavigator.Screen
-        name={t('navigation.matches')}
-        component={Matchs}
+        name={t('navigation.athena')}
+        component={Athena}
         options={{
           tabBarIcon: ({ color, size }) =>
-            createImageIcon(require('../assets/rank_badge.png'), size, color),
+            createImageIcon(require('../assets/athena.png'), size, color),
         }}
       />
     </TabNavigator.Navigator>

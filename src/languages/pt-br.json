@@ -17,7 +17,7 @@
     "characters": "Personagens",
     "stats": "Estatísticas",
     "maps": "Mapas",
-    "matches": "Partidas"
+    "athena": "Athena"
   },
   "splash": {
     "messages": {
@@ -117,7 +117,7 @@
     "capture_the_flag": "Capturar a Bandeira",
     "mystery_heroes": "Heróis Misteriosos"
   },
-  "matches": {
-    "title": "Partidas"
+  "athena": {
+    "title": "Athena"
   }
 }
