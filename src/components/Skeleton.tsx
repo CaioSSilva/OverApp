@@ -22,7 +22,7 @@ interface SkeletonProps {
 const Skeleton: React.FC<SkeletonProps> = ({
   height,
   width = '95%',
-  borderRadius = BORDER_RADIUS.LG,
+  borderRadius = BORDER_RADIUS.XL,
   marginVertical = SPACING.XS,
   marginHorizontal = 0,
   style,
