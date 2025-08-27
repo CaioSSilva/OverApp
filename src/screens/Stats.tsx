@@ -8,7 +8,7 @@ import HeroStatsSection from '../components/HeroStatsSection';
 import { COLORS, getThemedStyles } from '../styles/theme';
 import Skeleton from '../components/Skeleton';
 import { IterationCw } from 'lucide-react-native';
-import Button from '../components/Button/Button';
+import Button from '../components/Button';
 
 export default function Stats() {
   const isDarkMode = useColorScheme() === 'dark';

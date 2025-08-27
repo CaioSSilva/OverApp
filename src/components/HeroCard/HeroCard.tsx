@@ -12,7 +12,7 @@ import { Info } from 'lucide-react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { HeroCardProps, roleColors } from '../../interfaces/HeroCard.model';
-import Button from '../Button/Button';
+import Button from '../Button';
 import { getThemedStyles } from '../../styles/theme';
 import { styles, getCardBg, getTextColor } from './styles';
 import { useHeroCard } from './hooks';

@@ -1,5 +1,5 @@
 import { useColorScheme, TouchableOpacity, Text } from 'react-native';
-import { getThemedStyles } from '../../styles/theme';
+import { getThemedStyles } from '../styles/theme';
 import { ReactElement } from 'react';
 
 interface ButtonProps {

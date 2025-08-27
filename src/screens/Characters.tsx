@@ -4,7 +4,7 @@ import { dataService } from '../hooks/data';
 import { Hero } from '../interfaces/Hero.model';
 import HeroCard from '../components/HeroCard/HeroCard';
 import { useTranslation } from 'react-i18next';
-import Button from '../components/Button/Button';
+import Button from '../components/Button';
 import {
   CalcHeroTimesReturn,
   OverwatchProfileFullStats,

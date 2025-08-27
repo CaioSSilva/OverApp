@@ -4,7 +4,7 @@ import { dataService } from '../hooks/data';
 import { Map } from '../interfaces/Map.model';
 import MapCard from '../components/MapCard';
 import { useTranslation } from 'react-i18next';
-import Button from '../components/Button/Button';
+import Button from '../components/Button';
 import { COLORS, getThemedStyles } from '../styles/theme';
 import Skeleton from '../components/Skeleton';
 import { IterationCw } from 'lucide-react-native';
