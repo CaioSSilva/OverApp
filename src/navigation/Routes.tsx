@@ -86,7 +86,7 @@ function Tabs() {
         name={t('navigation.maps')}
         component={Maps}
         options={{
-          tabBarIcon: ({ size, color }) => createMapsIcon(size, color),
+          tabBarIcon: ({ size, color }) => createImageIcon(require('../assets/map.png'),size, color),
         }}
       />
       <TabNavigator.Screen
@@ -138,10 +138,6 @@ export default function Routes() {
     </MainStackNavigator.Navigator>
   );
 }
-
-const createMapsIcon = (size: number, color: string) => {
-  return <MapPin strokeWidth={2.5} size={size} color={color} />;
-};
 
 const createImageIcon = (source: any, size: number, color: string) => {
   return (
