@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Text,
   useColorScheme,
@@ -8,7 +8,6 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Image,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -21,6 +20,7 @@ import {
 import Input from '../components/AthenaInput';
 import { AthenaService } from '../hooks/athena';
 import AthenaMenu from '../components/AthenaMenu';
+import { Animated } from 'react-native';
 
 export default function Athena() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -42,7 +42,31 @@ export default function Athena() {
       setMessage('');
     }
   };
-  const keyboardOffset = 40;
+  const keyboardOffset = 30;
+  const bounceValue = useBounceAnimation();
+
+  function useBounceAnimation() {
+    const val = useRef(new Animated.Value(1)).current;
+
+    useEffect(() => {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(bounceValue, {
+            toValue: 1.2,
+            duration: 400,
+            useNativeDriver: true,
+          }),
+          Animated.timing(bounceValue, {
+            toValue: 1,
+            duration: 400,
+            useNativeDriver: true,
+          }),
+        ]),
+      ).start();
+    }, [val]);
+
+    return val;
+  }
 
   return (
     <View style={styles.container}>
@@ -53,7 +77,7 @@ export default function Athena() {
       >
         <TouchableWithoutFeedback onPress={dismissKeyboard}>
           <View style={[themedStyles.container, styles.wrapper]}>
-            <AthenaMenu/>
+            <AthenaMenu />
             <View style={styles.content}>
               <Text
                 style={[
@@ -72,10 +96,20 @@ export default function Athena() {
               <Text style={[themedStyles.text, styles.description]}>
                 {t('athena.description')}
               </Text>
-                <View style={styles.pill}> 
-                  <Text style={[themedStyles.text, styles.pillText]}>{t('athena.poweredBy')}</Text>
-                  <Image source={require("../assets/gemini_color.png")} style={styles.geminiLogo} resizeMode="contain" />
-                </View>
+              <View style={styles.pill}>
+                <Text style={[themedStyles.text, styles.pillText]}>
+                  {t('athena.poweredBy')}
+                </Text>
+
+                <Animated.Image
+                  source={require('../assets/gemini_color.png')}
+                  style={[
+                    styles.geminiLogo,
+                    { transform: [{ scale: bounceValue }] },
+                  ]}
+                  resizeMode="contain"
+                />
+              </View>
             </View>
 
             <View
@@ -134,20 +168,19 @@ const styles = StyleSheet.create({
     paddingBottom: SPACING.LG,
   },
   pill: {
-    width: 200,
     marginHorizontal: 'auto',
     marginTop: SPACING.MD,
     borderRadius: 20,
     backgroundColor: '#656565ad',
     borderColor: GLASS_COLORS.WHITE_BORDER,
     flexDirection: 'row',
-    justifyContent:'center',
+    justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
     padding: 5,
   },
   pillText: {
-    marginRight: 8,
+    marginHorizontal: 8,
   },
   geminiLogo: {
     width: 18,
