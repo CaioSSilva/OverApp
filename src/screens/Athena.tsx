@@ -13,22 +13,25 @@ import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getThemedStyles, SPACING, TYPOGRAPHY } from '../styles/theme';
 import Input from '../components/AthenaInput';
-import AthenaMenu from '../components/AthenaMenu';
+import { AthenaService } from '../hooks/athena';
 
 export default function Athena() {
   const isDarkMode = useColorScheme() === 'dark';
   const themedStyles = getThemedStyles(isDarkMode);
   const [message, setMessage] = useState('');
   const { t } = useTranslation();
+  const { askAthena } = AthenaService();
   const insets = useSafeAreaInsets();
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (message.trim()) {
-      console.log('Sending message:', message);
+      askAthena(message.trim()).then(response => {
+        console.log('Gemini Response:', response);
+      });
       setMessage('');
     }
   };
@@ -43,7 +46,6 @@ export default function Athena() {
       >
         <TouchableWithoutFeedback onPress={dismissKeyboard}>
           <View style={[themedStyles.container, styles.wrapper]}>
-          <AthenaMenu />
             <View style={styles.content}>
               <Text
                 style={[
