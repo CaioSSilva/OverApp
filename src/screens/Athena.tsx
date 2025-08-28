@@ -8,12 +8,19 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  Image,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { getThemedStyles, SPACING, TYPOGRAPHY } from '../styles/theme';
+import {
+  getThemedStyles,
+  GLASS_COLORS,
+  SPACING,
+  TYPOGRAPHY,
+} from '../styles/theme';
 import Input from '../components/AthenaInput';
 import { AthenaService } from '../hooks/athena';
+import AthenaMenu from '../components/AthenaMenu';
 
 export default function Athena() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -46,6 +53,7 @@ export default function Athena() {
       >
         <TouchableWithoutFeedback onPress={dismissKeyboard}>
           <View style={[themedStyles.container, styles.wrapper]}>
+            <AthenaMenu/>
             <View style={styles.content}>
               <Text
                 style={[
@@ -64,6 +72,10 @@ export default function Athena() {
               <Text style={[themedStyles.text, styles.description]}>
                 {t('athena.description')}
               </Text>
+                <View style={styles.pill}> 
+                  <Text style={[themedStyles.text, styles.pillText]}>{t('athena.poweredBy')}</Text>
+                  <Image source={require("../assets/gemini_color.png")} style={styles.geminiLogo} resizeMode="contain" />
+                </View>
             </View>
 
             <View
@@ -120,5 +132,25 @@ const styles = StyleSheet.create({
   bottomContainer: {
     paddingHorizontal: SPACING.LG,
     paddingBottom: SPACING.LG,
+  },
+  pill: {
+    width: 200,
+    marginHorizontal: 'auto',
+    marginTop: SPACING.MD,
+    borderRadius: 20,
+    backgroundColor: '#656565ad',
+    borderColor: GLASS_COLORS.WHITE_BORDER,
+    flexDirection: 'row',
+    justifyContent:'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    padding: 5,
+  },
+  pillText: {
+    marginRight: 8,
+  },
+  geminiLogo: {
+    width: 18,
+    height: 18,
   },
 });
