@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
     marginVertical: SPACING.MD,
     flexDirection: 'row',
     alignItems: 'center',
+    zIndex: 5,
   },
   containerDark: {
     backgroundColor: GLASS_COLORS.DARK_BACKGROUND,

@@ -8,26 +8,35 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
+  COLORS,
   getThemedStyles,
   GLASS_COLORS,
   SPACING,
   TYPOGRAPHY,
 } from '../styles/theme';
 import Input from '../components/AthenaInput';
-import { AthenaService } from '../hooks/athena';
+// import { AthenaService } from '../hooks/athena';
 import AthenaMenu from '../components/AthenaMenu';
 import { Animated } from 'react-native';
+import { MessageInterface } from '../interfaces/Message.model';
 
 export default function Athena() {
   const isDarkMode = useColorScheme() === 'dark';
   const themedStyles = getThemedStyles(isDarkMode);
   const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState<MessageInterface[]>(
+    Array.from({ length: 50 }, (_, i) => ({
+      text: `Mensagem de exemplo número ${i + 1}`,
+      actor: i % 2 === 0 ? 'You' : 'Athena',
+    }))
+  );
   const { t } = useTranslation();
-  const { askAthena } = AthenaService();
+  // const { askAthena } = AthenaService();
   const insets = useSafeAreaInsets();
 
   const dismissKeyboard = () => {
@@ -36,10 +45,7 @@ export default function Athena() {
 
   const handleSend = async () => {
     if (message.trim()) {
-      askAthena(message.trim()).then(response => {
-        console.log('Gemini Response:', response);
-      });
-      setMessage('');
+      setMessages([...messages, { text: message, actor: 'You' }]);
     }
   };
   const keyboardOffset = 30;
@@ -78,39 +84,57 @@ export default function Athena() {
         <TouchableWithoutFeedback onPress={dismissKeyboard}>
           <View style={[themedStyles.container, styles.wrapper]}>
             <AthenaMenu />
-            <View style={styles.content}>
-              <Text
-                style={[
-                  themedStyles.title,
-                  themedStyles.text,
-                  styles.welcomeTitle,
-                ]}
-              >
-                {t('athena.welcome')}
-              </Text>
-
-              <Text style={[themedStyles.text, styles.subtitle]}>
-                {t('athena.subtitle')}
-              </Text>
-
-              <Text style={[themedStyles.text, styles.description]}>
-                {t('athena.description')}
-              </Text>
-              <View style={styles.pill}>
-                <Text style={[themedStyles.text, styles.pillText]}>
-                  {t('athena.poweredBy')}
+            {!messages.length ? (
+              <View style={styles.content}>
+                <Text
+                  style={[
+                    themedStyles.title,
+                    themedStyles.text,
+                    styles.welcomeTitle,
+                  ]}
+                >
+                  {t('athena.welcome')}
                 </Text>
 
-                <Animated.Image
-                  source={require('../assets/gemini_color.png')}
-                  style={[
-                    styles.geminiLogo,
-                    { transform: [{ scale: bounceValue }] },
-                  ]}
-                  resizeMode="contain"
-                />
+                <Text style={[themedStyles.text, styles.subtitle]}>
+                  {t('athena.subtitle')}
+                </Text>
+
+                <Text style={[themedStyles.text, styles.description]}>
+                  {t('athena.description')}
+                </Text>
+                <View style={styles.pill}>
+                  <Text style={[themedStyles.text, styles.pillText]}>
+                    {t('athena.poweredBy')}
+                  </Text>
+
+                  <Animated.Image
+                    source={require('../assets/gemini_color.png')}
+                    style={[
+                      styles.geminiLogo,
+                      { transform: [{ scale: bounceValue }] },
+                    ]}
+                    resizeMode="contain"
+                  />
+                </View>
               </View>
-            </View>
+            ) : (
+              <ScrollView scrollEnabled style={{ flex: 1 }} showsVerticalScrollIndicator ba>
+                {messages.map((msg, index) => (
+                  <View key={index} style={{ padding: SPACING.SM }}>
+                    <Text
+                      style={[
+                        themedStyles.text,
+                        { fontWeight: TYPOGRAPHY.WEIGHTS.BOLD },
+                      ]}
+                    >
+                      {msg.actor}:
+                    </Text>
+                    <Text style={[themedStyles.text]}>{msg.text}</Text>
+                  </View>
+                ))}
+              </ScrollView>
+            )}
 
             <View
               style={[styles.bottomContainer, { paddingBottom: insets.bottom }]}
@@ -136,6 +160,7 @@ const styles = StyleSheet.create({
   },
   keyboardContainer: {
     flex: 1,
+    zIndex: 100,
   },
   wrapper: {
     flex: 1,
@@ -181,6 +206,7 @@ const styles = StyleSheet.create({
   },
   pillText: {
     marginHorizontal: 8,
+    color: COLORS.WHITE,
   },
   geminiLogo: {
     width: 18,
