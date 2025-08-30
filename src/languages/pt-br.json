@@ -123,7 +123,15 @@
     "subtitle": "Sua companheira para estratégia e insights",
     "inputPlaceholder": "Digite sua mensagem...",
     "lastChats": "Últimas conversas",
-    "poweredBy": "Com tecnologia Gemini",
+    "newChat": "Nova Conversa",
+    "poweredBy": "Com tecnologia Google",
     "description": "Explore heróis, descubra estratégias e eleve seu desempenho."
+  },
+  "toasts":{
+    "error": "Ocorreu um erro",
+    "chatCreated": "Conversa criada com sucesso",
+    "chatDeleted": "Conversa deletada",
+    "writeToTalk": "Escreva para falar com a Athena",
+    "limitReached": "Limite de uso atingido. Exclua um chat e tente novamente."
   }
 }

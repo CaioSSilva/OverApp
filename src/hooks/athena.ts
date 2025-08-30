@@ -1,26 +1,37 @@
-import { GenerateContentResponse, GoogleGenAI } from '@google/genai';
+import { Chat, GenerateContentResponse, GoogleGenAI } from '@google/genai';
 import { defaultPayload } from './athenaAct';
 
 const athena = new GoogleGenAI({
   apiKey: 'AIzaSyDhS8-CVMB7Sfs6_vXe4E9xZmaVcLbc6yA',
 });
 
-const askAthena = async (question: string): Promise<string | undefined> => {
-  const response = await athena.models.generateContent({
-    model: 'gemini-2.0-flash',
-    contents: { text: defaultPayload + question },
+const newChat = async (): Promise<Chat> => {
+  const chat = athena.chats.create({
+    model: 'gemini-2.5-flash',
+    config:{
+      systemInstruction: {
+        text: defaultPayload,
+      }
+    }
   });
-  return extractAthenaText(response);
+
+  return chat;
+};
+
+const sendMessage = async (
+  chat: Chat,
+  message: string,
+): Promise<GenerateContentResponse> => {
+  const res = await chat.sendMessage({
+    message: message,
+  });
+
+  return res;
 };
 
 export function AthenaService() {
   return {
-    askAthena,
+    newChat,
+    sendMessage,
   };
-}
-
-function extractAthenaText(
-  response: GenerateContentResponse | undefined,
-): string | undefined {
-  return response?.candidates?.[0]?.content?.parts?.[0]?.text;
 }

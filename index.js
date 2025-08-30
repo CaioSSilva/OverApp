@@ -1,3 +1,6 @@
+import 'core-js/actual/structured-clone';
+
+
 import { AppRegistry } from 'react-native';
 import './i18n';
 import App from './App';
