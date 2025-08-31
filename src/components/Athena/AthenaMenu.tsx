@@ -12,10 +12,8 @@ import {
   GLASS_COLORS,
   SPACING,
 } from '../../styles/theme';
-import { useState, useRef, useContext } from 'react';
+import { useState, useRef } from 'react';
 import { AthenaChats } from './AthenaChats';
-import { AthenaContext } from '../../contexts/AtenaContext';
-
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -24,7 +22,6 @@ export default function AthenaMenu() {
   const [showValue, setShowValue] = useState(false);
   const animatedWidth = useRef(new Animated.Value(0)).current;
   const isDarkMode = useColorScheme() === 'dark';
-  const {} = useContext(AthenaContext);
   const menuMargin = Animated.add(SPACING.LG, animatedWidth);
   const borderWidth = showValue ? 1 : 0;
 
@@ -36,7 +33,7 @@ export default function AthenaMenu() {
       toValue: newWidth,
       duration: 300,
       useNativeDriver: false,
-    }).start(() => {
+    }).start(async () => {
       setMenuWidth(newWidth);
       if (opening) setShowValue(true);
     });

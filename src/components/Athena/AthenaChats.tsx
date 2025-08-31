@@ -1,5 +1,4 @@
-import { CirclePlus, Trash } from 'lucide-react-native';
-import { useContext } from 'react';
+import { CirclePlus } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import {
   View,
@@ -9,9 +8,7 @@ import {
   StyleSheet,
   Platform,
   Dimensions,
-  TouchableOpacity,
 } from 'react-native';
-import { AthenaContext } from '../../contexts/AtenaContext';
 import {
   getThemedStyles,
   COLORS,
@@ -29,8 +26,6 @@ interface AthenaChatsProps {
 
 export function AthenaChats({ showValue, toggleMenu }: AthenaChatsProps) {
   const { t } = useTranslation();
-  const { chats, createChat, selectedChatId, deleteChat, selectChat} =
-    useContext(AthenaContext);
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
@@ -42,45 +37,11 @@ export function AthenaChats({ showValue, toggleMenu }: AthenaChatsProps) {
           </Text>
 
           <ScrollView style={styles.chatsView}>
-            {chats.map(c => {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    selectChat(c.id);
-                    toggleMenu();
-                  }}
-                  style={[
-                    styles.chatMenuContainer,
-                    selectedChatId &&
-                      selectedChatId === c.id &&
-                      styles.selectedBorder,
-                  ]}
-                  key={ c.id}
-                >
-                  <View style={styles.chatTextContainer}>
-                    <Text
-                      key={ c.id}
-                      style={[
-                        getThemedStyles(isDarkMode).text,
-                        styles.chatMenuText,
-                      ]}
-                    >
-                      { c.id}
-                    </Text>
-                    <Trash
-                      size={16}
-                      color={COLORS.WARNING}
-                      onPress={() => deleteChat( c.id)}
-                    />
-                  </View>
-                </TouchableOpacity>
-              );
-            })}
+            <></>
           </ScrollView>
           <Button
             width={140}
             onPress={() => {
-              createChat();
               toggleMenu();
             }}
             title={t('athena.newChat')}
