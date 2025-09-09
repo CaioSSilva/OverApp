@@ -10,7 +10,6 @@ import ContextsProvider from './src/contexts/ContextProvider';
 import Routes from './src/navigation/Routes';
 import { NavigationContainer } from '@react-navigation/native';
 import { getThemedStyles } from './src/styles/theme';
-import CustomToast from './src/components/Toast';
 
 export default function App() {
   return (
@@ -19,7 +18,6 @@ export default function App() {
       <ContextsProvider>
         <AppContent />
       </ContextsProvider>
-      <CustomToast />
     </SafeAreaProvider>
   );
 }

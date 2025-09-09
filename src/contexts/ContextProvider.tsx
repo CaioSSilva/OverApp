@@ -1,6 +1,5 @@
 import React from 'react';
 import { AppProvider } from './AppContext';
-import AthenaProvider from './AtenaContext';
 
 export default function ContextsProvider({
   children,
@@ -9,9 +8,7 @@ export default function ContextsProvider({
 }) {
   return (
     <>
-      <AppProvider>
-        <AthenaProvider>{children}</AthenaProvider>
-      </AppProvider>
+      <AppProvider>{children}</AppProvider>
     </>
   );
 }

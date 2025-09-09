@@ -123,15 +123,7 @@
     "subtitle": "Your companion for strategy and insights",
     "inputPlaceholder": "Type your message...",
     "lastChats": "Last chats",
-    "newChat": "New Chat",
-    "poweredBy": "Powered by Google",
+    "poweredBy":"Powered by Gemini",
     "description": "Explore heroes, discover strategies, and elevate your performance."
-  },
-  "toasts":{
-    "error": "An error occurred",
-    "chatCreated": "Chat created successfully",
-    "chatDeleted": "Chat deleted",
-    "writeToTalk": "Write to talk to Athena",
-    "limitReached": "Usage limit reached. Delete a chat and try again."
   }
 }

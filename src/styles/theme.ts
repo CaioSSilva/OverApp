@@ -22,7 +22,7 @@ export const COLORS = {
   WARNING: '#FF9800',
   ERROR: '#F44336',
   INFO: '#2196F3',
-};
+}
 
 export const TYPOGRAPHY = {
   SIZES: {
@@ -39,7 +39,7 @@ export const TYPOGRAPHY = {
     MEDIUM: '500' as const,
     BOLD: '700' as const,
   },
-};
+}
 
 export const SPACING = {
   XXS: 4,
@@ -49,7 +49,7 @@ export const SPACING = {
   LG: 24,
   XL: 32,
   XXL: 48,
-};
+}
 
 export const BORDER_RADIUS = {
   SM: 4,
@@ -57,13 +57,13 @@ export const BORDER_RADIUS = {
   LG: 12,
   XL: 16,
   ROUND: 50,
-};
+}
 
 export const ANIMATIONS = {
   FAST: 150,
   NORMAL: 300,
   SLOW: 500,
-};
+}
 
 export interface Theme {
   background: string;
@@ -92,6 +92,7 @@ export const darkTheme: Theme = {
   card: COLORS.DARK.CARD,
 };
 
+
 export const GLASS_COLORS = {
   PRIMARY_BACKGROUND: 'rgba(250, 156, 30, 0.15)',
   PRIMARY_BORDER: 'rgba(250, 156, 30, 0.3)',
@@ -99,7 +100,7 @@ export const GLASS_COLORS = {
   DARK_BORDER: 'rgba(250, 156, 30, 0.4)',
   WHITE_BACKGROUND: 'rgba(255, 255, 255, 0.2)',
   WHITE_BORDER: 'rgba(255, 255, 255, 0.3)',
-};
+}
 
 export const getTheme = (isDarkMode: boolean): Theme =>
   isDarkMode ? darkTheme : lightTheme;
@@ -151,9 +152,6 @@ export const getThemedStyles = (isDarkMode: boolean) => {
     },
 
     button: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      gap: SPACING.SM,
       backgroundColor: COLORS.PRIMARY,
       padding: SPACING.XS,
       borderRadius: BORDER_RADIUS.SM,
