@@ -12,6 +12,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
+  COLORS,
   getThemedStyles,
   GLASS_COLORS,
   SPACING,
@@ -180,6 +181,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   pillText: {
+    color: COLORS.WHITE,
     marginHorizontal: 8,
   },
   geminiLogo: {

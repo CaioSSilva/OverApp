@@ -1,6 +1,6 @@
 import { Menu } from 'lucide-react-native';
-import { StyleSheet, Text, View, Animated, Dimensions } from 'react-native';
-import { COLORS, GLASS_COLORS, SPACING } from '../styles/theme';
+import { StyleSheet, Text, View, Animated, Dimensions, useColorScheme } from 'react-native';
+import { COLORS, getThemedStyles, GLASS_COLORS, SPACING } from '../styles/theme';
 import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -10,9 +10,11 @@ export default function AthenaMenu() {
   const [menuWidth, setMenuWidth] = useState(0);
   const [showValue, setShowValue] = useState(false);
   const animatedWidth = useRef(new Animated.Value(0)).current;
+  const isDarkMode = useColorScheme() === 'dark';
   const { t } = useTranslation();
   const menuMargin = Animated.add(SPACING.LG, animatedWidth);
   const borderWidth =  showValue ? 1 : 0
+  const borderColor = isDarkMode ? '#1F1F1F' : '#D3D3D3';
 
   const toggleMenu = () => {
     const opening = menuWidth === 0;
@@ -29,11 +31,11 @@ export default function AthenaMenu() {
   };
 
   return (
-    <View style={styles.container}>
-      <Animated.View style={[styles.sidebar, { width: animatedWidth, borderRightWidth: borderWidth }]}> 
+    <View>
+      <Animated.View style={[styles.sidebar,getThemedStyles(isDarkMode).container, { width: animatedWidth, borderRightWidth: borderWidth, borderColor: borderColor}]}> 
         {showValue && (
           <View>
-            <Text style={styles.menuText}>{t('athena.lastChats')}</Text>
+            <Text style={[styles.menuText,{color: getThemedStyles(isDarkMode).text.color}]}>{t('athena.lastChats')}</Text>
           </View>
         )}
       </Animated.View>
@@ -57,14 +59,12 @@ const styles = StyleSheet.create({
     padding: SPACING.SM,
     borderRadius: 20,
     borderWidth: 1,
-    backgroundColor: GLASS_COLORS.WHITE_BACKGROUND,
-    borderColor: GLASS_COLORS.WHITE_BORDER,
+    backgroundColor: GLASS_COLORS.PRIMARY_BACKGROUND,
+    borderColor: GLASS_COLORS.PRIMARY_BORDER,
   },
   sidebar: {
     position: 'absolute',
-    backgroundColor: "#151515",
     borderRightWidth: 1,
-    borderColor: GLASS_COLORS.WHITE_BORDER,
     zIndex: 1000,
     width: 300,
     height: windowHeight,

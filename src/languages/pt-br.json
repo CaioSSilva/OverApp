@@ -82,13 +82,13 @@
     "assists": "Assistências",
     "sessionSummary": "Resumo da Sessão",
     "winRate": "Taxa de Vitória",
-    "kdRatio": "K/D Ratio",
-    "kd": "K/D",
+    "kdRatio": "Relação E/M",
+    "kd": "Eliminações / Mortes",
     "games": "Jogos",
     "eliminations_short": "Elim.",
     "deaths": "Mortes",
     "final_blows": "Finais",
-    "objective": "Obj."
+    "objective": "Tempo de Objetivo"
   },
   "heroDetails": {
     "perfil": "Perfil",

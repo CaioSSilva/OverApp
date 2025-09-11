@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { ProgressChart } from 'react-native-chart-kit';
+import Skeleton from '../../components/Skeleton';
 
 const { width: screenWidth } = Dimensions.get('window');
 const chartWidth = screenWidth - 40;
@@ -23,7 +24,9 @@ const PerformanceChartSection = React.memo<PerformanceChartSectionProps>(
       [isDarkMode],
     );
 
-    if (!hasData) return null;
+    if (!hasData) return (
+      <Skeleton height={220} />
+    )
 
     return (
       <View style={styles.section}>
@@ -33,13 +36,13 @@ const PerformanceChartSection = React.memo<PerformanceChartSectionProps>(
             <ProgressChart
               data={performanceData}
               width={chartWidth}
-              height={180}
+              height={200}
               strokeWidth={12}
               radius={28}
               chartConfig={chartConfig}
-              hideLegend={false}
+              hideLegend={true}
               style={styles.chart}
-              withCustomBarColorFromData={false}
+              withCustomBarColorFromData={true}
             />
           </View>
         </View>
@@ -73,9 +76,8 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   progressChartWrapper: {
-    alignItems: 'stretch',
+    alignItems: 'center',
     justifyContent: 'center',
-    width: '97%',
   },
 });
 

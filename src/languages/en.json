@@ -83,12 +83,12 @@
     "sessionSummary": "Session Summary",
     "winRate": "Win Rate",
     "kdRatio": "K/D Ratio",
-    "kd": "K/D",
+    "kd": "Kills / Deaths",
     "games": "Games",
     "eliminations_short": "Elim.",
     "deaths": "Deaths",
     "final_blows": "Finals",
-    "objective": "Obj."
+    "objective": "Obj. Time"
   },
   "heroDetails": {
     "perfil": "Profile",
