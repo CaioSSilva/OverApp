@@ -1,8 +1,18 @@
 import { Menu } from 'lucide-react-native';
-import { StyleSheet, Text, View, Animated, Dimensions, useColorScheme } from 'react-native';
-import { COLORS, getThemedStyles, GLASS_COLORS, SPACING } from '../styles/theme';
+import {
+  StyleSheet,
+  View,
+  Animated,
+  Dimensions,
+  useColorScheme,
+} from 'react-native';
+import {
+  COLORS,
+  getThemedStyles,
+  GLASS_COLORS,
+  SPACING,
+} from '../../styles/theme';
 import { useState, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -11,10 +21,8 @@ export default function AthenaMenu() {
   const [showValue, setShowValue] = useState(false);
   const animatedWidth = useRef(new Animated.Value(0)).current;
   const isDarkMode = useColorScheme() === 'dark';
-  const { t } = useTranslation();
   const menuMargin = Animated.add(SPACING.LG, animatedWidth);
-  const borderWidth =  showValue ? 1 : 0
-  const borderColor = isDarkMode ? '#1F1F1F' : '#D3D3D3';
+  const borderWidth = showValue ? 1 : 0;
 
   const toggleMenu = () => {
     const opening = menuWidth === 0;
@@ -30,14 +38,24 @@ export default function AthenaMenu() {
     });
   };
 
+  const borderColor = isDarkMode ? '#1F1F1F' : '#D3D3D3';
   return (
-    <View>
-      <Animated.View style={[styles.sidebar,getThemedStyles(isDarkMode).container, { width: animatedWidth, borderRightWidth: borderWidth, borderColor: borderColor}]}> 
-        {showValue && (
-          <View>
-            <Text style={[styles.menuText,{color: getThemedStyles(isDarkMode).text.color}]}>{t('athena.lastChats')}</Text>
-          </View>
-        )}
+    <View style={styles.container}>
+      <Animated.View
+        style={[
+          styles.sidebar,
+          getThemedStyles(isDarkMode).container,
+          {
+            width: animatedWidth,
+            borderRightWidth: borderWidth,
+            borderColor: borderColor,
+          },
+        ]}
+      >
+        {/* <AthenaChats
+          showValue={showValue}
+          toggleMenu={toggleMenu}
+        /> */}
       </Animated.View>
       <Animated.View
         style={[styles.button, { marginLeft: menuMargin }]}
@@ -57,6 +75,7 @@ const styles = StyleSheet.create({
     marginLeft: SPACING.LG + 300,
     marginTop: SPACING.SM,
     padding: SPACING.SM,
+    zIndex: 1000,
     borderRadius: 20,
     borderWidth: 1,
     backgroundColor: GLASS_COLORS.PRIMARY_BACKGROUND,
@@ -64,16 +83,10 @@ const styles = StyleSheet.create({
   },
   sidebar: {
     position: 'absolute',
+    backgroundColor: '#151515',
     borderRightWidth: 1,
     zIndex: 1000,
     width: 300,
     height: windowHeight,
-  },
-  menuText: {
-    color: COLORS.WHITE,
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginTop: SPACING.MD,
-    marginHorizontal: 'auto',
   },
 });

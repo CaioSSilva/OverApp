@@ -12,7 +12,7 @@ import Details from '../screens/Details';
 import { RouteProp } from '@react-navigation/native';
 import { DetailsProps } from '../interfaces/Details.model';
 import HeroDetails from '../screens/HeroDetails/HeroDetails';
-import Athena from '../screens/Athena';
+import Athena from '../screens/Athena/Athena';
 
 const TabNavigator = createBottomTabNavigator();
 
