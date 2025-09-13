@@ -13,6 +13,7 @@ import {
   SPACING,
 } from '../../styles/theme';
 import { useState, useRef } from 'react';
+import { AthenaChats } from './Chats';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -52,10 +53,7 @@ export default function AthenaMenu() {
           },
         ]}
       >
-        {/* <AthenaChats
-          showValue={showValue}
-          toggleMenu={toggleMenu}
-        /> */}
+        <AthenaChats showValue={showValue} toggleMenu={toggleMenu} />
       </Animated.View>
       <Animated.View
         style={[styles.button, { marginLeft: menuMargin }]}
