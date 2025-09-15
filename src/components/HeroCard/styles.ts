@@ -61,21 +61,11 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
-  noStatsContainer: {
-    flexDirection: 'row',
-    gap: 6,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
   timeContainer: {
     alignItems: 'flex-end',
   },
   timeText: {
     fontSize: 20,
-  },
-  info: {
-    backgroundColor: '#df6363',
-    borderRadius: 10,
   },
 });
 

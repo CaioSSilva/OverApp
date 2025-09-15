@@ -88,7 +88,8 @@
     "eliminations_short": "Elim.",
     "deaths": "Deaths",
     "final_blows": "Finals",
-    "objective": "Obj. Time"
+    "objective": "Obj. Time",
+    "noStats": "No provided stats for the refered hero. Change your search params and try again."
   },
   "heroDetails": {
     "perfil": "Profile",

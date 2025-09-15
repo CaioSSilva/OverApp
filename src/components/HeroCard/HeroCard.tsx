@@ -8,7 +8,6 @@ import {
   ViewStyle,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Info } from 'lucide-react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { HeroCardProps, roleColors } from '../../interfaces/HeroCard.model';
@@ -16,6 +15,7 @@ import Button from '../Button';
 import { getThemedStyles } from '../../styles/theme';
 import { styles, getCardBg, getTextColor } from './styles';
 import { useHeroCard } from './hooks';
+import NoDataTooltip from './components/NoDataTooltip/NoDataTooltip';
 
 export default function HeroCard({
   hero,
@@ -95,12 +95,7 @@ export default function HeroCard({
             (heroStatusData ? (
               <Button title={t('common.details')} onPress={handleStatusPress} />
             ) : (
-              <View style={styles.noStatsContainer}>
-                <Text style={getThemedStyles(isDarkMode).text}>
-                  {t('common.noData')}
-                </Text>
-                <Info color={'#fff'} style={styles.info} size={20} />
-              </View>
+              <NoDataTooltip />
             ))}
 
           {timePlayedDisplay && (
