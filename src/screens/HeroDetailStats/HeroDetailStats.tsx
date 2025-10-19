@@ -73,7 +73,7 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
     if (eliminations) {
       metrics.push({
         title: t('stats.eliminations'),
-        value: formatters.toNumber(eliminations.value),
+        value: formatters.number(eliminations.value),
         color: '#10B981',
         icon: getStatIcon('eliminations'),
       });
@@ -176,8 +176,11 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
       barPercentage: 0.8,
       fillShadowGradient: isDarkMode ? '#404040' : '#f3f4f6',
       fillShadowGradientOpacity: 0.2,
+      formatYLabel: (yValue: string) => formatters.number(yValue),
+      formatXLabel: (xValue: string) => xValue,
+      formatTopBarValue: (value: number) => formatters.number(value),
     }),
-    [isDarkMode],
+    [isDarkMode, formatters],
   );
 
   const combatChartData = useMemo(() => {

@@ -15,7 +15,7 @@ export default function NoDataTooltip() {
         actionType="press"
         popover={<Text style={[getThemedStyles(isDarkMode).text, {color: COLORS.WHITE}]}>{t('stats.noStats')}</Text>}
         backgroundColor={COLORS.PRIMARY}
-        width={200}
+        width={220}
         height={100}
         withOverlay={false}
       >
