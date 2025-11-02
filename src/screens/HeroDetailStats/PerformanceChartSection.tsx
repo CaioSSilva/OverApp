@@ -37,7 +37,7 @@ const PerformanceChartSection = React.memo<PerformanceChartSectionProps>(
     const legendTextStyle = useMemo(
       () => ({
         ...styles.legendText,
-        color: isDarkMode ? '#fff' : '#222',
+        color: '#fff',
       }),
       [isDarkMode],
     );

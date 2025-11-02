@@ -1,4 +1,5 @@
 import { StatusBar, useColorScheme, View } from 'react-native';
+import './ReactotronConfig' ;
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
@@ -10,6 +11,7 @@ import ContextsProvider from './src/contexts/ContextProvider';
 import Routes from './src/navigation/Routes';
 import { NavigationContainer } from '@react-navigation/native';
 import { getThemedStyles } from './src/styles/theme';
+import React from 'react';
 
 export default function App() {
   return (

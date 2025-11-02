@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { getThemedStyles } from '../styles/theme';
 import { ReactElement } from 'react';
+import React from 'react';
 
 interface ButtonProps {
   title?: string;

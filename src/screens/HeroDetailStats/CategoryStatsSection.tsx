@@ -58,7 +58,17 @@ const CategoryStatsSection = React.memo<CategoryStatsSectionProps>(
     return (
       <>
         {categories.map((category, categoryIndex) => {
-          const statsToShow = category.stats.slice(0, 6);
+          let gameWonFound = false;
+
+          const statsToShow = category.stats.filter(stat => {
+            if (stat.key === "games_won") {
+              if (gameWonFound) {
+                return false; 
+              }
+              gameWonFound = true;
+            }
+            return true; 
+          }).slice(0, 6);
           if (statsToShow.length === 0) return null;
 
           const getSectionTitle = () => {

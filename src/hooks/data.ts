@@ -10,7 +10,7 @@ import { Map } from '../interfaces/Map.model';
 
 const baseUrl = 'https://overfast-api.tekrop.fr';
 
-const player = 'Coruja-11482';
+const player = 'Kento-12528';
 
 //Kento-12528
 

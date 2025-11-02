@@ -8,6 +8,7 @@ import { dataService } from '../hooks/data';
 import { HeroStatsResponse } from '../interfaces/Status.model';
 import HeroCard from './HeroCard/HeroCard';
 import Skeleton from './Skeleton';
+import React from 'react';
 
 interface StatsSectionProps {
   setScrollEnabled: React.Dispatch<React.SetStateAction<boolean>>;

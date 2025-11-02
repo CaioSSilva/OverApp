@@ -14,6 +14,7 @@ import {
 } from '../../styles/theme';
 import { useState, useRef } from 'react';
 import { AthenaChats } from './Chats';
+import React from 'react';
 
 const windowHeight = Dimensions.get('window').height;
 
