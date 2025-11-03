@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { FlatList, Text, useColorScheme, View } from 'react-native';
 import { dataService } from '../hooks/data';
 import { Hero } from '../interfaces/Hero.model';
@@ -12,10 +12,12 @@ import {
 import { COLORS, getThemedStyles } from '../styles/theme';
 import Skeleton from '../components/Skeleton';
 import { IterationCw } from 'lucide-react-native';
+import { AppContext } from '../contexts/AppContext';
 
 export default function Characters() {
   const isDarkMode = useColorScheme() === 'dark';
   const { getHeroes } = dataService();
+  const { User } = useContext(AppContext);
   const [heroes, setHeroes] = useState<Hero[]>([]);
   const [stats, setStats] = useState<OverwatchProfileFullStats | undefined>(
     undefined,
@@ -23,7 +25,7 @@ export default function Characters() {
   const { t } = useTranslation();
 
   const getHeroList = useCallback(() => dataService().getHeroes(), []);
-  const getTimePlayed = useCallback(() => dataService().getProfileFull(), []);
+  const getTimePlayed = useCallback(() => dataService().getProfileFull(User?.name), []);
 
   useEffect(() => {
     getTimePlayed().then(s => setStats(s.stats));

@@ -2,13 +2,14 @@ import { StyleSheet, Text, useColorScheme, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { getThemedStyles } from '../styles/theme';
 import { useTranslation } from 'react-i18next';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Hero } from '../interfaces/Hero.model';
 import { dataService } from '../hooks/data';
 import { HeroStatsResponse } from '../interfaces/Status.model';
 import HeroCard from './HeroCard/HeroCard';
 import Skeleton from './Skeleton';
 import React from 'react';
+import { AppContext } from '../contexts/AppContext';
 
 interface StatsSectionProps {
   setScrollEnabled: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,6 +21,7 @@ export default function HeroStatsSection({
   const isDarkMode = useColorScheme() === 'dark';
   const styles = getThemedStyles(isDarkMode);
   const { t } = useTranslation();
+  const { User } = useContext(AppContext)
   const [heroes, setHeroes] = useState<Hero[]>([]);
   const [status, setStatus] = useState<HeroStatsResponse | null>(null);
 
@@ -78,6 +80,7 @@ export default function HeroStatsSection({
         valueModeDrop,
         valuePlatDrop,
         valueCharDrop!,
+        User?.name
       ),
     [valueCharDrop, valuePlatDrop, valueModeDrop],
   );

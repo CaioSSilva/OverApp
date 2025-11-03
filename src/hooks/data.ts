@@ -13,23 +13,27 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const baseUrl = 'https://overfast-api.tekrop.fr';
 
-const { User, setUser } = useContext(AppContext)
+const { setUser } = useContext(AppContext);
 
-const player = User?.name
-
+const checkUserExists = (user: string) => {
+  const response = axios.get(`${baseUrl}/players/${user}/summary`).catch(() => {
+    return null;
+  });
+  return response;
+}
 
 const getHeroes = async (): Promise<Hero[]> => {
   const response = await axios.get<Hero[]>(`${baseUrl}/heroes`);
   return response.data;
 };
 
-const getProfileById = async (): Promise<OverwatchProfile> => {
-  const response = await axios.get(`${baseUrl}/players/${player}/summary`);
+const getProfileById = async (user?: string): Promise<OverwatchProfile> => {
+  const response = await axios.get(`${baseUrl}/players/${user}/summary`);
   return response.data;
 };
 
-const getProfileFull = async (): Promise<OverwatchProfileFull> => {
-  const response = await axios.get(`${baseUrl}/players/${player}`);
+const getProfileFull = async (user?: string): Promise<OverwatchProfileFull> => {
+  const response = await axios.get(`${baseUrl}/players/${user}`);
   return response.data;
 };
 
@@ -37,11 +41,12 @@ const getStatusByHero = async (
   gamemode: string,
   platform: string,
   heroId: string,
+  user?: string
 ): Promise<HeroStatsResponse> => {
   const response = await axios.get(
     heroId !== ''
-      ? `${baseUrl}/players/${player}/stats?gamemode=${gamemode}&platform=${platform}&hero=${heroId}`
-      : `${baseUrl}/players/${player}/stats?gamemode=${gamemode}&platform=${platform}`,
+      ? `${baseUrl}/players/${user}/stats?gamemode=${gamemode}&platform=${platform}&hero=${heroId}`
+      : `${baseUrl}/players/${user}/stats?gamemode=${gamemode}&platform=${platform}`,
   );
   return response.data;
 };
@@ -58,13 +63,14 @@ const getMaps = async (): Promise<Map[]> => {
   return response.data;
 };
 
-const logOut = () => {
-  AsyncStorage.clear()
+const logOut = async () => {
+ await AsyncStorage.clear()
   setUser(null)
 };
 
 export function dataService() {
   return {
+    checkUserExists,
     getHeroes,
     getStatusByHero,
     getProfileById,

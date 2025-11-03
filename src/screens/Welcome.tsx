@@ -6,12 +6,15 @@ import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppContext } from '../contexts/AppContext';
+import { dataService } from '../hooks/data';
+import Toast from 'react-native-toast-message'
 
 export default function Welcome() {
     const isDarkMode = useColorScheme() === 'dark';
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const imageAnim = useRef(new Animated.Value(0)).current;
     const titleAnim = useRef(new Animated.Value(0)).current;
+    const { checkUserExists } = dataService();
     const [input, setInput] = useState('')
     const [titleText, setTitleText] = useState('');
     const { t } = useTranslation();
@@ -114,10 +117,6 @@ export default function Welcome() {
             meet: false
         },
         {
-            text: t('requirements.capitalized'),
-            meet: false
-        },
-        {
             text: t('requirements.separator'),
             meet: false
         },
@@ -129,20 +128,14 @@ export default function Welcome() {
 
     const handleLoginInput = (text: string) => {
         setInput(text)
-        const lengthReq = input.length >= 3 && input.length <= 12;
-        const capitalizedReq = /^[A-Z]/.test(input);
-        const separatorReq = input.includes('-');
-        const idReq = /-\d{1,}/.test(input);
-
+        const lengthReq = /^.{3,30}$/.test(text);
+        const separatorReq = /-/.test(text);
+        const idReq = /-\d+$/.test(text);
 
         setRequirements([
             {
                 text: t('requirements.length'),
                 meet: lengthReq
-            },
-            {
-                text: t('requirements.capitalized'),
-                meet: capitalizedReq
             },
             {
                 text: t('requirements.separator'),
@@ -155,11 +148,51 @@ export default function Welcome() {
         ])
     }
 
-    const handleLogin = async () => {
-        const userObj = { name: input };
-        await AsyncStorage.setItem('user', JSON.stringify(userObj));
-        setUser(userObj);
+    const resetForm = () => {
+        setInput('');
+        setRequirements([
+            {
+                text: t('requirements.length'),
+                meet: false
+            },
+            {
+                text: t('requirements.separator'),
+                meet: false
+            },
+            {
+                text: t('requirements.id'),
+                meet: false
+            }
+        ]);
     };
+
+    const handleLogin = async () => {
+        const profile = await checkUserExists(input);
+
+        if (profile) {
+            const userObj = { name: input };
+            await AsyncStorage.setItem('user', JSON.stringify(userObj));
+            loginSheet.current?.hide();
+            setUser(userObj);
+        } else {
+            Toast.show({
+                type: 'error',
+                text1: t('errors.unexpectedError'),
+                text2: t('errors.userNotFound'),
+                position: 'top',
+                visibilityTime: 4000,
+                autoHide: true,
+                topOffset: 50,
+            });
+        }
+    };
+
+    const onEnterPress = () => {
+        if (loginSheet.current) {
+            loginSheet.current.show();
+            resetForm();
+        }
+    }
 
     return (
         <Animated.View
@@ -188,9 +221,12 @@ export default function Welcome() {
                 <Text style={welcomeStyles(isDarkMode).title}>{titleText}</Text>
             </Animated.View>
 
-            {animationTimerRef.current && <Button title='Entrar' scale={1.3} onPress={() => loginSheet.current?.show()} />}
+            {animationTimerRef.current && <Button title='Entrar' scale={1.3} onPress={() => onEnterPress()} />}
 
-            <ActionSheet ref={loginSheet} containerStyle={welcomeStyles(isDarkMode).actionSheetContainer}>
+            <ActionSheet
+                gestureEnabled={false}
+                defaultOverlayOpacity={0}
+                headerAlwaysVisible ref={loginSheet} containerStyle={[welcomeStyles(isDarkMode).actionSheetContainer, { borderWidth: 1, borderColor: isDarkMode ? COLORS.DARK.BORDER : COLORS.LIGHT.BORDER }]}>
                 <Text
                     style={[
                         getThemedStyles(isDarkMode).text,

@@ -14,6 +14,7 @@ import { getThemedStyles } from './src/styles/theme';
 import React from 'react';
 import Welcome from './src/screens/Welcome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 
 export default function App() {
   return (
@@ -33,7 +34,7 @@ function AppContent() {
   const { setLoaded, Loaded, User, setUser } = useContext(AppContext);
 
   const loadingTimeout = () => {
-    const randomDelay = Math.floor(Math.random() * (8000 - 2000 + 1)) + 2000;
+    const randomDelay = Math.floor(Math.random() * (6000 + 1));
     const timer = setTimeout(() => {
       setLoaded(true);
     }, randomDelay);
@@ -45,7 +46,6 @@ const getUser = async () => {
     if (userString) {
       const userObj = JSON.parse(userString); 
       setUser(userObj);
-      console.log('Usuário recuperado:', userObj);
     }
 };
 
@@ -71,6 +71,7 @@ const getUser = async () => {
           <Routes />
         </NavigationContainer>
       ) : <Splash />}
+      <Toast />
     </View>
   );
 }

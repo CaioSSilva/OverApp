@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { ScrollView, Text, useColorScheme, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { dataService } from '../hooks/data';
@@ -9,17 +9,19 @@ import { COLORS, getThemedStyles } from '../styles/theme';
 import Skeleton from '../components/Skeleton';
 import { IterationCw } from 'lucide-react-native';
 import Button from '../components/Button';
+import { AppContext } from '../contexts/AppContext';
 
 export default function Stats() {
   const isDarkMode = useColorScheme() === 'dark';
   const [profile, setProfile] = useState<OverwatchProfile | null>(null);
   const [scroll, setScroll] = useState<boolean>(true);
   const { getProfileById } = dataService();
+  const { User } = useContext(AppContext);
   const { t } = useTranslation();
 
   const flex = { flex: 1 };
 
-  const fetchProfile = useCallback(() => getProfileById(), [getProfileById]);
+  const fetchProfile = useCallback(() => getProfileById(User?.name), [getProfileById]);
 
   useEffect(() => {
     fetchProfile().then(setProfile);
@@ -38,7 +40,7 @@ export default function Stats() {
             flex,
           ]}
         >
-          {t('common.player')}
+          {t('common.User?.name')}
         </Text>
         <Button
           onPress={() => {

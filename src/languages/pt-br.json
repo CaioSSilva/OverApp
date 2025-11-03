@@ -1,7 +1,7 @@
 {
   "common": {
     "update": "Atualizar",
-    "player": "Jogador",
+    "User?.name": "Jogador",
     "level": "Nível",
     "exit": "Sair",
     "enter": "Entrar",
@@ -15,9 +15,14 @@
     "location": "Localização",
     "loginBN":"Login com Battle.net"
   },
+  "errors": {
+    "userNotFound": "Verifique seu ID da Battle.net e tente novamente.",
+    "networkError": "Erro de conexão!",
+    "networkErrorSubtitle": "Por favor, verifique sua conexão e tente novamente.",
+    "unexpectedError": "Ocorreu um erro inesperado!"
+  },
   "requirements": {
-    "length": "◉ O nome deve ter entre 3 e 12 dígitos",
-    "capitalized": "◉ O nome deve começar com uma letra maiúscula",
+    "length": "◉ O nome deve ter entre 3 e 30 dígitos",
     "separator": "◉ O ID do Battle.net deve conter o separador, - ",
     "id": "◉ O ID numérico é obrigatório"
   },

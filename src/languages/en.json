@@ -1,7 +1,7 @@
 {
   "common": {
     "update": "Update",
-    "player": "Player",
+    "User?.name": "User?.name",
     "level": "Level",
     "exit": "Exit",
     "enter": "Enter",
@@ -15,9 +15,14 @@
     "location": "Location",
     "loginBN":"Login with Battle.net"
   },
+  "errors": {
+    "userNotFound": "Check your Battle.net ID and try again.",
+    "networkError": "Connection error!",
+    "networkErrorSubtitle": "Please check your connection and try again.",
+    "unexpectedError": "An unexpected error occurred!"
+  },
   "requirements": {
-    "length": "◉ The name must be between 3 and 12 characters long",
-    "capitalized": "◉ Name must start with an uppercase letter",
+    "length": "◉ The name must be between 3 and 30 characters long",
     "separator": "◉ Battle.net ID must contain a - separator",
     "id": "◉ Numeric ID must be present"
   },
