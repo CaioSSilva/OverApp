@@ -3,6 +3,8 @@ import {
   TouchableOpacity,
   Text,
   DimensionValue,
+  StyleProp,
+  ViewStyle,
 } from 'react-native';
 import { getThemedStyles } from '../styles/theme';
 import { ReactElement } from 'react';
@@ -12,16 +14,20 @@ interface ButtonProps {
   title?: string;
   width?: DimensionValue;
   icon?: ReactElement;
+  scale?: number;
   onPress: () => void;
   disabled?: boolean;
+  customStyles?: StyleProp<ViewStyle>
 }
 
 export default function Button({
   title,
   icon,
   onPress,
+  customStyles,
   width = 'auto',
   disabled = false,
+  scale = 1
 }: ButtonProps) {
   const isDarkMode = useColorScheme() === 'dark';
   const styles = getThemedStyles(isDarkMode);
@@ -31,7 +37,15 @@ export default function Button({
       style={[
         styles.button,
         disabled && styles.disabledButton,
-        { width: width },
+        {
+          width: width,
+          transform: [
+            {
+              scale: scale
+            }
+          ]
+        },
+        customStyles
       ]}
       onPress={onPress}
       disabled={disabled}

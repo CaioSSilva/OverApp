@@ -119,7 +119,11 @@ export default function ProfileCard({
           >
             {t('heroDetails.perfil')}
           </Text>
-          <Button title={t('common.exit')} onPress={() => logOut()} />
+          <Button customStyles={{
+            alignSelf: 'center',
+            justifyContent: 'center',
+            padding: 6,
+          }} width={70} title={t('common.exit')} onPress={() => logOut()} />
         </View>
       </ActionSheet>
     </>
@@ -217,15 +221,20 @@ const styles = StyleSheet.create({
   },
 
   actionSheetContainerBlack: {
-    height: 140,
+    height: 150,
     display: 'flex',
     backgroundColor: '#2d2d2d',
   },
 
   actionSheetContainerwhite: {
-    height: 140,
+    height: 150,
     display: 'flex',
     backgroundColor: '#e2e2e2',
   },
-  exitContainer: { width: '25%', margin: 'auto', gap: 10 },
+  exitContainer: {
+    display: 'flex',
+    flexDirection: "column",
+    alignItems: 'center',
+    gap: 20
+  },
 });

@@ -4,6 +4,7 @@
     "player": "Player",
     "level": "Level",
     "exit": "Exit",
+    "enter": "Enter",
     "updatedAt": "Updated at",
     "noData": "No data",
     "details": "Details",
@@ -11,7 +12,14 @@
     "total": "Total",
     "age": "Age",
     "birthday": "Birthday",
-    "location": "Location"
+    "location": "Location",
+    "loginBN":"Login with Battle.net"
+  },
+  "requirements": {
+    "length": "◉ The name must be between 3 and 12 characters long",
+    "capitalized": "◉ Name must start with an uppercase letter",
+    "separator": "◉ Battle.net ID must contain a - separator",
+    "id": "◉ Numeric ID must be present"
   },
   "navigation": {
     "characters": "Characters",

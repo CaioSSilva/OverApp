@@ -7,14 +7,16 @@ import {
 import { HeroStatsResponse } from '../interfaces/Status.model';
 import { locale } from '../../i18n';
 import { Map } from '../interfaces/Map.model';
+import { useContext } from 'react';
+import { AppContext } from '../contexts/AppContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const baseUrl = 'https://overfast-api.tekrop.fr';
 
-const player = 'Kento-12528';
+const { User, setUser } = useContext(AppContext)
 
-//Kento-12528
+const player = User?.name
 
-//Coruja-11482
 
 const getHeroes = async (): Promise<Hero[]> => {
   const response = await axios.get<Hero[]>(`${baseUrl}/heroes`);
@@ -57,7 +59,8 @@ const getMaps = async (): Promise<Map[]> => {
 };
 
 const logOut = () => {
-  console.log('User logged out');
+  AsyncStorage.clear()
+  setUser(null)
 };
 
 export function dataService() {

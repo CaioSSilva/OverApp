@@ -1,5 +1,5 @@
 import { StatusBar, useColorScheme, View } from 'react-native';
-import './ReactotronConfig' ;
+import './ReactotronConfig';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
@@ -12,6 +12,8 @@ import Routes from './src/navigation/Routes';
 import { NavigationContainer } from '@react-navigation/native';
 import { getThemedStyles } from './src/styles/theme';
 import React from 'react';
+import Welcome from './src/screens/Welcome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
   return (
@@ -28,15 +30,30 @@ function AppContent() {
   const isDarkMode = useColorScheme() === 'dark';
   const safeAreaInsets = useSafeAreaInsets();
 
-  const { setLoaded, Loaded } = useContext(AppContext);
+  const { setLoaded, Loaded, User, setUser } = useContext(AppContext);
 
-  useEffect(() => {
+  const loadingTimeout = () => {
     const randomDelay = Math.floor(Math.random() * (8000 - 2000 + 1)) + 2000;
     const timer = setTimeout(() => {
       setLoaded(true);
     }, randomDelay);
     return () => clearTimeout(timer);
-  }, [setLoaded]);
+  }
+
+const getUser = async () => {
+    const userString = await AsyncStorage.getItem('user');
+    if (userString) {
+      const userObj = JSON.parse(userString); 
+      setUser(userObj);
+      console.log('Usuário recuperado:', userObj);
+    }
+};
+
+  useEffect(() => {
+    getUser();
+
+    loadingTimeout()
+  }, [setUser]);
 
   return (
     <View
@@ -47,13 +64,13 @@ function AppContent() {
         },
       ]}
     >
-      {Loaded ? (
+      {!User ? (
+        <Welcome />
+      ) : Loaded ? (
         <NavigationContainer>
           <Routes />
         </NavigationContainer>
-      ) : (
-        <Splash />
-      )}
+      ) : <Splash />}
     </View>
   );
 }
