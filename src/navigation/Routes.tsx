@@ -13,6 +13,7 @@ import { RouteProp } from '@react-navigation/native';
 import { DetailsProps } from '../interfaces/Details.model';
 import HeroDetails from '../screens/HeroDetails/HeroDetails';
 import Athena from '../screens/Athena/Athena';
+import { COLORS } from '../styles/theme';
 
 const TabNavigator = createBottomTabNavigator();
 
@@ -57,11 +58,13 @@ function Tabs() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: isDarkMode ? '#121212' : '#E2E2E2',
+          backgroundColor: isDarkMode
+            ? COLORS.DARK.BACKGROUND
+            : COLORS.LIGHT.BACKGROUND,
           borderTopWidth: 1,
-          borderTopColor: isDarkMode ? '#1F1F1F' : '#D3D3D3',
+          borderTopColor: isDarkMode ? COLORS.DARK.BORDER : COLORS.LIGHT.BORDER,
         },
-        tabBarActiveTintColor: '#FA9C1E',
+        tabBarActiveTintColor: COLORS.PRIMARY,
         tabBarLabelStyle: { fontWeight: 'bold' },
       }}
     >

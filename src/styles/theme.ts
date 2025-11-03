@@ -1,27 +1,33 @@
 import { StyleSheet } from 'react-native';
 
 export const COLORS = {
-  PRIMARY: '#FA9C1E',
+  PRIMARY: '#FF7F00',
   WHITE: '#FFFFFF',
 
   LIGHT: {
-    BACKGROUND: '#E2E2E2',
-    TEXT: '#151515',
+    BACKGROUND: '#F0F0F0',
+    TEXT: '#0A1C2E',
     BORDER: '#D3D3D3',
     CARD: '#FFFFFF',
   },
 
   DARK: {
-    BACKGROUND: '#121212',
-    TEXT: '#E2E2E2',
-    BORDER: '#1F1F1F',
-    CARD: '#1F1F1F',
+    BACKGROUND: '#1E212B',
+    TEXT: '#E5EFFF',
+    BORDER: '#3D465C',
+    CARD: '#2A3040',
   },
 
-  SUCCESS: '#4CAF50',
-  WARNING: '#FF9800',
-  ERROR: '#F44336',
-  INFO: '#2196F3',
+  SUCCESS: '#00D8FF',
+  WARNING: '#F0B41E',
+  ERROR: '#FF4040',
+  INFO: '#0078FF',
+};
+
+export const ROLE_COLORS = {
+  TANK: '#38B6FF',
+  DAMAGE: '#FF5050',
+  SUPPORT: '#50D040',
 };
 
 export const TYPOGRAPHY = {

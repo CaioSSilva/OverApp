@@ -21,6 +21,8 @@ import {
   useStatIcon,
 } from '../../hooks/useHeroDetailStats';
 
+import { COLORS } from '../../styles/theme';
+
 const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
   statsData,
   heroName = 'Hero',
@@ -74,7 +76,7 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
       metrics.push({
         title: t('stats.eliminations'),
         value: formatters.number(eliminations.value),
-        color: '#10B981',
+        color: COLORS.SUCCESS,
         icon: getStatIcon('eliminations'),
       });
     }
@@ -89,7 +91,7 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
       metrics.push({
         title: t('characters.damage'),
         value: formatters.number(damage.value),
-        color: '#EF4444',
+        color: COLORS.ERROR,
         icon: getStatIcon('damage'),
       });
     }
@@ -101,14 +103,14 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
       metrics.push({
         title: t('stats.accuracy'),
         value: formatters.percentage(accuracy.value),
-        color: '#3B82F6',
+        color: COLORS.INFO,
         icon: getStatIcon('weapon_accuracy'),
       });
     } else if (healing) {
       metrics.push({
         title: t('stats.healing'),
         value: formatters.number(healing.value),
-        color: '#10B981',
+        color: COLORS.SUCCESS,
         icon: getStatIcon('healing_done'),
       });
     }
@@ -148,33 +150,37 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
       gamesPlayed,
       winRate,
       kdRatio,
-      winRateColor: winRate >= 50 ? '#10B981' : '#EF4444',
-      kdRatioColor: parseFloat(kdRatio) >= 1 ? '#10B981' : '#EF4444',
+      winRateColor: winRate >= 50 ? COLORS.SUCCESS : COLORS.ERROR,
+      kdRatioColor: parseFloat(kdRatio) >= 1 ? COLORS.SUCCESS : COLORS.ERROR,
     };
   }, [getStatValue, formatters]);
 
   const chartConfig = useMemo(
     () => ({
-      backgroundColor: isDarkMode ? '#2d2d2d' : '#ffffff',
-      backgroundGradientFrom: isDarkMode ? '#2d2d2d' : '#ffffff',
-      backgroundGradientTo: isDarkMode ? '#1e1e1e' : '#f8f9fa',
+      backgroundColor: isDarkMode ? COLORS.DARK.BACKGROUND : COLORS.WHITE,
+      backgroundGradientFrom: isDarkMode
+        ? COLORS.DARK.BACKGROUND
+        : COLORS.WHITE,
+      backgroundGradientTo: isDarkMode
+        ? COLORS.DARK.CARD
+        : COLORS.LIGHT.BACKGROUND,
       decimalPlaces: 0,
       color: (opacity = 1) =>
         isDarkMode
-          ? `rgba(156, 163, 175, ${opacity})`
-          : `rgba(59, 130, 246, ${opacity})`,
+          ? `rgba(226, 226, 226, ${opacity})`
+          : `rgba(33, 150, 243, ${opacity})`,
       labelColor: (opacity = 1) =>
         isDarkMode
-          ? `rgba(255, 255, 255, ${opacity})`
-          : `rgba(51, 51, 51, ${opacity})`,
+          ? `rgba(226, 226, 226, ${opacity})`
+          : `rgba(21, 21, 21, ${opacity})`,
       style: { borderRadius: 16 },
       propsForLabels: { fontSize: 10, fontWeight: '400' },
       propsForBackgroundLines: {
         strokeWidth: 1,
-        stroke: isDarkMode ? '#404040' : '#e5e7eb',
+        stroke: isDarkMode ? COLORS.DARK.BORDER : COLORS.LIGHT.BORDER,
       },
       barPercentage: 0.8,
-      fillShadowGradient: isDarkMode ? '#404040' : '#f3f4f6',
+      fillShadowGradient: isDarkMode ? COLORS.DARK.BORDER : COLORS.LIGHT.BORDER,
       fillShadowGradientOpacity: 0.2,
       formatYLabel: (yValue: string) => formatters.number(yValue),
       formatXLabel: (xValue: string) => xValue,
@@ -206,9 +212,9 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
         {
           data: [eliminations, deaths, finalBlows, assists],
           colors: [
-            () => '#10B981',
-            () => '#EF4444',
-            () => '#F59E0B',
+            () => COLORS.SUCCESS,
+            () => COLORS.ERROR,
+            () => COLORS.WARNING,
             () => '#8B5CF6',
           ],
         },
@@ -239,7 +245,7 @@ const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
         Math.min(Math.max(kdRatio / 3, 0.01), 1),
         Math.min(Math.max(objectiveTime / 120, 0.01), 1),
       ],
-      colors: ['#FF6B6B', '#4ECDC4', '#45B7D1'],
+      colors: [COLORS.ERROR, COLORS.SUCCESS, COLORS.INFO],
     };
   }, [getStatValue, formatters, t]);
 

@@ -1,3 +1,4 @@
+import { ROLE_COLORS } from '../styles/theme';
 import { Hero, Role } from './Hero.model';
 import { HeroStatsResponse } from './Status.model';
 import { HeroTime } from './Summary.model';
@@ -10,7 +11,7 @@ export type HeroCardProps = {
 };
 
 export const roleColors: Record<Role, string> = {
-  [Role.TANK]: '#5192c3',
-  [Role.DAMAGE]: '#df6363',
-  [Role.SUPPORT]: '#77c36b',
+  [Role.TANK]: ROLE_COLORS.TANK,
+  [Role.DAMAGE]: ROLE_COLORS.DAMAGE,
+  [Role.SUPPORT]: ROLE_COLORS.SUPPORT,
 };

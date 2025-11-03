@@ -15,12 +15,14 @@
     "location": "Location",
     "loginBN": "Login with Battle.net",
     "battleNet": "Place your Battle.net ID here",
-    "or": "Or"
+    "or": "Or",
+    "disconected": "Disconnected"
   },
   "errors": {
     "userNotFound": "Check your Battle.net ID and try again.",
-    "networkError": "Connection error!",
-    "networkErrorSubtitle": "Please check your connection and try again.",
+    "noInternet": "No internet connection detected!",
+    "checkNetwork": "Check your network settings to continue using the app.",
+    "checkConnection": "Check connection",
     "unexpectedError": "An unexpected error occurred!"
   },
   "requirements": {

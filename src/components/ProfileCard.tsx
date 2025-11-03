@@ -14,7 +14,7 @@ import { locale } from '../../i18n';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
 import Button from './Button';
 import { dataService } from '../hooks/data';
-import { getThemedStyles } from '../styles/theme';
+import { COLORS, getThemedStyles } from '../styles/theme';
 
 const getSheetStyles = (isDarkMode: boolean) =>
   isDarkMode
@@ -25,8 +25,8 @@ const endorsementColors = [
   '#A0A0A0',
   '#9ECA6B',
   '#68B3C8',
-  '#FFCE47',
-  '#DF6363',
+  '#8A4DFF',
+  '#FFB800',
 ];
 
 const getCardBg = (isDarkMode: boolean) =>
@@ -120,11 +120,7 @@ export default function ProfileCard({
             {t('heroDetails.perfil')}
           </Text>
           <Button
-            customStyles={{
-              alignSelf: 'center',
-              justifyContent: 'center',
-              padding: 6,
-            }}
+            customStyles={styles.exitButton}
             width={70}
             title={t('common.exit')}
             onPress={() => logOut()}
@@ -148,10 +144,10 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   cardLight: {
-    backgroundColor: '#F7FAFC',
+    backgroundColor: COLORS.LIGHT.CARD,
   },
   cardDark: {
-    backgroundColor: '#353535',
+    backgroundColor: COLORS.DARK.CARD,
   },
   bgImage: {
     width: '100%',
@@ -178,10 +174,10 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 16,
-    backgroundColor: '#bbb',
+    backgroundColor: COLORS.LIGHT.BORDER,
     marginBottom: 6,
     borderWidth: 3,
-    borderColor: '#fff',
+    borderColor: COLORS.WHITE,
   },
   infoBox: {
     flex: 1,
@@ -191,7 +187,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     marginBottom: 2,
-    color: '#fff',
+    color: COLORS.WHITE,
   },
   title: {
     fontSize: 16,
@@ -210,7 +206,7 @@ const styles = StyleSheet.create({
   },
   endorsementText: {
     fontWeight: 'bold',
-    color: '#fff',
+    color: COLORS.WHITE,
     marginLeft: 6,
     fontSize: 14,
   },
@@ -219,27 +215,32 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   textLight: {
-    color: '#222',
+    color: COLORS.LIGHT.TEXT,
   },
   textDark: {
-    color: '#fff',
+    color: COLORS.DARK.TEXT,
   },
 
   actionSheetContainerBlack: {
     height: 150,
     display: 'flex',
-    backgroundColor: '#2d2d2d',
+    backgroundColor: COLORS.DARK.CARD,
   },
 
   actionSheetContainerwhite: {
     height: 150,
     display: 'flex',
-    backgroundColor: '#e2e2e2',
+    backgroundColor: COLORS.LIGHT.BACKGROUND,
   },
   exitContainer: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     gap: 20,
+  },
+  exitButton: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    padding: 6,
   },
 });

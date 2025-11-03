@@ -3,6 +3,7 @@ import { COLORS, getThemedStyles } from '../../../../styles/theme';
 import { Info } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import Tooltip from 'rn-tooltip';
+import React from 'react';
 
 export default function NoDataTooltip() {
   const { t } = useTranslation();
@@ -25,7 +26,7 @@ export default function NoDataTooltip() {
         height={100}
         withOverlay={false}
       >
-        <Info color={'#fff'} style={styles.info} size={20} />
+        <Info color={COLORS.WHITE} style={styles.info} size={20} />
       </Tooltip>
     </View>
   );
@@ -39,7 +40,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   info: {
-    backgroundColor: '#df6363',
+    backgroundColor: COLORS.ERROR,
     borderRadius: 10,
   },
 });

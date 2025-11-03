@@ -191,28 +191,28 @@ const styles = StyleSheet.create({
     fontWeight: TYPOGRAPHY.WEIGHTS.BOLD,
   },
   healthFill: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: COLORS.SUCCESS,
   },
   armorFill: {
-    backgroundColor: '#FF9800',
+    backgroundColor: COLORS.WARNING,
   },
   shieldsFill: {
-    backgroundColor: '#2196F3',
+    backgroundColor: COLORS.INFO,
   },
   totalFill: {
     backgroundColor: COLORS.PRIMARY,
     width: '100%',
   },
   healthValue: {
-    color: '#4CAF50',
+    color: COLORS.SUCCESS,
     fontWeight: TYPOGRAPHY.WEIGHTS.BOLD,
   },
   armorValue: {
-    color: '#FF9800',
+    color: COLORS.WARNING,
     fontWeight: TYPOGRAPHY.WEIGHTS.BOLD,
   },
   shieldsValue: {
-    color: '#2196F3',
+    color: COLORS.INFO,
     fontWeight: TYPOGRAPHY.WEIGHTS.BOLD,
   },
   totalValue: {

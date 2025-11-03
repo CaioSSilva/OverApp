@@ -15,6 +15,7 @@ import React from 'react';
 import Welcome from './src/screens/Welcome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
+import NoConnectionModal from './src/components/NoConnectionModal/NoConnectionModal';
 
 export default function App() {
   return (
@@ -33,27 +34,27 @@ function AppContent() {
 
   const { setLoaded, Loaded, User, setUser } = useContext(AppContext);
 
-  const loadingTimeout = () => {
-    const randomDelay = Math.floor(Math.random() * (6000 + 1));
-    const timer = setTimeout(() => {
-      setLoaded(true);
-    }, randomDelay);
-    return () => clearTimeout(timer);
-  };
-
-  const getUser = async () => {
-    const userString = await AsyncStorage.getItem('user');
-    if (userString) {
-      const userObj = JSON.parse(userString);
-      setUser(userObj);
-    }
-  };
-
   useEffect(() => {
+    const loadingTimeout = () => {
+      const randomDelay = Math.floor(Math.random() * (6000 + 1));
+      const timer = setTimeout(() => {
+        setLoaded(true);
+      }, randomDelay);
+      return () => clearTimeout(timer);
+    };
+
+    const getUser = async () => {
+      const userString = await AsyncStorage.getItem('user');
+      if (userString) {
+        const userObj = JSON.parse(userString);
+        setUser(userObj);
+      }
+    };
+
     getUser();
 
     loadingTimeout();
-  }, [setUser]);
+  }, [setUser, setLoaded]);
 
   return (
     <View
@@ -74,6 +75,7 @@ function AppContent() {
         <Splash />
       )}
       <Toast />
+      <NoConnectionModal />
     </View>
   );
 }
