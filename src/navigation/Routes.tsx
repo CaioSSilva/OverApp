@@ -81,7 +81,7 @@ function Tabs() {
         component={Characters}
         options={{
           tabBarIcon: ({ size, color }) =>
-            createImageIcon(require('../assets/logo.png'), size, color),
+            createImageIcon(require('../assets/logo_black.png'), size, color),
         }}
       />
       <TabNavigator.Screen

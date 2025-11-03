@@ -47,7 +47,7 @@ export default function Splash() {
     >
       <ImageBackground
         style={splashStyles(isDarkMode).imageBackground}
-        source={require('../assets/logo.png')}
+        source={isDarkMode ?  require('../assets/logo_white.png') : require('../assets/logo_black.png')}
       />
       <PulseIndicator
         style={splashStyles(isDarkMode).activityIndicator}
