@@ -37,8 +37,8 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.6117647" blue="0.11764706"
-                            alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                        <color key="backgroundColor" red="1" green="0.4980392" blue="0" alpha="1"
+                            colorSpace="custom" customColorSpace="sRGB" />
                         <constraints>
                             <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom"
                                 secondItem="MN2-I3-ftu" secondAttribute="bottom" constant="20"
