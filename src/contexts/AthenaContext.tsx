@@ -8,7 +8,9 @@ export const AthenaProvider = (children: { children: React.ReactNode }) => {
   const [chats, setChats] = useState<Chat[]>([]);
 
   return (
-    <AthenaContext.Provider value={{ actualChatId, setActualChatId, chats, setChats }}>
+    <AthenaContext.Provider
+      value={{ actualChatId, setActualChatId, chats, setChats }}
+    >
       {children.children}
     </AthenaContext.Provider>
   );

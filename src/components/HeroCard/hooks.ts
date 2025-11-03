@@ -1,6 +1,10 @@
 import React from 'react';
 import { useColorScheme } from 'react-native';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import {
+  NavigationProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import { Hero } from '../../interfaces/Hero.model';
 import { HeroStatsResponse } from '../../interfaces/Status.model';
 import { HeroTime } from '../../interfaces/Summary.model';
@@ -11,6 +15,7 @@ import {
   calculateGradientColors,
   formatTimeDisplay,
 } from './utils';
+import { useTranslation } from 'react-i18next';
 
 export const useHeroCard = (
   hero: Hero,
@@ -20,6 +25,8 @@ export const useHeroCard = (
 ) => {
   const isDarkMode = useColorScheme() === 'dark';
   const navigation = useNavigation<NavigationProp<any>>();
+
+  const { t } = useTranslation();
 
   const fillWidth = React.useMemo(
     () => calculateFillWidth(time, maxSize),
@@ -41,7 +48,7 @@ export const useHeroCard = (
     [time],
   );
 
-  const hasTimePlayed = Boolean(timePlayedDisplay);
+  const isOnCharScreen = useRoute().name === t('navigation.characters');
 
   const heroStatusData = status ? findCardStatus(status, hero.key) : undefined;
 
@@ -69,7 +76,7 @@ export const useHeroCard = (
     fillOpacity,
     gradientColors,
     timePlayedDisplay,
-    hasTimePlayed,
+    isOnCharScreen,
     heroStatusData,
     handleHeroDetailsPress,
     handleStatusPress,

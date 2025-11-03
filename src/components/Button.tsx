@@ -17,7 +17,7 @@ interface ButtonProps {
   scale?: number;
   onPress: () => void;
   disabled?: boolean;
-  customStyles?: StyleProp<ViewStyle>
+  customStyles?: StyleProp<ViewStyle>;
 }
 
 export default function Button({
@@ -27,7 +27,7 @@ export default function Button({
   customStyles,
   width = 'auto',
   disabled = false,
-  scale = 1
+  scale = 1,
 }: ButtonProps) {
   const isDarkMode = useColorScheme() === 'dark';
   const styles = getThemedStyles(isDarkMode);
@@ -41,11 +41,11 @@ export default function Button({
           width: width,
           transform: [
             {
-              scale: scale
-            }
-          ]
+              scale: scale,
+            },
+          ],
         },
-        customStyles
+        customStyles,
       ]}
       onPress={onPress}
       disabled={disabled}

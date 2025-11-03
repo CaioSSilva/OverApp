@@ -20,7 +20,7 @@ const checkUserExists = (user: string) => {
     return null;
   });
   return response;
-}
+};
 
 const getHeroes = async (): Promise<Hero[]> => {
   const response = await axios.get<Hero[]>(`${baseUrl}/heroes`);
@@ -41,7 +41,7 @@ const getStatusByHero = async (
   gamemode: string,
   platform: string,
   heroId: string,
-  user?: string
+  user?: string,
 ): Promise<HeroStatsResponse> => {
   const response = await axios.get(
     heroId !== ''
@@ -64,8 +64,8 @@ const getMaps = async (): Promise<Map[]> => {
 };
 
 const logOut = async () => {
- await AsyncStorage.clear()
-  setUser(null)
+  await AsyncStorage.clear();
+  setUser(null);
 };
 
 export function dataService() {

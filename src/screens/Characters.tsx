@@ -25,7 +25,10 @@ export default function Characters() {
   const { t } = useTranslation();
 
   const getHeroList = useCallback(() => dataService().getHeroes(), []);
-  const getTimePlayed = useCallback(() => dataService().getProfileFull(User?.name), []);
+  const getTimePlayed = useCallback(
+    () => dataService().getProfileFull(User?.name),
+    [],
+  );
 
   useEffect(() => {
     getTimePlayed().then(s => setStats(s.stats));

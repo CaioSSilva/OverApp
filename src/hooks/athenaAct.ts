@@ -1,4 +1,4 @@
-import { locale } from "../../i18n";
+import { locale } from '../../i18n';
 
 export const defaultPayload =
   locale === 'pt'

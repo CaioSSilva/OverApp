@@ -4,7 +4,7 @@ interface MainContextType {
   Loaded: boolean;
   setLoaded: React.Dispatch<React.SetStateAction<boolean>>;
   User: { name: string } | null;
-  setUser: React.Dispatch<React.SetStateAction<{ name: string } | null>>
+  setUser: React.Dispatch<React.SetStateAction<{ name: string } | null>>;
 }
 
 export const AppContext = createContext({} as MainContextType);

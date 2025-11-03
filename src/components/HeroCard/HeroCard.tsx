@@ -31,7 +31,7 @@ export default function HeroCard({
     fillOpacity,
     gradientColors,
     timePlayedDisplay,
-    hasTimePlayed,
+    isOnCharScreen,
     heroStatusData,
     handleHeroDetailsPress,
     handleStatusPress,
@@ -45,7 +45,7 @@ export default function HeroCard({
         { borderLeftColor: roleColors[hero.role] },
       ]}
       onPress={handleHeroDetailsPress}
-      disabled={!hasTimePlayed}
+      disabled={!isOnCharScreen}
     >
       <LinearGradient
         colors={gradientColors}

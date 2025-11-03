@@ -1,7 +1,7 @@
 {
   "common": {
     "update": "Update",
-    "User?.name": "User?.name",
+    "player": "Player",
     "level": "Level",
     "exit": "Exit",
     "enter": "Enter",
@@ -13,7 +13,9 @@
     "age": "Age",
     "birthday": "Birthday",
     "location": "Location",
-    "loginBN":"Login with Battle.net"
+    "loginBN": "Login with Battle.net",
+    "battleNet": "Place your Battle.net ID here",
+    "or": "Or"
   },
   "errors": {
     "userNotFound": "Check your Battle.net ID and try again.",

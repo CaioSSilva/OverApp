@@ -21,7 +21,10 @@ export default function Stats() {
 
   const flex = { flex: 1 };
 
-  const fetchProfile = useCallback(() => getProfileById(User?.name), [getProfileById]);
+  const fetchProfile = useCallback(
+    () => getProfileById(User?.name),
+    [getProfileById],
+  );
 
   useEffect(() => {
     fetchProfile().then(setProfile);
@@ -40,7 +43,7 @@ export default function Stats() {
             flex,
           ]}
         >
-          {t('common.User?.name')}
+          {t('common.player')}
         </Text>
         <Button
           onPress={() => {

@@ -42,7 +42,6 @@ const CombatChartSection = React.memo<CombatChartSectionProps>(
             yAxisSuffix=""
             withInnerLines={false}
             showValuesOnTopOfBars={true}
-            
             fromZero={true}
             horizontalLabelRotation={0}
             verticalLabelRotation={0}

@@ -55,7 +55,7 @@ const PerformanceChartSection = React.memo<PerformanceChartSectionProps>(
         ))}
       </View>
     );
-    
+
     if (!hasData) return <Skeleton height={220} />;
 
     return (

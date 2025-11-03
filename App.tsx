@@ -39,20 +39,20 @@ function AppContent() {
       setLoaded(true);
     }, randomDelay);
     return () => clearTimeout(timer);
-  }
+  };
 
-const getUser = async () => {
+  const getUser = async () => {
     const userString = await AsyncStorage.getItem('user');
     if (userString) {
-      const userObj = JSON.parse(userString); 
+      const userObj = JSON.parse(userString);
       setUser(userObj);
     }
-};
+  };
 
   useEffect(() => {
     getUser();
 
-    loadingTimeout()
+    loadingTimeout();
   }, [setUser]);
 
   return (
@@ -70,7 +70,9 @@ const getUser = async () => {
         <NavigationContainer>
           <Routes />
         </NavigationContainer>
-      ) : <Splash />}
+      ) : (
+        <Splash />
+      )}
       <Toast />
     </View>
   );

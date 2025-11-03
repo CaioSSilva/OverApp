@@ -21,7 +21,7 @@ export default function HeroStatsSection({
   const isDarkMode = useColorScheme() === 'dark';
   const styles = getThemedStyles(isDarkMode);
   const { t } = useTranslation();
-  const { User } = useContext(AppContext)
+  const { User } = useContext(AppContext);
   const [heroes, setHeroes] = useState<Hero[]>([]);
   const [status, setStatus] = useState<HeroStatsResponse | null>(null);
 
@@ -80,7 +80,7 @@ export default function HeroStatsSection({
         valueModeDrop,
         valuePlatDrop,
         valueCharDrop!,
-        User?.name
+        User?.name,
       ),
     [valueCharDrop, valuePlatDrop, valueModeDrop],
   );
