@@ -16,6 +16,7 @@ import Welcome from './src/screens/Welcome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import NoConnectionModal from './src/components/NoConnectionModal/NoConnectionModal';
+import PulseBandSheet from './src/components/HearthGraph/PulseBandSheet';
 
 export default function App() {
   return (
@@ -70,6 +71,7 @@ function AppContent() {
       ) : Loaded ? (
         <NavigationContainer>
           <Routes />
+          <PulseBandSheet />
         </NavigationContainer>
       ) : (
         <Splash />

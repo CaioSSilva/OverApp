@@ -1,15 +1,22 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { ScrollView, Text, useColorScheme, View } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { dataService } from '../hooks/data';
 import { OverwatchProfile } from '../interfaces/Summary.model';
 import ProfileCard from '../components/ProfileCard';
 import HeroStatsSection from '../components/HeroStatsSection';
 import { COLORS, getThemedStyles } from '../styles/theme';
 import Skeleton from '../components/Skeleton';
-import { IterationCw } from 'lucide-react-native';
+import { Activity, IterationCw } from 'lucide-react-native';
 import Button from '../components/Button';
 import { AppContext } from '../contexts/AppContext';
+import BandContext from '../contexts/BandContext';
+import { dataService } from '../hooks/data';
 
 export default function Stats() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -17,13 +24,14 @@ export default function Stats() {
   const [scroll, setScroll] = useState<boolean>(true);
   const { getProfileById } = dataService();
   const { User } = useContext(AppContext);
+  const { bandModalRef, isConnected } = useContext(BandContext);
   const { t } = useTranslation();
 
   const flex = { flex: 1 };
 
   const fetchProfile = useCallback(
     () => getProfileById(User?.name),
-    [getProfileById],
+    [User?.name, getProfileById],
   );
 
   useEffect(() => {
@@ -36,6 +44,15 @@ export default function Stats() {
       style={getThemedStyles(isDarkMode).container}
     >
       <View style={getThemedStyles(isDarkMode).header}>
+        <View>
+          <Button
+            onPress={() => {
+              bandModalRef.current?.show();
+            }}
+            icon={<Activity size={20} color={COLORS.WHITE} />}
+          />
+          {isConnected && <View style={style().statusBall} />}
+        </View>
         <Text
           style={[
             getThemedStyles(isDarkMode).text,
@@ -58,3 +75,16 @@ export default function Stats() {
     </ScrollView>
   );
 }
+
+export const style = () =>
+  StyleSheet.create({
+    statusBall: {
+      width: 10,
+      height: 10,
+      borderRadius: 6,
+      backgroundColor: COLORS.INFO,
+      position: 'absolute',
+      top: -2,
+      right: -2,
+    },
+  });

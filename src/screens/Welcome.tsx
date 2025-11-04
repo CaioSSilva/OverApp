@@ -58,7 +58,7 @@ export default function Welcome() {
       duration: 2000,
       useNativeDriver: true,
     }).start();
-  });
+  }, [fadeAnim, imageAnim, titleAnim]);
 
   const [requirements, setRequirements] = useState<
     { text: string; meet: boolean }[]
@@ -162,7 +162,11 @@ export default function Welcome() {
       >
         <ImageBackground
           style={welcomeStyles(isDarkMode).imageBackground}
-          source={isDarkMode ?  require('../assets/logo_white.png') : require('../assets/logo_black.png')}
+          source={
+            isDarkMode
+              ? require('../assets/logo_white.png')
+              : require('../assets/logo_black.png')
+          }
         />
       </Animated.View>
 

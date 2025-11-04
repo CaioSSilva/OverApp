@@ -15,8 +15,27 @@
     "location": "Location",
     "loginBN": "Login with Battle.net",
     "battleNet": "Place your Battle.net ID here",
+    "openSettings": "Open Settings",
+    "cancel": "Cancel",
     "or": "Or",
+    "ok": "OK",
     "disconected": "Disconnected"
+  },
+  "pulseBand": {
+    "title": "Pulse Band",
+    "hasBandTitle": "Do you have a PulseBand?",
+    "connectMessage": "If so, turn on your Bluetooth to connect and sync your data.",
+    "currentBpm": "Current BPM: {{bpm}}",
+    "description": "Monitor your real-time heart rate while playing Overwatch.",
+    "search": "Search for Pulse Bands",
+    "searching": "Searching for Pulse Bands",
+    "notFound": "No Pulse Bands found",
+    "connect": "Connect",
+    "disconnect": "Disconnect",
+    "unknown": "Unknown",
+    "heartRate": "Heart Rate",
+    "bpm": "bpm",
+    "error": "Error connecting Pulse Band. Please try again."
   },
   "errors": {
     "userNotFound": "Check your Battle.net ID and try again.",

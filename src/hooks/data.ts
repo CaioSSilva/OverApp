@@ -7,13 +7,8 @@ import {
 import { HeroStatsResponse } from '../interfaces/Status.model';
 import { locale } from '../../i18n';
 import { Map } from '../interfaces/Map.model';
-import { useContext } from 'react';
-import { AppContext } from '../contexts/AppContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const baseUrl = 'https://overfast-api.tekrop.fr';
-
-const { setUser } = useContext(AppContext);
 
 const checkUserExists = (user: string) => {
   const response = axios.get(`${baseUrl}/players/${user}/summary`).catch(() => {
@@ -63,11 +58,6 @@ const getMaps = async (): Promise<Map[]> => {
   return response.data;
 };
 
-const logOut = async () => {
-  await AsyncStorage.clear();
-  setUser(null);
-};
-
 export function dataService() {
   return {
     checkUserExists,
@@ -77,6 +67,5 @@ export function dataService() {
     getProfileFull,
     getHeroDetails,
     getMaps,
-    logOut,
   };
 }

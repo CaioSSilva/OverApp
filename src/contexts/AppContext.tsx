@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createContext, useState } from 'react';
 import React from 'react';
 interface MainContextType {
@@ -5,6 +6,7 @@ interface MainContextType {
   setLoaded: React.Dispatch<React.SetStateAction<boolean>>;
   User: { name: string } | null;
   setUser: React.Dispatch<React.SetStateAction<{ name: string } | null>>;
+  logOut: () => Promise<void>;
 }
 
 export const AppContext = createContext({} as MainContextType);
@@ -13,8 +15,13 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [Loaded, setLoaded] = useState(false);
   const [User, setUser] = useState<{ name: string } | null>(null);
 
+  const logOut = async () => {
+    await AsyncStorage.clear();
+    setUser(null);
+  };
+
   return (
-    <AppContext.Provider value={{ Loaded, setLoaded, User, setUser }}>
+    <AppContext.Provider value={{ Loaded, setLoaded, User, setUser, logOut }}>
       {children}
     </AppContext.Provider>
   );

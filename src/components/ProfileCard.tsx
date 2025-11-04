@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
   Image,
   Text,
@@ -13,8 +13,8 @@ import { useTranslation } from 'react-i18next';
 import { locale } from '../../i18n';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
 import Button from './Button';
-import { dataService } from '../hooks/data';
 import { COLORS, getThemedStyles } from '../styles/theme';
+import { AppContext } from '../contexts/AppContext';
 
 const getSheetStyles = (isDarkMode: boolean) =>
   isDarkMode
@@ -40,8 +40,8 @@ export default function ProfileCard({
   profile: OverwatchProfile;
 }) {
   const isDarkMode = useColorScheme() === 'dark';
-  const { logOut } = dataService();
   const { t } = useTranslation();
+  const { logOut } = useContext(AppContext);
   const endorsementColor =
     endorsementColors[profile.endorsement.level] || endorsementColors[0];
   const [currentDateTime, setCurrentDateTime] = useState<string>('');

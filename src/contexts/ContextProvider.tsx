@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppProvider } from './AppContext';
 import { AthenaProvider } from './AthenaContext';
+import { BandProvider } from './BandContext';
 
 export default function ContextsProvider({
   children,
@@ -10,7 +11,9 @@ export default function ContextsProvider({
   return (
     <>
       <AppProvider>
-        <AthenaProvider>{children}</AthenaProvider>
+        <BandProvider>
+          <AthenaProvider>{children}</AthenaProvider>
+        </BandProvider>
       </AppProvider>
     </>
   );

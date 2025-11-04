@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { Chat } from '../interfaces/Athena.model';
 
 const AthenaContext = createContext({});
