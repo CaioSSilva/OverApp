@@ -189,7 +189,7 @@ const PulseBandSheet = () => {
               scale={1.1}
               onPress={async () => {
                 await disconnectDevice();
-                closeBluetoothModal();
+                setDevices([]);
               }}
             />
           </>

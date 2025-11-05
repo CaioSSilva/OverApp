@@ -67,7 +67,6 @@ function monitorCharacteristics(
     CHAR_UUID_BPM_STATUS,
     (error, characteristic) => {
       if (error) {
-        console.error('Monitor BPM error:', error.message);
         return;
       }
 
@@ -84,7 +83,6 @@ function monitorCharacteristics(
     CHAR_UUID_VIBRA_STATUS,
     (error, characteristic) => {
       if (error) {
-        console.error('Monitor Vibra error:', error.message);
         return;
       }
 
@@ -153,12 +151,8 @@ export function useBluetooth() {
         setIsConnected(true);
         await connected.discoverAllServicesAndCharacteristics();
 
-        BLTManager.onDeviceDisconnected(connected.id, error => {
-          if (error) {
-            // Log de desconexão removido. O erro é tratado.
-          } else {
-            // Log de desconexão removido.
-          }
+        BLTManager.onDeviceDisconnected(connected.id, _e => {
+          bandModalRef.current?.hide();
           setIsConnected(false);
           setConnectedDevice(undefined);
         });
@@ -194,6 +188,7 @@ export function useBluetooth() {
       CHAR_UUID_VIBRA_STATUS,
       setBpmStatus,
       setVibraStatus,
+      bandModalRef,
     ],
   );
 
@@ -244,22 +239,18 @@ export function useBluetooth() {
 
   const disconnectDevice = useCallback(async () => {
     if (connectedDevice) {
-      try {
-        await BLTManager.cancelDeviceConnection(connectedDevice.id);
-      } catch (error) {
-        console.error(
-          'Erro durante a desconexão (pode já estar desconectado):',
-          error,
-        );
-      } finally {
-        setIsConnected(false);
-        setConnectedDevice(undefined);
-      }
-    } else {
+      await BLTManager.cancelDeviceConnection(connectedDevice.id);
+      bandModalRef.current?.hide();
       setIsConnected(false);
       setConnectedDevice(undefined);
     }
-  }, [BLTManager, connectedDevice, setIsConnected, setConnectedDevice]);
+  }, [
+    BLTManager,
+    bandModalRef,
+    connectedDevice,
+    setConnectedDevice,
+    setIsConnected,
+  ]);
 
   return {
     scanDevices,
