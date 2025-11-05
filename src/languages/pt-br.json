@@ -15,6 +15,7 @@
     "location": "Localização",
     "loginBN": "Login com Battle.net",
     "battleNet": "Coloque seu ID da Battle.net aqui",
+    "enableBiometrics": "Ativar autenticação biométrica",
     "openSettings": "Abrir Configurações",
     "cancel": "Cancelar",
     "or": "Ou",

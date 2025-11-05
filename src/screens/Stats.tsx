@@ -1,5 +1,12 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
+  Animated,
   ScrollView,
   StyleSheet,
   Text,
@@ -27,6 +34,8 @@ export default function Stats() {
   const { bandModalRef, isConnected } = useContext(BandContext);
   const { t } = useTranslation();
 
+  const ballAnim = useRef(new Animated.Value(0)).current;
+
   const flex = { flex: 1 };
 
   const fetchProfile = useCallback(
@@ -36,7 +45,23 @@ export default function Stats() {
 
   useEffect(() => {
     fetchProfile().then(setProfile);
-  }, [fetchProfile]);
+
+    const animateBall = () => {
+      Animated.sequence([
+      Animated.timing(ballAnim, {
+        toValue: 1.2,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(ballAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      ]).start(() => animateBall());
+    };
+    animateBall();
+  }, [ballAnim, fetchProfile]);
 
   return (
     <ScrollView
@@ -51,7 +76,13 @@ export default function Stats() {
             }}
             icon={<Activity size={20} color={COLORS.WHITE} />}
           />
-          {isConnected && <View style={style().statusBall} />}
+          {isConnected && <Animated.View style={[style().statusBall, {
+            transform: [
+              {
+                scale: ballAnim,
+              },
+            ],
+          }]} />}
         </View>
         <Text
           style={[

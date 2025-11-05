@@ -18,6 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppContext } from '../contexts/AppContext';
 import { dataService } from '../hooks/data';
 import Toast from 'react-native-toast-message';
+import { StyledToggle } from '../components/Toggle';
 
 export default function Welcome() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -26,6 +27,7 @@ export default function Welcome() {
   const titleAnim = useRef(new Animated.Value(0)).current;
   const { checkUserExists } = dataService();
   const [input, setInput] = useState('');
+  const [bioToggleValue, setBioToggleValue] = useState<boolean>(false);
   const { t } = useTranslation();
 
   const { setUser } = useContext(AppContext);
@@ -184,11 +186,7 @@ export default function Welcome() {
         <Text style={welcomeStyles(isDarkMode).title}>OverApp</Text>
       </Animated.View>
 
-      <Button
-        title={t('common.enter')}
-        scale={1.3}
-        onPress={() => onEnterPress()}
-      />
+      <Button title={t('common.enter')} onPress={() => onEnterPress()} />
 
       <ActionSheet
         gestureEnabled={false}
@@ -227,8 +225,14 @@ export default function Welcome() {
               {req.text}
             </Text>
           ))}
-        </View>
 
+          <StyledToggle
+            isDarkMode={isDarkMode}
+            value={bioToggleValue}
+            onPress={() => setBioToggleValue(!bioToggleValue)}
+            label={t('common.enableBiometrics')}
+          />
+        </View>
         <Button
           customStyles={welcomeStyles(isDarkMode).customButton}
           disabled={!requirements.every(r => r.meet)}
@@ -281,7 +285,7 @@ const welcomeStyles = (isDarkMode: boolean) =>
       borderColor: isDarkMode ? COLORS.DARK.BORDER : COLORS.LIGHT.BORDER,
     },
     reqContainer: {
-      paddingLeft: 25,
+      paddingLeft: 18,
     },
     customButton: {
       alignSelf: 'center',

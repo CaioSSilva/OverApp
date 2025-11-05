@@ -158,7 +158,7 @@ export const getThemedStyles = (isDarkMode: boolean) => {
 
     button: {
       backgroundColor: COLORS.PRIMARY,
-      padding: SPACING.XS,
+      padding: SPACING.SM,
       borderRadius: BORDER_RADIUS.SM,
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -171,7 +171,7 @@ export const getThemedStyles = (isDarkMode: boolean) => {
 
     buttonText: {
       color: COLORS.WHITE,
-      fontSize: TYPOGRAPHY.SIZES.SM,
+      fontSize: TYPOGRAPHY.SIZES.MD,
       fontWeight: TYPOGRAPHY.WEIGHTS.BOLD,
     },
 
