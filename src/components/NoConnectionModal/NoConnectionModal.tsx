@@ -8,12 +8,12 @@ import {
 } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
-import { COLORS } from '../../styles/theme';
+import { COLORS, getThemedStyles } from '../../styles/theme';
 import { useTranslation } from 'react-i18next';
 import { Linking, Platform } from 'react-native';
 import Button from '../Button';
 
-const { width, height } = Dimensions.get('screen');
+const { width } = Dimensions.get('screen');
 
 const NoConnectionModal = () => {
   const modalRef = useRef<ActionSheetRef>(null);
@@ -61,10 +61,10 @@ const NoConnectionModal = () => {
       closeOnTouchBackdrop={false}
       closable={false}
       ref={modalRef}
-      containerStyle={styles.actionSheetContainer}
+      containerStyle={getThemedStyles(isDarkMode).sheet}
     >
       <View style={styles.sheetContent}>
-        <Text style={styles.titleText}>{t('common.disconected')}</Text>
+        <Text style={getThemedStyles(isDarkMode).titleText}>{t('common.disconected')}</Text>
         <Text style={styles.messageText}>
           {t('errors.noInternet')}
           {'\n'}
@@ -82,26 +82,8 @@ const NoConnectionModal = () => {
 
 const noConnectionStyles = (isDarkMode: boolean) =>
   StyleSheet.create({
-    actionSheetContainer: {
-      backgroundColor: isDarkMode ? COLORS.DARK.CARD : COLORS.LIGHT.CARD,
-      borderWidth: 1,
-      borderColor: isDarkMode ? COLORS.DARK.BORDER : COLORS.LIGHT.BORDER,
-      paddingBottom: height * 0.02,
-    },
     sheetContent: {
-      padding: 30,
-      paddingTop: 40,
       alignItems: 'center',
-      width: '100%',
-    },
-    titleText: {
-      fontFamily: 'OverwatchFont-Bold',
-      fontSize: 28,
-      fontWeight: 'bold',
-      color: COLORS.PRIMARY,
-      marginBottom: 10,
-      textTransform: 'uppercase',
-      letterSpacing: 1.5,
     },
     messageText: {
       fontFamily: 'OverwatchFont-Regular',

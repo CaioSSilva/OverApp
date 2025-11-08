@@ -13,10 +13,12 @@ import { AppContext } from '../contexts/AppContext';
 
 interface StatsSectionProps {
   setScrollEnabled: React.Dispatch<React.SetStateAction<boolean>>;
+  refreshing?: boolean;
 }
 
 export default function HeroStatsSection({
   setScrollEnabled,
+  refreshing,
 }: StatsSectionProps) {
   const isDarkMode = useColorScheme() === 'dark';
   const styles = getThemedStyles(isDarkMode);
@@ -33,7 +35,7 @@ export default function HeroStatsSection({
 
   useEffect(() => {
     getHeroList().then(setHeroes);
-  }, [getHeroList]);
+  }, [getHeroList, refreshing]);
 
   useEffect(() => {
     setItemsCharDrop([
@@ -82,7 +84,7 @@ export default function HeroStatsSection({
         valueCharDrop!,
         User?.name,
       ),
-    [valueCharDrop, valuePlatDrop, valueModeDrop],
+    [valueModeDrop, valuePlatDrop, valueCharDrop, User?.name],
   );
 
   return (

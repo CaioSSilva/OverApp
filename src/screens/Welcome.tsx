@@ -18,7 +18,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppContext } from '../contexts/AppContext';
 import { dataService } from '../hooks/data';
 import Toast from 'react-native-toast-message';
-import { StyledToggle } from '../components/Toggle';
 
 export default function Welcome() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -27,7 +26,6 @@ export default function Welcome() {
   const titleAnim = useRef(new Animated.Value(0)).current;
   const { checkUserExists } = dataService();
   const [input, setInput] = useState('');
-  const [bioToggleValue, setBioToggleValue] = useState<boolean>(false);
   const { t } = useTranslation();
 
   const { setUser } = useContext(AppContext);
@@ -225,13 +223,6 @@ export default function Welcome() {
               {req.text}
             </Text>
           ))}
-
-          <StyledToggle
-            isDarkMode={isDarkMode}
-            value={bioToggleValue}
-            onPress={() => setBioToggleValue(!bioToggleValue)}
-            label={t('common.enableBiometrics')}
-          />
         </View>
         <Button
           customStyles={welcomeStyles(isDarkMode).customButton}

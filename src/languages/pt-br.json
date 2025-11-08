@@ -15,7 +15,6 @@
     "location": "Localização",
     "loginBN": "Login com Battle.net",
     "battleNet": "Coloque seu ID da Battle.net aqui",
-    "enableBiometrics": "Ativar autenticação biométrica",
     "openSettings": "Abrir Configurações",
     "cancel": "Cancelar",
     "or": "Ou",
@@ -36,6 +35,9 @@
     "unknown": "Desconhecido",
     "heartRate": "Frequência Cardíaca",
     "bpm": "bpm",
+    "history": "Histórico",
+    "historyReady": "Histórico de BPM pronto!",
+    "unableToSaveFile": "Não foi possível salvar o arquivo!",
     "error": "Erro ao conectar Pulse Band. Tente novamente."
   },
   "errors": {

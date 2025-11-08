@@ -209,5 +209,27 @@ export const getThemedStyles = (isDarkMode: boolean) => {
     marginSM: { margin: SPACING.SM },
     marginMD: { margin: SPACING.MD },
     marginLG: { margin: SPACING.LG },
+
+    sheet: {
+      backgroundColor: theme.card,
+      borderTopLeftRadius: BORDER_RADIUS.LG,
+      borderTopRightRadius: BORDER_RADIUS.LG,
+      paddingHorizontal: SPACING.SM,
+      paddingBottom: SPACING.LG,
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: theme.border,
+    },
+
+    titleText: {
+      fontFamily: 'OverwatchFont-Bold',
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: COLORS.PRIMARY,
+      marginVertical: 10,
+      textTransform: 'uppercase',
+      textAlign: 'center',
+      letterSpacing: 1.5,
+    },
   });
 };

@@ -29,6 +29,7 @@ export default function Stats() {
   const isDarkMode = useColorScheme() === 'dark';
   const [profile, setProfile] = useState<OverwatchProfile | null>(null);
   const [scroll, setScroll] = useState<boolean>(true);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
   const { getProfileById } = dataService();
   const { User } = useContext(AppContext);
   const { bandModalRef, isConnected } = useContext(BandContext);
@@ -97,12 +98,14 @@ export default function Stats() {
           onPress={() => {
             setProfile(null);
             fetchProfile().then(setProfile);
+            setRefreshing(true);
+            setTimeout(() => setRefreshing(false), 1000);
           }}
           icon={<IterationCw size={20} color={COLORS.WHITE} />}
         />
       </View>
       {profile ? <ProfileCard profile={profile} /> : <Skeleton height={136} />}
-      <HeroStatsSection setScrollEnabled={setScroll} />
+      <HeroStatsSection refreshing={refreshing} setScrollEnabled={setScroll} />
     </ScrollView>
   );
 }

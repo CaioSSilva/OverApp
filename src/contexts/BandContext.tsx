@@ -16,9 +16,9 @@ interface BandContextType {
   setBpmStatus: React.Dispatch<React.SetStateAction<string>>;
   setVibraStatus: React.Dispatch<React.SetStateAction<boolean>>;
   setIsSearchingForBand: React.Dispatch<React.SetStateAction<boolean>>;
-  bpmHistory: number[];
+  bpmHistory: { value: number; timestamp: number }[];
   bpmForExibition: number[];
-  vibraHistory: boolean[];
+  vibraHistory: { value: boolean; timestamp: number }[];
 }
 
 const BandContext = createContext<BandContextType>({} as BandContextType);
@@ -39,8 +39,15 @@ export const BandProvider = (children: { children: React.ReactNode }) => {
 
   const [isSearchingForBand, setIsSearchingForBand] = useState(false);
 
-  const [bpmHistory, setBpmHistory] = useState<number[]>([]);
-  const [vibraHistory, setVibraHistory] = useState<boolean[]>([]);
+  const [bpmHistory, setBpmHistory] = useState<
+    { value: number; timestamp: number }[]
+  >([]);
+  const [vibraHistory, setVibraHistory] = useState<
+    {
+      value: boolean;
+      timestamp: number;
+    }[]
+  >([]);
 
   const [bpmForExibition, setBpmForExibition] = useState<number[]>([]);
 
@@ -48,7 +55,10 @@ export const BandProvider = (children: { children: React.ReactNode }) => {
     if (bpmStatus)
       setBpmHistory(prev => [
         ...prev,
-        !Number.isNaN(Number(bpmStatus)) ? Number(bpmStatus) : 0,
+        {
+          value: !Number.isNaN(Number(bpmStatus)) ? Number(bpmStatus) : 0,
+          timestamp: Date.now(),
+        },
       ]);
 
     if (bpmStatus) {
@@ -61,7 +71,13 @@ export const BandProvider = (children: { children: React.ReactNode }) => {
       });
     }
 
-    setVibraHistory(prev => [...prev, vibraStatus]);
+    setVibraHistory(prev => [
+      ...prev,
+      {
+        value: vibraStatus,
+        timestamp: Date.now(),
+      },
+    ]);
   }, [bpmStatus, vibraStatus]);
 
   return (

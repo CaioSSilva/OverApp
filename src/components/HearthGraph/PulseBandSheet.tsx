@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import {
   Dimensions,
   Linking,
@@ -9,18 +9,19 @@ import {
   View,
   ScrollView,
 } from 'react-native';
-import ActionSheet from 'react-native-actions-sheet';
+import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
 import Button from '../Button';
-import { COLORS } from '../../styles/theme';
+import { COLORS, getThemedStyles } from '../../styles/theme';
 import { useTranslation } from 'react-i18next';
 import BandContext from '../../contexts/BandContext';
 import { useBluetooth } from '../../hooks/useBluetooth';
 import { Device } from 'react-native-ble-plx';
 import { LineChart } from 'react-native-chart-kit';
-
-const { height } = Dimensions.get('screen');
+import { ClockFading } from 'lucide-react-native';
+import HistorySheet from './HistorySheet';
 
 const PulseBandSheet = () => {
+  const historySheetRef = useRef<ActionSheetRef>(null);
   const isDarkMode = useColorScheme() === 'dark';
   const { t } = useTranslation();
   const { bluetoothTunedOn, scanDevices, connectDevice, disconnectDevice } =
@@ -61,12 +62,12 @@ const PulseBandSheet = () => {
       onBeforeShow={() => setIsSearchingForBand(false)}
       headerAlwaysVisible
       ref={bandModalRef}
-      containerStyle={styles(isDarkMode).actionSheetContainer}
+      containerStyle={getThemedStyles(isDarkMode).sheet}
     >
       <View style={styles(isDarkMode).sheetContent}>
         {!isConnected && !isSearchingForBand ? (
           <>
-            <Text style={styles(isDarkMode).titleText}>
+            <Text style={getThemedStyles(isDarkMode).titleText}>
               {t('pulseBand.hasBandTitle')}
             </Text>
 
@@ -95,7 +96,7 @@ const PulseBandSheet = () => {
           </>
         ) : isSearchingForBand ? (
           <>
-            <Text style={styles(isDarkMode).titleText}>
+            <Text style={getThemedStyles(isDarkMode).titleText}>
               {t('pulseBand.searching')}
             </Text>
 
@@ -128,9 +129,20 @@ const PulseBandSheet = () => {
           </>
         ) : (
           <>
-            <Text style={styles(isDarkMode).titleText}>
-              {t('pulseBand.title')}
-            </Text>
+            <View style={styles(isDarkMode).chartHeader}>
+              <Text style={getThemedStyles(isDarkMode).titleText}>
+                {t('pulseBand.title')}
+              </Text>
+
+              <Button
+                icon={<ClockFading size={20} color={COLORS.WHITE}/>}
+                customStyles={styles(isDarkMode).clockwiseIcon}
+                scale={1.1}
+                onPress={() => {
+                  historySheetRef.current?.show();
+                }}
+              />
+            </View>
 
             <LineChart
               bezier
@@ -192,6 +204,7 @@ const PulseBandSheet = () => {
                 setDevices([]);
               }}
             />
+            <HistorySheet ref={historySheetRef}/>
           </>
         )}
       </View>
@@ -228,24 +241,8 @@ const styles = (isDarkMode: boolean) =>
       marginBottom: 0,
       lineHeight: 24,
     },
-    actionSheetContainer: {
-      backgroundColor: isDarkMode ? COLORS.DARK.CARD : COLORS.LIGHT.CARD,
-      borderWidth: 1,
-      borderColor: isDarkMode ? COLORS.DARK.BORDER : COLORS.LIGHT.BORDER,
-      paddingBottom: height * 0.02,
-    },
     sheetContent: {
       alignItems: 'center',
-      padding: 20,
-    },
-    titleText: {
-      fontFamily: 'OverwatchFont-Bold',
-      fontSize: 20,
-      fontWeight: 'bold',
-      color: COLORS.PRIMARY,
-      marginBottom: 10,
-      textTransform: 'uppercase',
-      letterSpacing: 1.5,
     },
     messageText: {
       fontFamily: 'OverwatchFont-Regular',
@@ -259,5 +256,15 @@ const styles = (isDarkMode: boolean) =>
       marginVertical: 12,
       borderRadius: 18,
       backgroundColor: isDarkMode ? COLORS.DARK.CARD : COLORS.LIGHT.CARD,
+    },
+    chartHeader: {
+      width: '100%',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    clockwiseIcon: {
+      position: 'absolute',
+      right: 0,
     },
   });
