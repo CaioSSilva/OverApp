@@ -58,6 +58,18 @@
     "maps": "Mapas",
     "athena": "Athena"
   },
+  "biometrics" : {
+    "title": "Biometria",
+    "authenticate": "Autenticar",
+    "enableMessage": "Ative a autenticação biométrica para aumentar a segurança do seu aplicativo.",
+    "enableButton": "Ativar Biometria",
+    "disableButton": "Desativar Biometria",
+    "enabledMessage": "A autenticação biométrica está ativada.",
+    "disabledMessage": "A autenticação biométrica está desativada.",
+    "error": "Erro de Biometria.",
+    "failed": "Falha na autenticação biométrica.",
+    "canceled": "Autenticação biométrica cancelada pelo usuário."
+  },
   "splash": {
     "messages": {
       "widowmakerAim": "Ajustando a mira da Widowmaker...",

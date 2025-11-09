@@ -18,6 +18,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppContext } from '../contexts/AppContext';
 import { dataService } from '../hooks/data';
 import Toast from 'react-native-toast-message';
+import { StyledToggle } from '../components/Toggle';
+import { useBiometrics } from '../hooks/useBiometrics';
 
 export default function Welcome() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -25,10 +27,13 @@ export default function Welcome() {
   const imageAnim = useRef(new Animated.Value(0)).current;
   const titleAnim = useRef(new Animated.Value(0)).current;
   const { checkUserExists } = dataService();
+  const { authenticate, setBiometryActive } = useBiometrics();
   const [input, setInput] = useState('');
   const { t } = useTranslation();
 
   const { setUser } = useContext(AppContext);
+
+  const [enableBiometrics, setEnableBiometrics] = useState(false);
 
   const battleNetBtnColor = '#009AE4';
 
@@ -122,6 +127,16 @@ export default function Welcome() {
 
     if (profile) {
       const userObj = { name: input };
+      const isAuthenticated = await AsyncStorage.getItem('authenticated');
+
+      if (enableBiometrics && isAuthenticated !== 'true') {
+        const auth = await authenticate();
+        if (!auth.success) {
+          return;
+        }
+setBiometryActive(true);
+      }
+
       await AsyncStorage.setItem('user', JSON.stringify(userObj));
       loginSheet.current?.hide();
       setUser(userObj);
@@ -223,6 +238,13 @@ export default function Welcome() {
               {req.text}
             </Text>
           ))}
+
+          <StyledToggle
+            label={t('biometrics.enableMessage')}
+            value={enableBiometrics}
+            onPress={() => setEnableBiometrics(!enableBiometrics)}
+            isDarkMode={isDarkMode}
+          />
         </View>
         <Button
           customStyles={welcomeStyles(isDarkMode).customButton}

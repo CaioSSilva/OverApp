@@ -60,6 +60,18 @@
     "maps": "Maps",
     "athena": "Athena"
   },
+  "biometrics" : {
+    "title": "Biometrics",
+    "authenticate": "Authenticate",
+    "enableMessage": "Enable biometric authentication to enhance your app security.",
+    "enableButton": "Enable Biometrics",
+    "disableButton": "Disable Biometrics",
+    "enabledMessage": "Biometric authentication is enabled.",
+    "disabledMessage": "Biometric authentication is disabled.",
+    "error": "Biometrics Error.",
+    "failed": "Biometric authentication failed.",
+    "canceled": "Biometric authentication canceled."
+  },
   "splash": {
     "messages": {
       "widowmakerAim": "Adjusting Widowmaker's aim...",

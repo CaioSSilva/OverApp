@@ -233,7 +233,6 @@ const styles = (isDarkMode: boolean) =>
     },
     deviceTitle: {
       flex: 1,
-      fontFamily: 'OverwatchFont-Regular',
       fontWeight: '700',
       fontSize: 16,
       color: isDarkMode ? COLORS.DARK.TEXT : COLORS.LIGHT.TEXT,
@@ -245,7 +244,6 @@ const styles = (isDarkMode: boolean) =>
       alignItems: 'center',
     },
     messageText: {
-      fontFamily: 'OverwatchFont-Regular',
       fontSize: 16,
       color: isDarkMode ? COLORS.DARK.TEXT : COLORS.LIGHT.TEXT,
       textAlign: 'center',

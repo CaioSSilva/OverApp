@@ -8,6 +8,7 @@ import {
   Animated,
   Pressable,
   Easing,
+  Dimensions,
 } from 'react-native';
 import {
   COLORS,
@@ -96,6 +97,7 @@ const styles = StyleSheet.create({
     marginVertical: SPACING.SM,
   },
   label: {
+    width: Dimensions.get('screen').width - TRACK_WIDTH - 50,
     marginLeft: SPACING.SM,
     fontSize: TYPOGRAPHY.SIZES.MD,
   },

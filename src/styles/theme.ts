@@ -222,7 +222,6 @@ export const getThemedStyles = (isDarkMode: boolean) => {
     },
 
     titleText: {
-      fontFamily: 'OverwatchFont-Bold',
       fontSize: 20,
       fontWeight: 'bold',
       color: COLORS.PRIMARY,

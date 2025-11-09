@@ -86,7 +86,6 @@ const noConnectionStyles = (isDarkMode: boolean) =>
       alignItems: 'center',
     },
     messageText: {
-      fontFamily: 'OverwatchFont-Regular',
       fontSize: 16,
       color: isDarkMode ? COLORS.DARK.TEXT : COLORS.LIGHT.TEXT,
       textAlign: 'center',
