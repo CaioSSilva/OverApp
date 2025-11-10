@@ -17,17 +17,49 @@ import {
   SPACING,
 } from '../../styles/theme';
 import Button from '../../components/Button';
+import React, { useContext } from 'react';
+import { Chat } from '../../interfaces/Athena.model';
+import AthenaContext from '../../contexts/AthenaContext';
 
 const windowHeight = Dimensions.get('window').height;
 
 interface AthenaChatsProps {
   showValue: boolean;
   toggleMenu: () => void;
+  onCreateChat: () => void;
+  onSelectChat: (chatId: string) => void;
+  onDeleteChat: (chatId: string) => void;
 }
 
-export function AthenaChats({ showValue, toggleMenu }: AthenaChatsProps) {
+export function AthenaChats({
+  showValue,
+  toggleMenu,
+  onCreateChat,
+  onSelectChat,
+  onDeleteChat,
+}: AthenaChatsProps) {
   const { t } = useTranslation();
   const isDarkMode = useColorScheme() === 'dark';
+  const { chats, actualChatId } = useContext(AthenaContext);
+
+  const handleCreateChat = () => {
+    onCreateChat();
+    toggleMenu();
+  };
+
+  const handleSelectChat = (chatId: string) => {
+    onSelectChat(chatId);
+    toggleMenu();
+  };
+
+  const getChatName = (chat: Chat) => {
+    if (chat.name) return chat.name;
+    if (chat.messages.length > 0) {
+      const firstUserMessage = chat.messages.find(m => m.role === 'user');
+      return firstUserMessage?.content.substring(0, 30) + '...' || 'Chat';
+    }
+    return 'Novo Chat';
+  };
 
   return (
     <>
@@ -38,49 +70,44 @@ export function AthenaChats({ showValue, toggleMenu }: AthenaChatsProps) {
           </Text>
 
           <ScrollView style={styles.chatsView}>
-            {[].map(() => {
+            {chats.map((chat) => {
               return (
                 <TouchableOpacity
-                  onPress={() => {
-                    //selectChat(c.id);
-                    toggleMenu();
-                  }}
+                  onPress={() => handleSelectChat(chat.id)}
                   style={[
                     styles.chatMenuContainer,
-                    // selectedChatId &&
-                    //   selectedChatId === c.id &&
-                    //   styles.selectedBorder,
+                    actualChatId === chat.id && styles.selectedBorder,
                   ]}
-                  //key={ c.id}
+                  key={chat.id}
                 >
                   <View style={styles.chatTextContainer}>
                     <Text
-                      //key={ c.id}
+                      numberOfLines={1}
                       style={[
                         getThemedStyles(isDarkMode).text,
                         styles.chatMenuText,
                       ]}
                     >
-                      {/* { c.id} */}
+                      {getChatName(chat)}
                     </Text>
-                    <Trash
-                      size={16}
-                      color={COLORS.WARNING}
-                      //onPress={() => deleteChat( c.id)}
-                    />
+                    <TouchableOpacity onPress={() => onDeleteChat(chat.id)}>
+                      <Trash size={16} color={COLORS.WARNING} />
+                    </TouchableOpacity>
                   </View>
                 </TouchableOpacity>
               );
             })}
           </ScrollView>
           <Button
-            width={95}
-            onPress={() => {
-              //   createChat();
-              toggleMenu();
-            }}
+            onPress={handleCreateChat}
             title={t('athena.newChat')}
-            icon={<CirclePlus size={22} color={COLORS.WHITE} />}
+            icon={
+              <CirclePlus
+                style={styles.moreIcon}
+                size={22}
+                color={COLORS.WHITE}
+              />
+            }
           />
         </View>
       )}
@@ -128,5 +155,8 @@ const styles = StyleSheet.create({
   chatMenuText: {
     fontSize: 12,
     padding: SPACING.SM,
+  },
+  moreIcon: {
+    marginLeft: SPACING.SM,
   },
 });

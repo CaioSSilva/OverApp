@@ -1,7 +1,19 @@
 import React, { createContext, useState } from 'react';
 import { Chat } from '../interfaces/Athena.model';
 
-const AthenaContext = createContext({});
+interface AthenaContextData {
+  actualChatId: string | null;
+  setActualChatId: (id: string | null) => void;
+  chats: Chat[];
+  setChats: (chats: Chat[]) => void;
+}
+
+const AthenaContext = createContext<AthenaContextData>({
+  actualChatId: null,
+  setActualChatId: () => {},
+  chats: [],
+  setChats: () => {},
+});
 
 export const AthenaProvider = (children: { children: React.ReactNode }) => {
   const [actualChatId, setActualChatId] = useState<string | null>(null);
@@ -15,3 +27,5 @@ export const AthenaProvider = (children: { children: React.ReactNode }) => {
     </AthenaContext.Provider>
   );
 };
+
+export default AthenaContext;

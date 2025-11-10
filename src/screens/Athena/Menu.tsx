@@ -5,6 +5,7 @@ import {
   Animated,
   Dimensions,
   useColorScheme,
+  TouchableOpacity,
 } from 'react-native';
 import {
   COLORS,
@@ -18,7 +19,17 @@ import React from 'react';
 
 const windowHeight = Dimensions.get('window').height;
 
-export default function AthenaMenu() {
+interface AthenaMenuProps {
+  onCreateChat: () => void;
+  onSelectChat: (chatId: string) => void;
+  onDeleteChat: (chatId: string) => void;
+}
+
+export default function AthenaMenu({
+  onCreateChat,
+  onSelectChat,
+  onDeleteChat,
+}: AthenaMenuProps) {
   const [menuWidth, setMenuWidth] = useState(0);
   const [showValue, setShowValue] = useState(false);
   const animatedWidth = useRef(new Animated.Value(0)).current;
@@ -40,9 +51,23 @@ export default function AthenaMenu() {
     });
   };
 
+  const closeMenu = () => {
+    if (menuWidth > 0) {
+      toggleMenu();
+    }
+  };
+
   const borderColor = isDarkMode ? '#1F1F1F' : '#D3D3D3';
   return (
     <View style={styles.container}>
+      {showValue && (
+        <TouchableOpacity
+          style={styles.overlay}
+          activeOpacity={1}
+          onPress={closeMenu}
+        />
+      )}
+
       <Animated.View
         style={[
           styles.sidebar,
@@ -54,7 +79,13 @@ export default function AthenaMenu() {
           },
         ]}
       >
-        <AthenaChats showValue={showValue} toggleMenu={toggleMenu} />
+        <AthenaChats
+          showValue={showValue}
+          toggleMenu={toggleMenu}
+          onCreateChat={onCreateChat}
+          onSelectChat={onSelectChat}
+          onDeleteChat={onDeleteChat}
+        />
       </Animated.View>
       <Animated.View
         style={[styles.button, { marginLeft: menuMargin }]}
@@ -68,6 +99,16 @@ export default function AthenaMenu() {
 
 const styles = StyleSheet.create({
   container: { flexDirection: 'row' },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 999,
+    height: windowHeight,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+  },
   button: {
     width: 38,
     height: 38,

@@ -179,6 +179,17 @@
     "lastChats": "Last chats",
     "newChat": "New Chat",
     "poweredBy": "Powered by Gemini",
-    "description": "Explore heroes, discover strategies, and elevate your performance."
+    "description": "Explore heroes, discover strategies, and elevate your performance.",
+    "errors": {
+      "connectionFailed": "Unable to connect to Athena. Please check your internet connection.",
+      "apiError": "Athena is temporarily unavailable. Please try again in a few moments.",
+      "emptyResponse": "Athena couldn't generate a response. Try rephrasing your question.",
+      "loadChatsFailed": "Failed to load chat history.",
+      "saveChatsFailed": "Failed to save conversation.",
+      "invalidMessage": "Please enter a valid message.",
+      "chatsLimit": "You have reached the maximum number of chats!",
+      "chatsLimitsSub": "Please delete some chats to create new ones.",
+      "rateLimitExceeded": "Too many requests. Please wait a few seconds before trying again."
+    }
   }
 }

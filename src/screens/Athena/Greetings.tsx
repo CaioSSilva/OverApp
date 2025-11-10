@@ -8,6 +8,7 @@ import {
 } from '../../styles/theme';
 import { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import React from 'react';
 
 export function AthenaGrettings() {
   const isDarkMode = useColorScheme() === 'dark';

@@ -177,6 +177,17 @@
     "lastChats": "Últimas conversas",
     "newChat": "Nova Conversa",
     "poweredBy": "Com tecnologia Gemini",
-    "description": "Explore heróis, descubra estratégias e eleve seu desempenho."
+    "description": "Explore heróis, descubra estratégias e eleve seu desempenho.",
+    "errors": {
+      "connectionFailed": "Não foi possível conectar com a Athena. Verifique sua conexão com a internet.",
+      "apiError": "A Athena está temporariamente indisponível. Tente novamente em alguns instantes.",
+      "emptyResponse": "A Athena não conseguiu gerar uma resposta. Tente reformular sua pergunta.",
+      "loadChatsFailed": "Erro ao carregar histórico de conversas.",
+      "saveChatsFailed": "Erro ao salvar conversa.",
+      "invalidMessage": "Por favor, digite uma mensagem válida.",
+      "chatsLimit": "Limite de conversas atingido!",
+      "chatsLimitSub": "Exclua algumas para criar novas.",
+      "rateLimitExceeded": "Muitas requisições. Por favor, aguarde alguns segundos antes de tentar novamente."
+    }
   }
 }
