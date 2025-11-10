@@ -61,6 +61,7 @@
   "biometrics" : {
     "title": "Biometria",
     "authenticate": "Autenticar",
+    "notSupported": "Seu dispositivo pode não suportar autenticação",
     "enableMessage": "Ative a autenticação biométrica para aumentar a segurança do seu aplicativo.",
     "enableButton": "Ativar Biometria",
     "disableButton": "Desativar Biometria",

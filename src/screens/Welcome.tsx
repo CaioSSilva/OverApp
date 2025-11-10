@@ -4,22 +4,20 @@ import {
   ImageBackground,
   StyleSheet,
   Text,
-  TextInput,
   useColorScheme,
-  View,
   ViewStyle,
 } from 'react-native';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { COLORS, getThemedStyles } from '../styles/theme';
 import Button from '../components/Button';
-import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
+import { ActionSheetRef } from 'react-native-actions-sheet';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppContext } from '../contexts/AppContext';
 import { dataService } from '../hooks/data';
 import Toast from 'react-native-toast-message';
-import { StyledToggle } from '../components/Toggle';
 import { useBiometrics } from '../hooks/useBiometrics';
+import { LoginSheet } from '../components/LoginSheet';
 
 export default function Welcome() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -27,15 +25,11 @@ export default function Welcome() {
   const imageAnim = useRef(new Animated.Value(0)).current;
   const titleAnim = useRef(new Animated.Value(0)).current;
   const { checkUserExists } = dataService();
-  const { authenticate, setBiometryActive } = useBiometrics();
-  const [input, setInput] = useState('');
+  const { authenticate, setBiometryActive, checkBiometricSupport } =
+    useBiometrics();
   const { t } = useTranslation();
 
   const { setUser } = useContext(AppContext);
-
-  const [enableBiometrics, setEnableBiometrics] = useState(false);
-
-  const battleNetBtnColor = '#009AE4';
 
   const styles = getThemedStyles(isDarkMode);
   const splashStyle: ViewStyle = {
@@ -65,76 +59,28 @@ export default function Welcome() {
     }).start();
   }, [fadeAnim, imageAnim, titleAnim]);
 
-  const [requirements, setRequirements] = useState<
-    { text: string; meet: boolean }[]
-  >([
-    {
-      text: t('requirements.length'),
-      meet: false,
-    },
-    {
-      text: t('requirements.separator'),
-      meet: false,
-    },
-    {
-      text: t('requirements.id'),
-      meet: false,
-    },
-  ]);
-
-  const handleLoginInput = (text: string) => {
-    setInput(text);
-    const lengthReq = /^.{3,30}$/.test(text);
-    const separatorReq = /-/.test(text);
-    const idReq = /-\d+$/.test(text);
-
-    setRequirements([
-      {
-        text: t('requirements.length'),
-        meet: lengthReq,
-      },
-      {
-        text: t('requirements.separator'),
-        meet: separatorReq,
-      },
-      {
-        text: t('requirements.id'),
-        meet: idReq,
-      },
-    ]);
-  };
-
-  const resetForm = () => {
-    setInput('');
-    setRequirements([
-      {
-        text: t('requirements.length'),
-        meet: false,
-      },
-      {
-        text: t('requirements.separator'),
-        meet: false,
-      },
-      {
-        text: t('requirements.id'),
-        meet: false,
-      },
-    ]);
-  };
-
-  const handleLogin = async () => {
-    const profile = await checkUserExists(input);
+  const handleLogin = async (battleNetId: string, enableBiometrics: boolean) => {
+    const profile = await checkUserExists(battleNetId);
 
     if (profile) {
-      const userObj = { name: input };
+      const userObj = { name: battleNetId };
       const isAuthenticated = await AsyncStorage.getItem('authenticated');
 
       if (enableBiometrics && isAuthenticated !== 'true') {
+        const isSupported = await checkBiometricSupport();
+        if (!isSupported) {
+          Toast.show({
+            type: 'error',
+            text1: t('biometrics.disabledMessage'),
+            text2: t('biometrics.notSupported'),
+          });
+          return;
+        }
         const auth = await authenticate();
         if (!auth.success) {
           return;
         }
-setBiometryActive(true);
+        setBiometryActive(true);
       }
 
       await AsyncStorage.setItem('user', JSON.stringify(userObj));
@@ -145,10 +91,6 @@ setBiometryActive(true);
         type: 'error',
         text1: t('errors.unexpectedError'),
         text2: t('errors.userNotFound'),
-        position: 'top',
-        visibilityTime: 4000,
-        autoHide: true,
-        topOffset: 50,
       });
     }
   };
@@ -156,7 +98,6 @@ setBiometryActive(true);
   const onEnterPress = () => {
     if (loginSheet.current) {
       loginSheet.current.show();
-      resetForm();
     }
   };
 
@@ -201,73 +142,7 @@ setBiometryActive(true);
 
       <Button title={t('common.enter')} onPress={() => onEnterPress()} />
 
-      <ActionSheet
-        gestureEnabled={false}
-        defaultOverlayOpacity={0.1}
-        headerAlwaysVisible
-        ref={loginSheet}
-        containerStyle={[
-          welcomeStyles(isDarkMode).actionSheetContainer,
-          welcomeStyles(isDarkMode).loginSheet,
-        ]}
-      >
-        <Text
-          style={[
-            getThemedStyles(isDarkMode).text,
-            getThemedStyles(isDarkMode).title,
-          ]}
-        >
-          {t('common.enter')}
-        </Text>
-
-        <TextInput
-          onChangeText={handleLoginInput}
-          cursorColor={COLORS.PRIMARY}
-          selectionHandleColor={COLORS.PRIMARY}
-          selectionColor={COLORS.PRIMARY}
-          placeholderTextColor={COLORS.PRIMARY}
-          placeholder={t('common.battleNet')}
-          style={welcomeStyles(isDarkMode).input}
-        />
-        <View style={welcomeStyles(isDarkMode).reqContainer}>
-          {requirements.map((req, index) => (
-            <Text
-              key={index}
-              style={{ color: !req.meet ? COLORS.ERROR : COLORS.SUCCESS }}
-            >
-              {req.text}
-            </Text>
-          ))}
-
-          <StyledToggle
-            label={t('biometrics.enableMessage')}
-            value={enableBiometrics}
-            onPress={() => setEnableBiometrics(!enableBiometrics)}
-            isDarkMode={isDarkMode}
-          />
-        </View>
-        <Button
-          customStyles={welcomeStyles(isDarkMode).customButton}
-          disabled={!requirements.every(r => r.meet)}
-          width={'90%'}
-          title={t('common.enter')}
-          onPress={() => handleLogin()}
-        />
-        <View style={welcomeStyles(isDarkMode).orContainer}>
-          <Text style={welcomeStyles(isDarkMode).orText}>{t('common.or')}</Text>
-        </View>
-        <Button
-          customStyles={[
-            welcomeStyles(isDarkMode).customButton,
-            {
-              backgroundColor: battleNetBtnColor,
-            },
-          ]}
-          width={'90%'}
-          title={t('common.loginBN')}
-          onPress={() => {}}
-        />
-      </ActionSheet>
+      <LoginSheet ref={loginSheet} onLogin={handleLogin} />
     </Animated.View>
   );
 }
@@ -281,50 +156,5 @@ const welcomeStyles = (isDarkMode: boolean) =>
       color: isDarkMode ? COLORS.DARK.TEXT : COLORS.PRIMARY,
       fontWeight: '700',
       fontSize: 32,
-    },
-    actionSheetContainer: {
-      display: 'flex',
-      backgroundColor: isDarkMode ? COLORS.DARK.CARD : COLORS.LIGHT.CARD,
-    },
-    input: {
-      width: '90%',
-      padding: 10,
-      margin: 10,
-      backgroundColor: COLORS.WHITE,
-      color: COLORS.DARK.BACKGROUND,
-      alignSelf: 'center',
-      borderRadius: 6,
-      borderWidth: 1,
-      borderColor: isDarkMode ? COLORS.DARK.BORDER : COLORS.LIGHT.BORDER,
-    },
-    reqContainer: {
-      paddingLeft: 18,
-    },
-    customButton: {
-      alignSelf: 'center',
-      justifyContent: 'center',
-      padding: 10,
-      margin: 10,
-    },
-    loginSheet: {
-      borderWidth: 1,
-      borderColor: isDarkMode ? COLORS.DARK.BORDER : COLORS.LIGHT.BORDER,
-      paddingBottom: Dimensions.get('screen').height * 0.02,
-    },
-    orContainer: {
-      width: '90%',
-      alignSelf: 'center',
-      alignItems: 'center',
-      marginVertical: 10,
-      borderBottomWidth: 1,
-      borderBottomColor: isDarkMode ? COLORS.DARK.BORDER : COLORS.LIGHT.BORDER,
-      position: 'relative',
-    },
-    orText: {
-      color: isDarkMode ? COLORS.DARK.TEXT : COLORS.LIGHT.TEXT,
-      backgroundColor: isDarkMode ? COLORS.DARK.CARD : COLORS.LIGHT.CARD,
-      paddingHorizontal: 10,
-      position: 'absolute',
-      top: -10,
     },
   });

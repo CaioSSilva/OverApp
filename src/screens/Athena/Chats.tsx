@@ -56,7 +56,7 @@ export function AthenaChats({
     if (chat.name) return chat.name;
     if (chat.messages.length > 0) {
       const firstUserMessage = chat.messages.slice().reverse().find(m => m.role === 'user');
-      return firstUserMessage?.content.substring(0, 50) + '...' || 'Chat';
+      return firstUserMessage?.content.substring(0, 30) + '...' || 'Chat';
     }
     return 'Novo Chat';
   };

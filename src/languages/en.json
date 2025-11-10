@@ -63,6 +63,7 @@
   "biometrics" : {
     "title": "Biometrics",
     "authenticate": "Authenticate",
+    "notSupported": "Your device maybe not support authentication",
     "enableMessage": "Enable biometric authentication to enhance your app security.",
     "enableButton": "Enable Biometrics",
     "disableButton": "Disable Biometrics",
