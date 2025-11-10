@@ -1,10 +1,17 @@
-import React, { useRef, useEffect } from 'react';
+import React, {
+  useRef,
+  useEffect,
+  useCallback,
+  useState,
+  useContext,
+} from 'react';
 import {
   View,
   Text,
   ScrollView,
   StyleSheet,
   useColorScheme,
+  Image,
 } from 'react-native';
 import { ChatMessage } from '../../interfaces/Athena.model';
 import {
@@ -15,6 +22,9 @@ import {
   TYPOGRAPHY,
 } from '../../styles/theme';
 import { TypingIndicator } from './TypingIndicator';
+import { dataService } from '../../hooks/data';
+import { OverwatchProfile } from '../../interfaces/Summary.model';
+import { AppContext } from '../../contexts/AppContext';
 
 interface AthenaMessagesProps {
   messages: ChatMessage[];
@@ -25,14 +35,23 @@ export function AthenaMessages({ messages, isLoading }: AthenaMessagesProps) {
   const isDarkMode = useColorScheme() === 'dark';
   const themedStyles = getThemedStyles(isDarkMode);
   const scrollViewRef = useRef<ScrollView>(null);
+  const { User } = useContext(AppContext);
+  const [profile, setProfile] = useState<OverwatchProfile | null>(null);
+  const { getProfileById } = dataService();
+
+  const fetchProfile = useCallback(
+    () => getProfileById(User?.name),
+    [User?.name, getProfileById],
+  );
 
   useEffect(() => {
+    fetchProfile().then(setProfile);
     if ((messages.length > 0 || isLoading) && scrollViewRef.current) {
       setTimeout(() => {
         scrollViewRef.current?.scrollToEnd({ animated: true });
       }, 100);
     }
-  }, [messages, isLoading]);
+  }, [messages, isLoading, fetchProfile]);
 
   if (messages.length === 0 && !isLoading) {
     return null;
@@ -50,19 +69,20 @@ export function AthenaMessages({ messages, isLoading }: AthenaMessagesProps) {
           key={index}
           style={[
             styles.messageContainer,
-            message.role === 'user'
-              ? styles.userMessage
-              : styles.modelMessage,
+            message.role === 'user' ? styles.userMessage : styles.modelMessage,
           ]}
         >
           <View
             style={[
               styles.messageBubble,
-              message.role === 'user'
-                ? styles.userBubble
-                : styles.modelBubble,
+              message.role === 'user' ? styles.userBubble : styles.modelBubble,
             ]}
           >
+            {message.role === 'user' ? (
+              <Image style={styles.avatar} source={{ uri: profile?.avatar }} />
+            ) : (
+              <Text style={[styles.avatar, styles.avatarText]}>A</Text>
+            )}
             <Text
               style={[
                 themedStyles.text,
@@ -119,5 +139,21 @@ const styles = StyleSheet.create({
   },
   userText: {
     color: COLORS.WHITE,
+  },
+  avatar: {
+    width: 25,
+    height: 25,
+    borderRadius: 16,
+    backgroundColor: COLORS.INFO,
+    marginRight: 8,    position: 'absolute',
+    right: -18,
+    top: -10,
+  },
+  avatarText: {
+    color: COLORS.WHITE,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    lineHeight: 25,
+    left: -10,
   },
 });
