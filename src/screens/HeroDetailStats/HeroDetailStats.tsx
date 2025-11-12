@@ -18,10 +18,11 @@ import SessionSummarySection from './SessionSummarySection';
 import {
   useStatsData,
   useFormatters,
-  useStatIcon,
+  
 } from '../../hooks/useHeroDetailStats';
 
 import { COLORS } from '../../styles/theme';
+import { useStatIcon } from '../../hooks/useStatIcon';
 
 const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
   statsData,

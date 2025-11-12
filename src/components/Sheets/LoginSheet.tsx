@@ -9,9 +9,9 @@ import {
 } from 'react-native';
 import ActionSheet, { ActionSheetRef } from 'react-native-actions-sheet';
 import { useTranslation } from 'react-i18next';
-import { COLORS, getThemedStyles } from '../styles/theme';
-import Button from './Button';
-import { StyledToggle } from './Toggle';
+import { COLORS, getThemedStyles } from '../../styles/theme';
+import Button from '../Button';
+import { StyledToggle } from '../Toggle';
 
 interface LoginSheetProps {
   onLogin: (battleNetId: string, enableBiometrics: boolean) => Promise<void>;

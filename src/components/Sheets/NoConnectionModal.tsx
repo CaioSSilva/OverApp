@@ -12,7 +12,6 @@ import { COLORS, getThemedStyles } from '../../styles/theme';
 import { useTranslation } from 'react-i18next';
 import { Linking, Platform } from 'react-native';
 import Button from '../Button';
-
 const { width } = Dimensions.get('screen');
 
 const NoConnectionModal = () => {

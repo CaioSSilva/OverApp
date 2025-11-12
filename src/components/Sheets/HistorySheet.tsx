@@ -87,6 +87,34 @@ export default function HearthGraph({ ref }: HistorySheetProps) {
     });
   };
 
+const validateBpmValue = (bpmValue: number): BPMStatus => {
+  const isBpmNormal = bpmValue >= 40 && bpmValue <= 180;
+  const isBpmOnAttention = bpmValue > 180 && bpmValue <= 200;
+  const isBpmCritical = bpmValue > 200;
+
+  if (isBpmNormal) {
+    return BPMStatus.NORMAL;
+  } else if (isBpmOnAttention) {
+    return BPMStatus.ATTENTION;
+  } else if (isBpmCritical) {
+    return BPMStatus.CRITICAL;
+  } else {
+    return BPMStatus.NORMAL;
+  }
+};
+
+const handleBPMColor = (bpmStatus: BPMStatus): string => {
+  switch (bpmStatus) {
+    case BPMStatus.NORMAL:
+      return COLORS.SUCCESS;
+    case BPMStatus.ATTENTION:
+      return COLORS.WARNING;
+    case BPMStatus.CRITICAL:
+      return COLORS.ERROR;
+    default:
+      return COLORS.SUCCESS;
+  }
+}
   return (
     <ActionSheet
       containerStyle={getThemedStyles(isDarkMode).sheet}
@@ -126,13 +154,7 @@ export default function HearthGraph({ ref }: HistorySheetProps) {
                   style={[
                     styles(isDarkMode).historyText,
                     {
-                      color:
-                        validateBpmValue(entry.value) === BPMStatus.NORMAL
-                          ? COLORS.SUCCESS
-                          : validateBpmValue(entry.value) ===
-                            BPMStatus.ATTENTION
-                          ? COLORS.WARNING
-                          : COLORS.ERROR,
+                      color: handleBPMColor(validateBpmValue(entry.value)),
                     },
                   ]}
                 >
@@ -187,19 +209,3 @@ const styles = (isDarkMode: boolean) =>
       marginVertical: 0,
     },
   });
-
-const validateBpmValue = (bpmValue: number): BPMStatus => {
-  const isBpmNormal = bpmValue >= 40 && bpmValue <= 180;
-  const isBpmOnAttention = bpmValue > 180 && bpmValue <= 200;
-  const isBpmCritical = bpmValue > 200;
-
-  if (isBpmNormal) {
-    return BPMStatus.NORMAL;
-  } else if (isBpmOnAttention) {
-    return BPMStatus.ATTENTION;
-  } else if (isBpmCritical) {
-    return BPMStatus.CRITICAL;
-  } else {
-    return BPMStatus.NORMAL;
-  }
-};

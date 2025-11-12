@@ -4,8 +4,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { useColorScheme, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
-import PulseBandSheet from "./src/components/HearthGraph/PulseBandSheet";
-import NoConnectionModal from "./src/components/NoConnectionModal/NoConnectionModal";
+import PulseBandSheet from "./src/components/Sheets/PulseBandSheet";
+import NoConnectionModal from "./src/components/Sheets/NoConnectionModal";
 import { AppContext } from "./src/contexts/AppContext";
 import { useBiometrics } from "./src/hooks/useBiometrics";
 import Routes from "./src/navigation/Routes";
@@ -64,7 +64,7 @@ function AppContent() {
     >
       {renderScreen()}
       <Toast />
-      <NoConnectionModal />
+      {/* <NoConnectionModal /> */}
     </View>
   );
 }

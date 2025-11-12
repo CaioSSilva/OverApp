@@ -17,7 +17,7 @@ import { AppContext } from '../contexts/AppContext';
 import { dataService } from '../hooks/data';
 import Toast from 'react-native-toast-message';
 import { useBiometrics } from '../hooks/useBiometrics';
-import { LoginSheet } from '../components/LoginSheet';
+import { LoginSheet } from '../components/Sheets/LoginSheet';
 
 export default function Welcome() {
   const isDarkMode = useColorScheme() === 'dark';
