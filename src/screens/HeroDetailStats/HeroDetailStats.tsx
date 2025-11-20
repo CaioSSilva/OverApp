@@ -14,15 +14,10 @@ import CombatChartSection from './CombatChartSection';
 import PerformanceChartSection from './PerformanceChartSection';
 import CategoryStatsSection from './CategoryStatsSection';
 import SessionSummarySection from './SessionSummarySection';
-
-import {
-  useStatsData,
-  useFormatters,
-  
-} from '../../hooks/useHeroDetailStats';
-
 import { COLORS } from '../../styles/theme';
 import { useStatIcon } from '../../hooks/useStatIcon';
+import { useStatsData } from '../../hooks/useStatsData';
+import { useFormatters } from '../../hooks/useFormatters';
 
 const ActionSheetHeroStats: React.FC<ActionSheetHeroStatsProps> = ({
   statsData,

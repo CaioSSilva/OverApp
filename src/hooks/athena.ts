@@ -8,10 +8,15 @@ import AthenaContext from '../contexts/AthenaContext';
 import { useTranslation } from 'react-i18next';
 
 const CHATS_STORAGE_KEY = '@athena_chats';
+const MAX_CHATS = 8;
 
 const athena = new GoogleGenAI({
   apiKey: 'AIzaSyC-4cXUks22_UTfBp_iYpUZ7FYGR_f1wq0',
 });
+
+const extractAthenaText = (response: GenerateContentResponse | undefined): string | undefined => {
+  return response?.candidates?.[0]?.content?.parts?.[0]?.text;
+};
 
 const askAthena = async (question: string): Promise<string | undefined> => {
   const response = await athena.models.generateContent({
@@ -21,11 +26,41 @@ const askAthena = async (question: string): Promise<string | undefined> => {
   return extractAthenaText(response);
 };
 
-function extractAthenaText(
-  response: GenerateContentResponse | undefined,
-): string | undefined {
-  return response?.candidates?.[0]?.content?.parts?.[0]?.text;
-}
+const createNewChat = (): Chat => ({
+  id: Date.now().toString(),
+  name: '',
+  messages: [],
+  createdAt: Date.now(),
+  updatedAt: Date.now(),
+});
+
+const addUserMessage = (chats: Chat[], chatId: string, content: string): Chat[] => {
+  return chats.map((chat) =>
+    chat.id === chatId
+      ? {
+          ...chat,
+          messages: [...chat.messages, { role: 'user', content }],
+          updatedAt: Date.now(),
+        }
+      : chat,
+  );
+};
+
+const addModelMessage = (chats: Chat[], chatId: string, content: string): Chat[] => {
+  return chats.map((chat) =>
+    chat.id === chatId
+      ? {
+          ...chat,
+          messages: [...chat.messages, { role: 'model', content }],
+          updatedAt: Date.now(),
+        }
+      : chat,
+  );
+};
+
+const buildPromptHistory = (messages: ChatMessage[]): string => {
+  return messages.map((msg) => `${msg.role}: ${msg.content}`).join('\n');
+};
 
 export function useAthenaChat() {
   const { t } = useTranslation();
@@ -68,20 +103,15 @@ export function useAthenaChat() {
   }, [chats, t]);
 
   const createChat = () => {
-    if (chats.length > 8) {
+    if (chats.length >= MAX_CHATS) {
       Toast.show({
         type: 'info',
         text1: t('athena.errors.chatsLimit'),
         text2: t('athena.errors.chatsLimitSub'),
       });
+      return;
     }
-    const newChat: Chat = {
-      id: Date.now().toString(),
-      name: '',
-      messages: [],
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-    };
+    const newChat = createNewChat();
     setChats([newChat, ...chats]);
     setActualChatId(newChat.id);
   };
@@ -104,78 +134,26 @@ export function useAthenaChat() {
     let currentChatId = actualChatId;
 
     if (!currentChatId) {
-      const newChat: Chat = {
-        id: Date.now().toString(),
-        name: '',
-        messages: [],
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-      };
+      const newChat = createNewChat();
       setChats([newChat, ...chats]);
       setActualChatId(newChat.id);
       currentChatId = newChat.id;
     }
 
-    const userMessage: ChatMessage = {
-      role: 'user',
-      content: text,
-    };
-
-    const updatedChats = chats.map((chat) => {
-      if (chat.id === currentChatId) {
-        return {
-          ...chat,
-          messages: [...chat.messages, userMessage],
-          updatedAt: Date.now(),
-        };
-      }
-      return chat;
-    });
-
-    if (!chats.find((c) => c.id === currentChatId)) {
-      updatedChats.unshift({
-        id: currentChatId,
-        name: '',
-        messages: [userMessage],
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-      });
-    }
-
+    let updatedChats = addUserMessage(chats, currentChatId, text);
     setChats(updatedChats);
     setMessage('');
     setIsLoading(true);
 
     try {
-      const previousMessages =
-        updatedChats.find((c) => c.id === currentChatId)?.messages || [];
-      const historyString = previousMessages
-        .map((msg) => `${msg.role}: ${msg.content}`)
-        .join('\n');
-
-      const fullPrompt = historyString
-        ? `${historyString}\nuser: ${text}`
-        : text;
+      const previousMessages = updatedChats.find((c) => c.id === currentChatId)?.messages || [];
+      const historyString = buildPromptHistory(previousMessages.slice(0, -1));
+      const fullPrompt = historyString ? `${historyString}\nuser: ${text}` : text;
       const response = await askAthena(fullPrompt);
 
       if (response) {
-        const modelMessage: ChatMessage = {
-          role: 'model',
-          content: response,
-        };
-
-        const finalChats = updatedChats.map((chat) => {
-          if (chat.id === currentChatId) {
-            return {
-              ...chat,
-              messages: [...chat.messages, modelMessage],
-              updatedAt: Date.now(),
-            };
-          }
-          return chat;
-        });
-
-        setChats(finalChats);
+        updatedChats = addModelMessage(updatedChats, currentChatId, response);
+        setChats(updatedChats);
       }
     } catch (error) {
       Toast.show({
@@ -187,11 +165,7 @@ export function useAthenaChat() {
     }
   };
 
-  const getCurrentChat = () => {
-    return chats.find((chat) => chat.id === actualChatId);
-  };
-
-  const currentChat = getCurrentChat();
+  const currentChat = chats.find((chat) => chat.id === actualChatId);
   const hasMessages = currentChat && currentChat.messages.length > 0;
 
   return {

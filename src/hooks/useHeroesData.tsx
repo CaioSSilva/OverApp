@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { dataService } from './data';
 import { Earth, Joystick, Monitor } from 'lucide-react-native';
 import { Hero } from '../interfaces/Hero.model';
@@ -11,39 +11,30 @@ export default function useHeroesData(
   User: { name?: string } | undefined | null,
 ) {
   const { getHeroes } = dataService();
-  const getHeroList = useCallback(() => dataService().getHeroes(), []);
-  const getTimePlayed = useCallback(
-    () => dataService().getProfileFull(User?.name),
-    [User?.name],
-  );
-
   const [heroes, setHeroes] = useState<Hero[]>([]);
-  const [stats, setStats] = useState<OverwatchProfileFullStats | undefined>(
-    undefined,
-  );
+  const [stats, setStats] = useState<OverwatchProfileFullStats | undefined>(undefined);
   const [isSortedAsc, setIsSortedAsc] = useState(true);
-  const [selectedPlatform, setSelectedPlatform] = useState<
-    'all' | 'pc' | 'console'
-  >('all');
+  const [selectedPlatform, setSelectedPlatform] = useState<'all' | 'pc' | 'console'>('all');
 
   useEffect(() => {
-    getTimePlayed().then(s => setStats(s.stats));
-    getHeroList().then(setHeroes);
-  }, [getHeroList, getTimePlayed]);
+    dataService()
+      .getProfileFull(User?.name)
+      .then(s => setStats(s.stats));
+    dataService()
+      .getHeroes()
+      .then(setHeroes);
+  }, [User?.name]);
 
-  function updateHeroes() {
+  const updateHeroes = () => {
     setHeroes([]);
     getHeroes().then(setHeroes);
-    getTimePlayed().then(s => setStats(s.stats));
-  }
+    dataService()
+      .getProfileFull(User?.name)
+      .then(s => setStats(s.stats));
+  };
 
-  const { combinedTimes, sortedHeroes } = useMemo(
-    () => calcHeroTimes(stats, heroes, selectedPlatform),
-    [stats, heroes, selectedPlatform],
-  );
-
+  const { combinedTimes, sortedHeroes } = calcHeroTimes(stats, heroes, selectedPlatform);
   const maxSize = combinedTimes[0]?.totalTime;
-
   const findHeroTime = (heroKey: string) =>
     stats ? combinedTimes.find(ct => ct.hero === heroKey) : undefined;
 
