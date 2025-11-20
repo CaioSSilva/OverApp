@@ -17,7 +17,12 @@ import BandContext from '../../contexts/BandContext';
 import { useBluetooth } from '../../hooks/useBluetooth';
 import { Device } from 'react-native-ble-plx';
 import { LineChart } from 'react-native-chart-kit';
-import { ClockFading } from 'lucide-react-native';
+import {
+  BatteryFull,
+  BatteryLow,
+  BatteryMedium,
+  ClockFading,
+} from 'lucide-react-native';
 import HistorySheet from './HistorySheet';
 
 const PulseBandSheet = () => {
@@ -32,6 +37,7 @@ const PulseBandSheet = () => {
     bpmForExibition,
     setIsSearchingForBand,
     isSearchingForBand,
+    batteryLevel,
   } = useContext(BandContext);
   const [devices, setDevices] = useState<Device[]>([]);
 
@@ -54,6 +60,22 @@ const PulseBandSheet = () => {
   const cancelButtonStyles = {
     marginTop: 20,
     backgroundColor: COLORS.ERROR,
+  };
+
+  const mapBatteryState = (level: number) => {
+    const lvl = Math.round(level);
+    if (lvl === 100)
+      return {
+        color: COLORS.SUCCESS,
+      };
+    if (lvl >= 75)
+      return {
+        color: COLORS.WARNING,
+      };
+    if (lvl >= 40)
+      return {
+        color: COLORS.ERROR,
+      };
   };
 
   return (
@@ -130,12 +152,39 @@ const PulseBandSheet = () => {
         ) : (
           <>
             <View style={styles(isDarkMode).chartHeader}>
+              <View style={styles(isDarkMode).batteryContainer}>
+                {mapBatteryState(batteryLevel)?.color === COLORS.SUCCESS ? (
+                  <View style={styles(isDarkMode).batteryContent}>
+                    <BatteryFull
+                      size={20}
+                      color={mapBatteryState(batteryLevel)?.color}
+                    />
+                    <Text style={{color: mapBatteryState(batteryLevel)?.color}}>{batteryLevel + '%'}</Text>
+                  </View>
+                ) : mapBatteryState(batteryLevel)?.color === COLORS.WARNING ? (
+                  <View style={styles(isDarkMode).batteryContent}>
+                    <BatteryMedium
+                      size={20}
+                      color={mapBatteryState(batteryLevel)?.color}
+                    />
+                    <Text style={{color: mapBatteryState(batteryLevel)?.color}}>{batteryLevel + '%'}</Text>
+                  </View>
+                ) : (
+                  <View style={styles(isDarkMode).batteryContent}>
+                    <BatteryLow
+                      size={20}
+                      color={mapBatteryState(batteryLevel)?.color}
+                    />
+                    <Text style={{color: mapBatteryState(batteryLevel)?.color}}>{batteryLevel + '%'}</Text>
+                  </View>
+                )}
+              </View>
               <Text style={getThemedStyles(isDarkMode).titleText}>
                 {t('pulseBand.title')}
               </Text>
 
               <Button
-                icon={<ClockFading size={20} color={COLORS.WHITE}/>}
+                icon={<ClockFading size={20} color={COLORS.WHITE} />}
                 customStyles={styles(isDarkMode).clockwiseIcon}
                 scale={1.1}
                 onPress={() => {
@@ -204,7 +253,7 @@ const PulseBandSheet = () => {
                 setDevices([]);
               }}
             />
-            <HistorySheet ref={historySheetRef}/>
+            <HistorySheet ref={historySheetRef} />
           </>
         )}
       </View>
@@ -265,4 +314,16 @@ const styles = (isDarkMode: boolean) =>
       position: 'absolute',
       right: 0,
     },
+    batteryContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      position: 'absolute',
+      left: 0,
+    },
+    batteryContent : {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginRight: 5,
+      gap: 4,
+    }
   });

@@ -34,8 +34,10 @@ async function readInitialValues(
   SERVICE_UUID: string,
   CHAR_UUID_BPM_STATUS: string,
   CHAR_UUID_VIBRA_STATUS: string,
+  CHAR_UUID_BATTERY: string,
   setBpmStatus: (val: string) => void,
   setVibraStatus: (val: boolean) => void,
+  setBatteryLevel: (val: number) => void,
 ) {
   try {
     const bpmChar = await device.readCharacteristicForService(
@@ -49,6 +51,13 @@ async function readInitialValues(
       CHAR_UUID_VIBRA_STATUS,
     );
     setVibraStatus(StringToBool(base64.decode(vibraChar?.value ?? '')));
+
+    const batteryChar = await device.readCharacteristicForService(
+      SERVICE_UUID,
+      CHAR_UUID_BATTERY,
+    );
+    const batteryValue = parseInt(base64.decode(batteryChar?.value ?? '0'), 10);
+    setBatteryLevel(batteryValue);
   } catch (error) {
     console.error('Erro ao ler valores iniciais:', error);
   }
@@ -59,8 +68,10 @@ function monitorCharacteristics(
   SERVICE_UUID: string,
   CHAR_UUID_BPM_STATUS: string,
   CHAR_UUID_VIBRA_STATUS: string,
+  CHAR_UUID_BATTERY: string,
   setBpmStatus: (val: string) => void,
   setVibraStatus: (val: boolean) => void,
+  setBatteryLevel: (val: number) => void,
 ) {
   device.monitorCharacteristicForService(
     SERVICE_UUID,
@@ -92,6 +103,23 @@ function monitorCharacteristics(
     },
     'vibratransaction',
   );
+
+  device.monitorCharacteristicForService(
+    SERVICE_UUID,
+    CHAR_UUID_BATTERY,
+    (error, characteristic) => {
+      if (error) {
+        return;
+      }
+
+      if (characteristic?.value != null) {
+        const battery = parseInt(base64.decode(characteristic.value), 10);
+        console.log('Battery Level:', battery);
+        setBatteryLevel(battery);
+      }
+    },
+    'batterytransaction',
+  );
 }
 
 export function useBluetooth() {
@@ -104,9 +132,11 @@ export function useBluetooth() {
     SERVICE_UUID,
     CHAR_UUID_BPM_STATUS,
     CHAR_UUID_VIBRA_STATUS,
+    CHAR_UUID_BATTERY,
     setIsSearchingForBand,
     setBpmStatus,
     setVibraStatus,
+    setBatteryLevel,
     bandModalRef,
   } = useContext(BandContext);
 
@@ -119,21 +149,31 @@ export function useBluetooth() {
     return state === 'PoweredOn';
   }, [BLTManager]);
 
+  const monitorBluetoothState = useCallback(
+    (onStateChange?: (state: string) => void) => {
+      const subscription = BLTManager.onStateChange(state => {
+        if (state === 'PoweredOn') {
+          setBluetoothTunedOn(true);
+        } else {
+          setBluetoothTunedOn(false);
+          setIsConnected(false);
+          setConnectedDevice(undefined);
+        }
+        onStateChange?.(state);
+      }, true);
+
+      return subscription;
+    },
+    [BLTManager, setIsConnected, setConnectedDevice],
+  );
+
   useEffect(() => {
-    const subscription = BLTManager.onStateChange(state => {
-      if (state === 'PoweredOn') {
-        setBluetoothTunedOn(true);
-      } else {
-        setBluetoothTunedOn(false);
-        setIsConnected(false);
-        setConnectedDevice(undefined);
-      }
-    }, true);
+    const subscription = monitorBluetoothState();
 
     return () => {
       subscription.remove();
     };
-  }, [BLTManager, setIsConnected, setConnectedDevice]);
+  }, [monitorBluetoothState]);
 
   useEffect(() => {
     const checkState = async () => {
@@ -162,16 +202,20 @@ export function useBluetooth() {
           SERVICE_UUID,
           CHAR_UUID_BPM_STATUS,
           CHAR_UUID_VIBRA_STATUS,
+          CHAR_UUID_BATTERY,
           setBpmStatus,
           setVibraStatus,
+          setBatteryLevel,
         );
         monitorCharacteristics(
           connected,
           SERVICE_UUID,
           CHAR_UUID_BPM_STATUS,
           CHAR_UUID_VIBRA_STATUS,
+          CHAR_UUID_BATTERY,
           setBpmStatus,
           setVibraStatus,
+          setBatteryLevel,
         );
       } catch (error) {
         console.warn('Connection error:', error);
@@ -186,8 +230,10 @@ export function useBluetooth() {
       SERVICE_UUID,
       CHAR_UUID_BPM_STATUS,
       CHAR_UUID_VIBRA_STATUS,
+      CHAR_UUID_BATTERY,
       setBpmStatus,
       setVibraStatus,
+      setBatteryLevel,
       bandModalRef,
     ],
   );

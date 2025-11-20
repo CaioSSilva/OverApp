@@ -13,12 +13,15 @@ interface BandContextType {
   SERVICE_UUID: string;
   CHAR_UUID_BPM_STATUS: string;
   CHAR_UUID_VIBRA_STATUS: string;
+  CHAR_UUID_BATTERY: string;
   setBpmStatus: React.Dispatch<React.SetStateAction<string>>;
   setVibraStatus: React.Dispatch<React.SetStateAction<boolean>>;
   setIsSearchingForBand: React.Dispatch<React.SetStateAction<boolean>>;
   bpmHistory: { value: number; timestamp: number }[];
   bpmForExibition: number[];
   vibraHistory: { value: boolean; timestamp: number }[];
+  batteryLevel: number
+  setBatteryLevel: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const BandContext = createContext<BandContextType>({} as BandContextType);
@@ -33,6 +36,8 @@ export const BandProvider = (children: { children: React.ReactNode }) => {
   const SERVICE_UUID = '4fafc201-1fb5-459e-8fcc-c5c9c331914b';
   const CHAR_UUID_BPM_STATUS = 'beb5483e-36e1-4688-b7f5-ea07361b26a8';
   const CHAR_UUID_VIBRA_STATUS = '86b14f82-a337-43c3-8b7c-0e86f8d052d9';
+  const CHAR_UUID_BATTERY  =    "124f1674-636b-4e91-b226-345123456789";
+
 
   const [bpmStatus, setBpmStatus] = useState<string>('');
   const [vibraStatus, setVibraStatus] = useState<boolean>(false);
@@ -50,6 +55,8 @@ export const BandProvider = (children: { children: React.ReactNode }) => {
   >([]);
 
   const [bpmForExibition, setBpmForExibition] = useState<number[]>([]);
+
+  const [batteryLevel, setBatteryLevel] = useState<number>(0);
 
   useEffect(() => {
     if (bpmStatus)
@@ -93,12 +100,15 @@ export const BandProvider = (children: { children: React.ReactNode }) => {
         SERVICE_UUID,
         CHAR_UUID_BPM_STATUS,
         CHAR_UUID_VIBRA_STATUS,
+        CHAR_UUID_BATTERY,
         setIsSearchingForBand,
         setBpmStatus,
         setVibraStatus,
         bpmHistory,
         bpmForExibition,
         vibraHistory,
+        batteryLevel,
+        setBatteryLevel,
       }}
     >
       {children.children}
