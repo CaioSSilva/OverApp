@@ -15,7 +15,7 @@
     "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-native-community/netinfo": "^11.4.1",
     "@react-native-masked-view/masked-view": "^0.2.9",
-    "@react-native-voice/voice": "^3.2.4",
+    "@react-native-voice/voice": "^3.1.5",
     "@react-native/new-app-screen": "0.81.0",
     "@react-navigation/bottom-tabs": "^7.4.6",
     "@react-navigation/elements": "^2.6.3",

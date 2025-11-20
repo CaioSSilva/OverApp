@@ -118,6 +118,8 @@
   "stats": {
     "title": "Stats",
     "gameTimeAll": "Gameplay Time - All time",
+    "gameTimeConsole" : "Gameplay Time - Console",
+    "gameTimePC" : "Gameplay Time - PC",
     "selectGamemode": "Select a gamemode",
     "selectPlatform": "Select a platform",
     "quickplay": "Quick Play",

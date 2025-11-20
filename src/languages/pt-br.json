@@ -116,6 +116,8 @@
   "stats": {
     "title": "Estatísticas",
     "gameTimeAll": "Tempo de Jogo - Todos os dados",
+    "gameTimeConsole" : "Tempo de Jogo - Console",
+    "gameTimePC" : "Tempo de Jogo - PC",
     "selectGamemode": "Selecione um modo de jogo",
     "selectPlatform": "Selecione uma plataforma",
     "quickplay": "Jogo Rápido",

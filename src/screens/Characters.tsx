@@ -1,130 +1,37 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { FlatList, Text, useColorScheme, View } from 'react-native';
-import { dataService } from '../hooks/data';
-import { Hero } from '../interfaces/Hero.model';
+import React, { useContext } from 'react';
+import { FlatList, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import useHeroesData, {
+  cyclePlatform,
+  selectedPlatformIcon,
+} from '../hooks/useHeroesData';
 import HeroCard from '../components/HeroCard/HeroCard';
 import { useTranslation } from 'react-i18next';
 import Button from '../components/Button';
-import {
-  CalcHeroTimesReturn,
-  OverwatchProfileFullStats,
-} from '../interfaces/Summary.model';
+
 import { COLORS, getThemedStyles } from '../styles/theme';
 import Skeleton from '../components/Skeleton';
-import { IterationCw } from 'lucide-react-native';
+import {
+  ArrowDownWideNarrow,
+  ArrowUpNarrowWide,
+  IterationCw,
+} from 'lucide-react-native';
 import { AppContext } from '../contexts/AppContext';
 
 export default function Characters() {
   const isDarkMode = useColorScheme() === 'dark';
-  const { getHeroes } = dataService();
   const { User } = useContext(AppContext);
-  const [heroes, setHeroes] = useState<Hero[]>([]);
-  const [stats, setStats] = useState<OverwatchProfileFullStats | undefined>(
-    undefined,
-  );
   const { t } = useTranslation();
 
-  const getHeroList = useCallback(() => dataService().getHeroes(), []);
-  const getTimePlayed = useCallback(
-    () => dataService().getProfileFull(User?.name),
-    [],
-  );
-
-  useEffect(() => {
-    getTimePlayed().then(s => setStats(s.stats));
-    getHeroList().then(setHeroes);
-  }, [getHeroList, getTimePlayed]);
-
-  function updateHeroes() {
-    setHeroes([]);
-    getHeroes().then(setHeroes);
-    getTimePlayed().then(s => setStats(s.stats));
-  }
-  function calcHeroTimes(): CalcHeroTimesReturn {
-    if (!stats) return { combinedTimes: [], sortedHeroes: [] };
-
-    const platforms = ['pc', 'console'] as const;
-    const modes = ['quickplay', 'competitive'] as const;
-
-    const allTimeValues = platforms.flatMap(platform =>
-      modes.flatMap(
-        mode =>
-          stats[platform]?.[mode]?.heroes_comparisons?.time_played?.values ||
-          [],
-      ),
-    );
-
-    const heroTimeMap = new Map<
-      string,
-      {
-        totalTime: number;
-        pcTime: number;
-        consoleTime: number;
-        pcQuickplayTime: number;
-        pcCompetitiveTime: number;
-        consoleQuickplayTime: number;
-        consoleCompetitiveTime: number;
-      }
-    >();
-
-    allTimeValues.forEach(({ hero, value }) => {
-      if (!heroTimeMap.has(hero)) {
-        heroTimeMap.set(hero, {
-          totalTime: 0,
-          pcTime: 0,
-          consoleTime: 0,
-          pcQuickplayTime: 0,
-          pcCompetitiveTime: 0,
-          consoleQuickplayTime: 0,
-          consoleCompetitiveTime: 0,
-        });
-      }
-      heroTimeMap.get(hero)!.totalTime += value;
-    });
-
-    platforms.forEach(platform => {
-      modes.forEach(mode => {
-        const values =
-          stats[platform]?.[mode]?.heroes_comparisons?.time_played?.values ||
-          [];
-        values.forEach(({ hero, value }) => {
-          const heroData = heroTimeMap.get(hero)!;
-          const timeKey = `${platform}${
-            mode === 'quickplay' ? 'Quickplay' : 'Competitive'
-          }Time` as keyof typeof heroData;
-          const platformKey = `${platform}Time` as keyof typeof heroData;
-
-          (heroData[timeKey] as number) += value;
-          (heroData[platformKey] as number) += value;
-        });
-      });
-    });
-
-    const combinedTimes = Array.from(heroTimeMap.entries()).map(
-      ([hero, times]) => ({
-        hero,
-        ...times,
-      }),
-    );
-
-    combinedTimes.sort((a, b) => b.totalTime - a.totalTime);
-
-    const sortedHeroes = heroes.sort((a, b) => {
-      const aTime = combinedTimes.find(ct => ct.hero === a.key)?.totalTime || 0;
-      const bTime = combinedTimes.find(ct => ct.hero === b.key)?.totalTime || 0;
-      return bTime - aTime;
-    });
-
-    return { combinedTimes, sortedHeroes };
-  }
-
-  const maxSize = calcHeroTimes().combinedTimes[0]?.totalTime;
-
-  const findHeroTime = (heroKey: string) => {
-    return stats
-      ? calcHeroTimes().combinedTimes.find(ct => ct.hero === heroKey)
-      : undefined;
-  };
+  const {
+    isSortedAsc,
+    setIsSortedAsc,
+    updateHeroes,
+    sortedHeroes,
+    maxSize,
+    findHeroTime,
+    selectedPlatform,
+    setSelectedPlatform,
+  } = useHeroesData(User);
 
   return (
     <View style={getThemedStyles(isDarkMode).container}>
@@ -144,18 +51,42 @@ export default function Characters() {
               getThemedStyles(isDarkMode).headerSubtitle,
             ]}
           >
-            {t('stats.gameTimeAll')}
+            {t(
+              selectedPlatform === 'all'
+                ? 'stats.gameTimeAll'
+                : selectedPlatform === 'pc'
+                ? 'stats.gameTimePC'
+                : 'stats.gameTimeConsole',
+            )}
           </Text>
         </View>
 
-        <Button
-          onPress={() => updateHeroes()}
-          icon={<IterationCw size={20} color={COLORS.WHITE} />}
-        />
+        <View style={styles.buttonsContainer}>
+          <Button
+            icon={
+              isSortedAsc ? (
+                <ArrowDownWideNarrow size={20} color={COLORS.WHITE} />
+              ) : (
+                <ArrowUpNarrowWide size={20} color={COLORS.WHITE} />
+              )
+            }
+            customStyles={{ backgroundColor: COLORS.INFO }}
+            onPress={() => setIsSortedAsc(!isSortedAsc)}
+          />
+          <Button
+            icon={selectedPlatformIcon(selectedPlatform)}
+            customStyles={{ backgroundColor: COLORS.INFO }}
+            onPress={() => cyclePlatform(selectedPlatform, setSelectedPlatform)}
+          />
+          <Button
+            onPress={() => updateHeroes()}
+            icon={<IterationCw size={20} color={COLORS.WHITE} />}
+          />
+        </View>
       </View>
-      {calcHeroTimes().sortedHeroes.length > 0 ? (
+      {sortedHeroes.length > 0 ? (
         <FlatList
-          data={calcHeroTimes().sortedHeroes}
+          data={isSortedAsc ? sortedHeroes : [...sortedHeroes].reverse()}
           keyExtractor={item => item.key || item.name}
           renderItem={({ item }) => (
             <HeroCard
@@ -174,3 +105,9 @@ export default function Characters() {
     </View>
   );
 }
+const styles = StyleSheet.create({
+  buttonsContainer: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+});

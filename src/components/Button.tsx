@@ -7,13 +7,13 @@ import {
   ViewStyle,
 } from 'react-native';
 import { getThemedStyles } from '../styles/theme';
-import { ReactElement } from 'react';
+import { ReactNode } from 'react';
 import React from 'react';
 
 interface ButtonProps {
   title?: string;
   width?: DimensionValue;
-  icon?: ReactElement;
+  icon?: ReactNode;
   scale?: number;
   onPress: () => void;
   disabled?: boolean;

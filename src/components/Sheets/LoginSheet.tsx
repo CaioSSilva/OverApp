@@ -67,6 +67,7 @@ export const LoginSheet = forwardRef<ActionSheetRef, LoginSheetProps>(
 
     const resetForm = () => {
       setInput('');
+      setEnableBiometrics(false);
       setRequirements([
         {
           text: t('requirements.length'),
