@@ -105,7 +105,7 @@ export default function Characters() {
       ) : (
         <Skeleton height={90} count={10} />
       )}
-      {!isConnected && <BandBubble />}
+      {isConnected && <BandBubble />}
     </View>
   );
 }
