@@ -64,7 +64,7 @@ function AppContent() {
     >
       {renderScreen()}
       <Toast />
-      {/* <NoConnectionModal /> */}
+      <NoConnectionModal />
     </View>
   );
 }

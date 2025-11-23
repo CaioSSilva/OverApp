@@ -1,6 +1,7 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState, useCallback } from 'react';
 import { ActionSheetRef } from 'react-native-actions-sheet';
 import { BleManager, Device } from 'react-native-ble-plx';
+import { COLORS } from '../styles/theme';
 
 interface BandContextType {
   bandModalRef: React.RefObject<ActionSheetRef | null>;
@@ -22,6 +23,7 @@ interface BandContextType {
   vibraHistory: { value: boolean; timestamp: number }[];
   batteryLevel: number
   setBatteryLevel: React.Dispatch<React.SetStateAction<number>>;
+  mapBatteryState: () => { color: string } | undefined;
 }
 
 const BandContext = createContext<BandContextType>({} as BandContextType);
@@ -57,6 +59,23 @@ export const BandProvider = (children: { children: React.ReactNode }) => {
   const [bpmForExibition, setBpmForExibition] = useState<number[]>([]);
 
   const [batteryLevel, setBatteryLevel] = useState<number>(0);
+
+  const mapBatteryState = useCallback(() => {
+    const lvl = Math.round(batteryLevel);
+    if (lvl >= 90)
+      return {
+        color: COLORS.BATTERY.HIGH,
+      };
+    if (lvl >= 50)
+      return {
+        color: COLORS.BATTERY.MEDIUM
+      };
+    if (lvl >= 30)
+      return {
+        color: COLORS.BATTERY.LOW,
+      };
+  }, [batteryLevel]);
+
 
   useEffect(() => {
     if (bpmStatus)
@@ -109,6 +128,7 @@ export const BandProvider = (children: { children: React.ReactNode }) => {
         vibraHistory,
         batteryLevel,
         setBatteryLevel,
+        mapBatteryState, 
       }}
     >
       {children.children}

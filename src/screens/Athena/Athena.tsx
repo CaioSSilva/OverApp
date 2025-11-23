@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import {
   useColorScheme,
   View,
@@ -12,13 +12,16 @@ import AthenaMenu from './Menu';
 import AthenaInput from './Input';
 import { AthenaGrettings } from './Greetings';
 import { AthenaMessages } from './Messages';
+import { BandBubble } from '../../components/BandBubble';
 import { useTranslation } from 'react-i18next';
 import { getThemedStyles, SPACING } from '../../styles/theme';
 import { useAthenaChat } from '../../hooks/athena';
+import BandContext from '../../contexts/BandContext';
 
 export default function Athena() {
   const isDarkMode = useColorScheme() === 'dark';
   const { t } = useTranslation();
+  const { isConnected } = useContext(BandContext);
   const inputRef = useRef<any>(null);
 
   const {
@@ -75,6 +78,7 @@ export default function Athena() {
           />
         </View>
       </KeyboardAvoidingView>
+      {isConnected && <BandBubble />}
     </View>
   );
 }

@@ -7,6 +7,7 @@ import useHeroesData, {
 import HeroCard from '../components/HeroCard/HeroCard';
 import { useTranslation } from 'react-i18next';
 import Button from '../components/Button';
+import { BandBubble } from '../components/BandBubble';
 
 import { COLORS, getThemedStyles } from '../styles/theme';
 import Skeleton from '../components/Skeleton';
@@ -16,10 +17,12 @@ import {
   IterationCw,
 } from 'lucide-react-native';
 import { AppContext } from '../contexts/AppContext';
+import BandContext from '../contexts/BandContext';
 
 export default function Characters() {
   const isDarkMode = useColorScheme() === 'dark';
   const { User } = useContext(AppContext);
+  const { isConnected } = useContext(BandContext);
   const { t } = useTranslation();
 
   const {
@@ -102,6 +105,7 @@ export default function Characters() {
       ) : (
         <Skeleton height={90} count={10} />
       )}
+      {!isConnected && <BandBubble />}
     </View>
   );
 }

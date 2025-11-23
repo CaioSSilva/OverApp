@@ -38,6 +38,7 @@ const PulseBandSheet = () => {
     setIsSearchingForBand,
     isSearchingForBand,
     batteryLevel,
+    mapBatteryState,
   } = useContext(BandContext);
   const [devices, setDevices] = useState<Device[]>([]);
 
@@ -60,22 +61,6 @@ const PulseBandSheet = () => {
   const cancelButtonStyles = {
     marginTop: 20,
     backgroundColor: COLORS.ERROR,
-  };
-
-  const mapBatteryState = (level: number) => {
-    const lvl = Math.round(level);
-    if (lvl === 100)
-      return {
-        color: COLORS.SUCCESS,
-      };
-    if (lvl >= 75)
-      return {
-        color: COLORS.WARNING,
-      };
-    if (lvl >= 40)
-      return {
-        color: COLORS.ERROR,
-      };
   };
 
   return (
@@ -153,29 +138,29 @@ const PulseBandSheet = () => {
           <>
             <View style={styles(isDarkMode).chartHeader}>
               <View style={styles(isDarkMode).batteryContainer}>
-                {mapBatteryState(batteryLevel)?.color === COLORS.SUCCESS ? (
+                {mapBatteryState()?.color === COLORS.BATTERY.HIGH ? (
                   <View style={styles(isDarkMode).batteryContent}>
                     <BatteryFull
                       size={20}
-                      color={mapBatteryState(batteryLevel)?.color}
+                      color={mapBatteryState()?.color}
                     />
-                    <Text style={{color: mapBatteryState(batteryLevel)?.color}}>{batteryLevel + '%'}</Text>
+                    <Text style={{color: mapBatteryState()?.color}}>{batteryLevel + '%'}</Text>
                   </View>
-                ) : mapBatteryState(batteryLevel)?.color === COLORS.WARNING ? (
+                ) : mapBatteryState()?.color === COLORS.BATTERY.MEDIUM ? (
                   <View style={styles(isDarkMode).batteryContent}>
                     <BatteryMedium
                       size={20}
-                      color={mapBatteryState(batteryLevel)?.color}
+                      color={mapBatteryState()?.color}
                     />
-                    <Text style={{color: mapBatteryState(batteryLevel)?.color}}>{batteryLevel + '%'}</Text>
+                    <Text style={{color: mapBatteryState()?.color}}>{batteryLevel + '%'}</Text>
                   </View>
                 ) : (
                   <View style={styles(isDarkMode).batteryContent}>
                     <BatteryLow
                       size={20}
-                      color={mapBatteryState(batteryLevel)?.color}
+                      color={mapBatteryState()?.color}
                     />
-                    <Text style={{color: mapBatteryState(batteryLevel)?.color}}>{batteryLevel + '%'}</Text>
+                    <Text style={{color: mapBatteryState()?.color}}>{batteryLevel + '%'}</Text>
                   </View>
                 )}
               </View>

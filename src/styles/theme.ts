@@ -22,6 +22,13 @@ export const COLORS = {
   WARNING: '#F0B41E',
   ERROR: '#FF4040',
   INFO: '#0078FF',
+
+
+  BATTERY: {
+    HIGH: '#50D040',
+    MEDIUM: '#FFB400',
+    LOW: '#FF5050',
+  },
 };
 
 export const ROLE_COLORS = {

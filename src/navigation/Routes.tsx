@@ -1,4 +1,4 @@
-import { Image, useColorScheme } from 'react-native';
+import { Image, useColorScheme, View, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Stats from '../screens/Stats';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +14,7 @@ import { DetailsProps } from '../interfaces/Details.model';
 import HeroDetails from '../screens/HeroDetails/HeroDetails';
 import Athena from '../screens/Athena/Athena';
 import { COLORS } from '../styles/theme';
+import React from 'react';
 
 const TabNavigator = createBottomTabNavigator();
 
@@ -54,53 +55,55 @@ function Tabs() {
   const { t } = useTranslation();
 
   return (
-    <TabNavigator.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: {
-          backgroundColor: isDarkMode
-            ? COLORS.DARK.BACKGROUND
-            : COLORS.LIGHT.BACKGROUND,
-          borderTopWidth: 1,
-          borderTopColor: isDarkMode ? COLORS.DARK.BORDER : COLORS.LIGHT.BORDER,
-        },
-        tabBarActiveTintColor: COLORS.PRIMARY,
-        tabBarLabelStyle: { fontWeight: 'bold' },
-      }}
-    >
-      <TabNavigator.Screen
-        name={t('navigation.stats')}
-        component={Stats}
-        options={{
-          tabBarIcon: ({ color, size }) =>
-            createImageIcon(require('../assets/comp_points.png'), size, color),
+    <View style={styles.tabsContainer}>
+      <TabNavigator.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: {
+            backgroundColor: isDarkMode
+              ? COLORS.DARK.BACKGROUND
+              : COLORS.LIGHT.BACKGROUND,
+            borderTopWidth: 1,
+            borderTopColor: isDarkMode ? COLORS.DARK.BORDER : COLORS.LIGHT.BORDER,
+          },
+          tabBarActiveTintColor: COLORS.PRIMARY,
+          tabBarLabelStyle: { fontWeight: 'bold' },
         }}
-      />
-      <TabNavigator.Screen
-        name={t('navigation.characters')}
-        component={Characters}
-        options={{
-          tabBarIcon: ({ size, color }) =>
-            createImageIcon(require('../assets/logo_black.png'), size, color),
-        }}
-      />
-      <TabNavigator.Screen
-        name={t('navigation.maps')}
-        component={Maps}
-        options={{
-          tabBarIcon: ({ size, color }) =>
-            createImageIcon(require('../assets/map.png'), size, color),
-        }}
-      />
-      <TabNavigator.Screen
-        name={t('navigation.athena')}
-        component={Athena}
-        options={{
-          tabBarIcon: ({ color, size }) =>
-            createImageIcon(require('../assets/athena.png'), size, color),
-        }}
-      />
-    </TabNavigator.Navigator>
+      >
+        <TabNavigator.Screen
+          name={t('navigation.stats')}
+          component={Stats}
+          options={{
+            tabBarIcon: ({ color, size }) =>
+              createImageIcon(require('../assets/comp_points.png'), size, color),
+          }}
+        />
+        <TabNavigator.Screen
+          name={t('navigation.characters')}
+          component={Characters}
+          options={{
+            tabBarIcon: ({ size, color }) =>
+              createImageIcon(require('../assets/logo_black.png'), size, color),
+          }}
+        />
+        <TabNavigator.Screen
+          name={t('navigation.maps')}
+          component={Maps}
+          options={{
+            tabBarIcon: ({ size, color }) =>
+              createImageIcon(require('../assets/map.png'), size, color),
+          }}
+        />
+        <TabNavigator.Screen
+          name={t('navigation.athena')}
+          component={Athena}
+          options={{
+            tabBarIcon: ({ color, size }) =>
+              createImageIcon(require('../assets/athena.png'), size, color),
+          }}
+        />
+      </TabNavigator.Navigator>
+    </View>
   );
 }
 
@@ -150,3 +153,9 @@ const createImageIcon = (source: any, size: number, color: string) => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  tabsContainer: {
+    flex: 1,
+  },
+});

@@ -1,20 +1,22 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { FlatList, Text, useColorScheme, View } from 'react-native';
 import { dataService } from '../hooks/data';
 import { Map } from '../interfaces/Map.model';
 import MapCard from '../components/MapCard';
 import { useTranslation } from 'react-i18next';
 import Button from '../components/Button';
+import { BandBubble } from '../components/BandBubble';
 import { COLORS, getThemedStyles } from '../styles/theme';
 import Skeleton from '../components/Skeleton';
 import { IterationCw } from 'lucide-react-native';
+import BandContext from '../contexts/BandContext';
 
 export default function Maps() {
   const isDarkMode = useColorScheme() === 'dark';
   const { getMaps } = dataService();
   const [maps, setMaps] = useState<Map[]>([]);
   const { t } = useTranslation();
-
+  const { isConnected } = useContext(BandContext);
   const getMapsList = useCallback(() => dataService().getMaps(), []);
 
   useEffect(() => {
@@ -65,6 +67,7 @@ export default function Maps() {
       ) : (
         <Skeleton height={200} count={5} />
       )}
+      {isConnected && <BandBubble />}
     </View>
   );
 }
