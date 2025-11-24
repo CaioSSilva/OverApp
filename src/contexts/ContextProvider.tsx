@@ -3,6 +3,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppProvider } from './AppContext';
 import { AthenaProvider } from './AthenaContext';
 import { BandProvider } from './BandContext';
+import { VoiceProvider } from './VoiceContext';
 
 export default function ContextsProvider({
   children,
@@ -13,7 +14,9 @@ export default function ContextsProvider({
     <SafeAreaProvider>
       <AppProvider>
         <BandProvider>
-          <AthenaProvider>{children}</AthenaProvider>
+          <AthenaProvider>
+            <VoiceProvider>{children}</VoiceProvider>
+          </AthenaProvider>
         </BandProvider>
       </AppProvider>
     </SafeAreaProvider>

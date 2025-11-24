@@ -4,6 +4,7 @@ import React, {
   useImperativeHandle,
   useMemo,
   useCallback,
+  useContext,
 } from 'react';
 import {
   TextInput,
@@ -16,7 +17,7 @@ import {
 import { Send, Mic } from 'lucide-react-native';
 import { COLORS, GLASS_COLORS, SPACING, TYPOGRAPHY } from '../../styles/theme';
 import { MicRecording } from './MicRecording';
-
+import { VoiceContext } from '../../contexts/VoiceContext';
 interface InputProps extends TextInputProps {
   placeholder?: string;
   value?: string;
@@ -82,6 +83,9 @@ export default function AthenaInput({
     onMic?.();
   }, [onMic]);
 
+  const { isRecording, startRecognizing, stopRecognizing, text } =
+    useContext(VoiceContext);
+
   const hasText = useMemo(() => Boolean(value?.trim()), [value]);
 
   const containerStyles = useMemo(
@@ -107,9 +111,6 @@ export default function AthenaInput({
     [isDarkMode],
   );
 
-  const [isMicBeingPressed, setIsMicBeingPressed] = useState(false);
-  const [isMicRecording, setIsMicRecording] = useState(true);
-
   return (
     <View style={containerStyles}>
       <TextInput
@@ -134,23 +135,30 @@ export default function AthenaInput({
         </TouchableOpacity>
       ) : (
         <>
-          {isMicBeingPressed && (
+          {isRecording && (
             <View style={styles.micHolder}>
-              {isMicRecording ? <MicRecording /> : <Mic size={20} color={COLORS.WHITE} />}
+              {isRecording ? (
+                <MicRecording />
+              ) : (
+                <Mic size={20} color={COLORS.WHITE} />
+              )}
             </View>
           )}
           <TouchableOpacity
             style={[
               styles.micButton,
               {
-                backgroundColor: isMicBeingPressed
+                backgroundColor: isRecording
                   ? COLORS.WHITE
                   : GLASS_COLORS.WHITE_BACKGROUND,
               },
             ]}
             onPress={handleMic}
-            onLongPress={() => setIsMicBeingPressed(true)}
-            onPressOut={() => setIsMicBeingPressed(false)}
+            onLongPress={() => startRecognizing()}
+            onPressOut={() => {
+              stopRecognizing();
+              onChangeText && onChangeText(text);
+            }}
             activeOpacity={0.7}
           >
             <Mic size={20} color={COLORS.PRIMARY} />

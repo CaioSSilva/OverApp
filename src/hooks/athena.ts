@@ -11,7 +11,7 @@ const CHATS_STORAGE_KEY = '@athena_chats';
 const MAX_CHATS = 8;
 
 const athena = new GoogleGenAI({
-  apiKey: 'AIzaSyC-4cXUks22_UTfBp_iYpUZ7FYGR_f1wq0',
+  apiKey: 'AIzaSyChsNNivhH1VZjxg8YYZ9XT-OeImlcLwL8',
 });
 
 const extractAthenaText = (response: GenerateContentResponse | undefined): string | undefined => {
