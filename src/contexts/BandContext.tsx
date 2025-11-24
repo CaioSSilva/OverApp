@@ -21,7 +21,7 @@ interface BandContextType {
   bpmHistory: { value: number; timestamp: number }[];
   bpmForExibition: number[];
   vibraHistory: { value: boolean; timestamp: number }[];
-  batteryLevel: number
+  batteryLevel: number;
   setBatteryLevel: React.Dispatch<React.SetStateAction<number>>;
   mapBatteryState: () => { color: string } | undefined;
 }
@@ -38,8 +38,7 @@ export const BandProvider = (children: { children: React.ReactNode }) => {
   const SERVICE_UUID = '4fafc201-1fb5-459e-8fcc-c5c9c331914b';
   const CHAR_UUID_BPM_STATUS = 'beb5483e-36e1-4688-b7f5-ea07361b26a8';
   const CHAR_UUID_VIBRA_STATUS = '86b14f82-a337-43c3-8b7c-0e86f8d052d9';
-  const CHAR_UUID_BATTERY  =    "124f1674-636b-4e91-b226-345123456789";
-
+  const CHAR_UUID_BATTERY = '124f1674-636b-4e91-b226-345123456789';
 
   const [bpmStatus, setBpmStatus] = useState<string>('');
   const [vibraStatus, setVibraStatus] = useState<boolean>(false);
@@ -62,20 +61,20 @@ export const BandProvider = (children: { children: React.ReactNode }) => {
 
   const mapBatteryState = useCallback(() => {
     const lvl = Math.round(batteryLevel);
-    if (lvl >= 90)
+    if (lvl > 90)
       return {
         color: COLORS.BATTERY.HIGH,
       };
-    if (lvl >= 50)
+    if (lvl > 50 && lvl <= 90)
       return {
-        color: COLORS.BATTERY.MEDIUM
+        color: COLORS.BATTERY.MEDIUM,
       };
-    if (lvl >= 30)
+    else {
       return {
         color: COLORS.BATTERY.LOW,
       };
+    }
   }, [batteryLevel]);
-
 
   useEffect(() => {
     if (bpmStatus)
@@ -128,7 +127,7 @@ export const BandProvider = (children: { children: React.ReactNode }) => {
         vibraHistory,
         batteryLevel,
         setBatteryLevel,
-        mapBatteryState, 
+        mapBatteryState,
       }}
     >
       {children.children}

@@ -25,9 +25,9 @@ export function BandBubble() {
         { borderColor: mapBatteryState()?.color },
       ]}
     >
-      {batteryLevel >= 90 ? (
+      {batteryLevel > 90 ? (
         <BatteryFull size={21} color={mapBatteryState()?.color} />
-      ) : batteryLevel >= 50 ? (
+      ) : batteryLevel > 50 && batteryLevel <= 90 ? (
        <BatteryMedium size={21} color={mapBatteryState()?.color} />
       ) : (
         <BatteryLow size={21} color={mapBatteryState()?.color} />
