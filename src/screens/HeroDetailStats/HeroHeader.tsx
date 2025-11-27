@@ -1,5 +1,5 @@
 import { ArrowLeft } from 'lucide-react-native';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { COLORS } from '../../styles/theme';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -9,31 +9,25 @@ interface HeroHeaderProps {
   isDarkMode: boolean;
 }
 
-const HeroHeader = React.memo<HeroHeaderProps>(({ heroName, isDarkMode }) => {
-  const headerStyle = useMemo(
-    () => ({
-      ...styles.heroHeader,
-      backgroundColor: isDarkMode ? '#1e1e1e' : '#667eea',
-    }),
-    [isDarkMode],
-  );
+export default function HeroHeader({ heroName, isDarkMode }: HeroHeaderProps) {
+ 
   const navigation = useNavigation<NavigationProp<any>>();
 
   return (
-    <View style={headerStyle}>
+    <View style={styles(isDarkMode).heroHeader}>
       <ArrowLeft
-        style={styles.backIco}
+        style={styles(isDarkMode).backIco}
         onPress={() => navigation.goBack()}
         size={23}
         color={COLORS.WHITE}
       />
 
-      <Text style={styles.heroTitle}>{heroName}</Text>
+      <Text style={styles(isDarkMode).heroTitle}>{heroName}</Text>
     </View>
   );
-});
+}
 
-const styles = StyleSheet.create({
+const styles = (isDarkMode: boolean) => StyleSheet.create({
   heroHeader: {
     padding: 12,
     alignItems: 'center',
@@ -41,6 +35,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     marginTop: 8,
     marginBottom: 12,
+    backgroundColor:  isDarkMode ? '#1e1e1e' : '#667eea',
   },
   heroTitle: {
     fontSize: 16,
@@ -54,5 +49,3 @@ const styles = StyleSheet.create({
     padding: 4,
   },
 });
-
-export default HeroHeader;
